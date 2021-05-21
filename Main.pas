@@ -3,7 +3,8 @@ unit Main;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, InterfaceTransactionLoader;
+  InterfaceModule, System.Generics.Collections, InterfaceTransactionLoader,
+  Transaction, WindowSkeleton;
 
 type
   TMain = class (TInterfacedObject)
@@ -23,7 +24,8 @@ var
 implementation
 
 uses
-  System.SysUtils, ModuleTransactionLoader;
+  System.SysUtils, ModuleTransactionLoader, Winapi.Windows,
+  PanelTransactionList;
 
 { TMain }
 
@@ -56,15 +58,26 @@ begin
       Exit;
   end;
 
-  raise Exception.Create(rs_no_interface);
+  //raise Exception.Create(rs_no_interface);
 end;
 
 procedure TMain.Run;
 var
   pomLoader : ITransactionLoader;
+  pomTrans : TObjectList<TTransaction>;
+  pomWind : TWndSkeleton;
 begin
-  pomLoader := GiveObjectByInterface (ITransactionLoader) as ITransactionLoader;
-  pomLoader.Load(nil, 'example.xml')
+  pomWind := TWndSkeleton.Create(nil);
+  try
+    pomWind.Init (TfrmTransactionList.Create(pomWind));
+    pomWind.ShowModal;
+  finally
+    FreeAndNil (pomWind);
+  end;
+//  pomLoader := GiveObjectByInterface (ITransactionLoader) as ITransactionLoader;
+//  pomTrans := TObjectList<TTransaction>.Create;
+//  pomLoader.Load(pomTrans, 'example.xml');
+//  FreeAndNil(pomTrans);
 end;
 
 end.

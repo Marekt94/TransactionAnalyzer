@@ -10,14 +10,16 @@ uses
   InterfaceModule in 'Interfaces\InterfaceModule.pas',
   InterfaceTransaction in 'Interfaces\InterfaceTransaction.pas',
   InterfaceTransactionLoader in 'Interfaces\InterfaceTransactionLoader.pas',
-  Main in 'Main.pas';
+  Main in 'Main.pas',
+  ConstXMLLoader in 'Others\ConstXMLLoader.pas',
+  WindowSkeleton in 'Windows\WindowSkeleton.pas' {WndSkeleton},
+  PanelTransactionList in 'Windows\PanelTransactionList.pas' {frmTransactionList: TFrame};
 
 {$R *.res}
 
 begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
   Application.Run;
   MainKernel := TMain.Create;
   (MainKernel as TMain).Run;

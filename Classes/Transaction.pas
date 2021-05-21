@@ -6,27 +6,23 @@ uses
   InterfaceTransaction;
 
 type
-  TTransaction = class (TInterfacedObject, ITransaction)
+  TTransaction = class
   strict private
-    FName : String;
+    FExecutionDate : TDate;
+    FOrderDate : TDate;
+    FType : string;
+    FDescription : string;
+    FAmount : Double;
   public
-    function GetName : string;
-    procedure SetName (p_Name : string);
-    property Name: string read GetName write SetName;
+    property ExecutionDate   : TDate  read FExecutionDate write FExecutionDate;
+    property OrderDate       : TDate  read FOrderDate     write FOrderDate;
+    property TransactionType : string read FType          write FType;
+    property Description     : string read FDescription   write FDescription;
+    property Amount          : Double read FAmount        write FAmount;
   end;
 
 implementation
 
 { TTransaction }
-
-function TTransaction.GetName: string;
-begin
-  Result := FName;
-end;
-
-procedure TTransaction.SetName(p_Name: string);
-begin
-  FName := p_Name;
-end;
 
 end.
