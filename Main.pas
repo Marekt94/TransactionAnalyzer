@@ -58,7 +58,7 @@ begin
       Exit;
   end;
 
-  //raise Exception.Create(rs_no_interface);
+  raise Exception.Create(rs_no_interface);
 end;
 
 procedure TMain.Run;
@@ -74,10 +74,6 @@ begin
   finally
     FreeAndNil (pomWind);
   end;
-//  pomLoader := GiveObjectByInterface (ITransactionLoader) as ITransactionLoader;
-//  pomTrans := TObjectList<TTransaction>.Create;
-//  pomLoader.Load(pomTrans, 'example.xml');
-//  FreeAndNil(pomTrans);
 end;
 
 end.
