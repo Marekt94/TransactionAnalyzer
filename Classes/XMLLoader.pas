@@ -56,7 +56,6 @@ var
   pomTransactions   : IXMLNode;
   pomTransaction    : TTransaction;
   pomFormatSettings : TFormatSettings;
-  pomText           : string;
 begin
   pomXMLDoc := TXMLDocument.Create (nil);
   pomXMLDoc.Active := true;

@@ -63,8 +63,6 @@ end;
 
 procedure TMain.Run;
 var
-  pomLoader : ITransactionLoader;
-  pomTrans : TObjectList<TTransaction>;
   pomWind : TWndSkeleton;
 begin
   pomWind := TWndSkeleton.Create(nil);
