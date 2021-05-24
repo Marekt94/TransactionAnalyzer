@@ -1,9 +1,14 @@
-- dodać w jądrze, żeby moduł również dodawał się do listy interfejsów i zwracał siebie
 - autosize kolumn
 - ogarnąć uruchamianie głwónego okna, zeby nie uruchamiał się szkielet ze sztucznie dodaną ramką (uniezlażenić od jądra)
-- w module wczytywania powinna byc lista transakcji
+- znaleźć dobry logger
+- wyczyścić niepotrzebne unity
+- uporządkować unity: najpierw od delphi, potem interfejsy, potem klasy
 
 opcjonalne
 - każdy moduł mółgby mieć funkcję edycji ustawień - okno ze zmianą ustawień, np: zmiana formatu wczytywanego pliku
 - wyrejestrowywanie klasy
 - refactoring - wydzelenie stringgrida z wnetrza funckji - powinien być parametrem
+
+SKOŃCZONE
+- dodać w jądrze, żeby moduł również dodawał się do listy interfejsów i zwracał siebie
+- w module wczytywania powinna byc lista transakcji

@@ -16,6 +16,7 @@ type
     procedure RegisterClasses; virtual;
     function GetObjectList : TList<TInterfacedClass>;
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
+    function GetSelfInterface : TGUID; virtual;
     function InterfaceExists (p_GUID : TGUID) : boolean;
   end;
 
@@ -42,6 +43,11 @@ end;
 function TBaseModule.GetObjectList: TList<TInterfacedClass>;
 begin
   Result := FObjectList;
+end;
+
+function TBaseModule.GetSelfInterface: TGUID;
+begin
+  //to be covered in descendant
 end;
 
 function TBaseModule.GiveObjectByInterface(

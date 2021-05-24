@@ -14,10 +14,10 @@ type
       constructor Create;
       destructor Destroy; override;
       procedure Run;
-      class function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
       property ObjectList: TList<IModule> read FObjectList;
   end;
 
+  function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
 var
   MainKernel : IInterface;
 
@@ -25,7 +25,7 @@ implementation
 
 uses
   System.SysUtils, ModuleTransactionLoader, Winapi.Windows,
-  PanelTransactionList;
+  PanelTransactionList, InterfaceModuleTransactionLoader;
 
 { TMain }
 
@@ -42,25 +42,6 @@ begin
   inherited;
 end;
 
-class function TMain.GiveObjectByInterface(p_GUID: TGUID): IInterface;
-resourcestring
-  rs_no_interface = 'Brak interfejsu';
-var
-  pomKernel : TMain;
-begin
-  Result := nil;
-  pomKernel := MainKernel as TMain;
-
-  for var i := 0 to pomKernel.ObjectList.Count - 1 do
-  begin
-    Result := pomKernel.ObjectList.Items [i].GiveObjectByInterface (p_GUID);
-    if Assigned (Result) then
-      Exit;
-  end;
-
-  raise Exception.Create(rs_no_interface);
-end;
-
 procedure TMain.Run;
 var
   pomWind : TWndSkeleton;
@@ -72,6 +53,32 @@ begin
   finally
     FreeAndNil (pomWind);
   end;
+end;
+//------------------------------------------------------------------------------
+function GiveObjectByInterface(p_GUID: TGUID): IInterface;
+resourcestring
+  rs_no_interface = 'Brak interfejsu';
+var
+  pomKernel : TMain;
+  pomInterface : IInterface;
+begin
+  Result := nil;
+  pomInterface := nil;
+  pomKernel := MainKernel as TMain;
+
+  for var i := 0 to pomKernel.ObjectList.Count - 1 do
+  begin
+    if pomKernel.ObjectList.Items [i].SelfInterface = p_GUID then
+      Exit (pomKernel.ObjectList.Items [i])
+    else
+    begin
+      Result := pomKernel.ObjectList.Items [i].GiveObjectByInterface (p_GUID);
+      if Assigned (Result) then
+        Exit;
+    end
+  end;
+
+  raise Exception.Create(rs_no_interface);
 end;
 
 end.

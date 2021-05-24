@@ -13,7 +13,8 @@ uses
   Main in 'Main.pas',
   ConstXMLLoader in 'Others\ConstXMLLoader.pas',
   WindowSkeleton in 'Windows\WindowSkeleton.pas' {WndSkeleton},
-  PanelTransactionList in 'Windows\PanelTransactionList.pas' {frmTransactionList: TFrame};
+  PanelTransactionList in 'Windows\PanelTransactionList.pas' {frmTransactionList: TFrame},
+  InterfaceModuleTransactionLoader in 'Interfaces\InterfaceModuleTransactionLoader.pas';
 
 {$R *.res}
 

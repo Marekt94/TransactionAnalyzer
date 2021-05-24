@@ -38,7 +38,7 @@ type
 implementation
 
 uses
-  InterfaceTransactionLoader, Main;
+  Main, InterfaceModuleTransactionLoader;
 
 {$R *.dfm}
 
@@ -63,15 +63,13 @@ end;
 
 procedure TfrmTransactionList.btnLoadClick(Sender: TObject);
 var
-  pomLoader : ITransactionLoader;
-  pomList : TObjectList <TTransaction>;
+  pomLoader : IModuleTransactionLoader;
 begin
   if ofdOpenTransactionFile.Execute (Handle) then
   begin
-    pomLoader := Main.TMain.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader;
-    pomList := TObjectList <TTransaction>.Create;
-    pomLoader.Load (pomList, ofdOpenTransactionFile.FileName);
-    FillList (pomList);
+    pomLoader := GiveObjectByInterface (IModuleTransactionLoader) as IModuleTransactionLoader;
+    if pomLoader.LoadTransactions (ofdOpenTransactionFile.FileName) then;
+      FillList (pomLoader.TransactionList);
   end
 end;
 
