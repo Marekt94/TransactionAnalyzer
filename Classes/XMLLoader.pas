@@ -34,11 +34,11 @@ begin
   if not Assigned (p_Transaction) then
     raise Exception.Create(rs_Empty_Transaction);
 
-  p_Transaction.ExecutionDate   := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_ExecDate).Text,  p_FormatSettings);
-  p_Transaction.OrderDate       := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_OrderDate).Text, p_FormatSettings);
-  p_Transaction.TransactionType :=             p_Node.ChildNodes.FindNode (c_NN_Type).Text;
-  p_Transaction.Description     :=             p_Node.ChildNodes.FindNode (c_NN_Description).Text;
-  p_Transaction.Amount          := StrToFloat (p_Node.ChildNodes.FindNode (c_NN_AmountCurr).Text, p_FormatSettings);
+  p_Transaction.DocExecutionDate   := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_ExecDate).Text,  p_FormatSettings);
+  p_Transaction.DocOrderDate       := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_OrderDate).Text, p_FormatSettings);
+  p_Transaction.DocTransactionType :=             p_Node.ChildNodes.FindNode (c_NN_Type).Text;
+  p_Transaction.DocDescription     :=             p_Node.ChildNodes.FindNode (c_NN_Description).Text;
+  p_Transaction.DocAmount          := StrToFloat (p_Node.ChildNodes.FindNode (c_NN_AmountCurr).Text, p_FormatSettings);
 end;
 
 function TXMLLoader.FindNode(p_NodeName: string; p_NodeList : IXMLNodeList): IXMLNode;

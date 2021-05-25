@@ -118,6 +118,9 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Interfaces\InterfaceModuleTransactionLoader.pas"/>
+        <DCCReference Include="Classes\Category.pas"/>
+        <DCCReference Include="Classes\ModuleCategories.pas"/>
+        <DCCReference Include="Interfaces\InterfaceModuleCategory.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

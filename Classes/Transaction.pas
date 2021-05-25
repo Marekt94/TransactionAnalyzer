@@ -5,20 +5,27 @@ interface
 uses
   InterfaceTransaction;
 
+const
+  cExpense = 0;
+  cImpact  = 1;
+
 type
+  //doc prefix - from document
   TTransaction = class
   strict private
-    FExecutionDate : TDate;
-    FOrderDate : TDate;
-    FType : string;
-    FDescription : string;
-    FAmount : Double;
+    FDocExecutionDate : TDate;
+    FDocOrderDate : TDate;
+    FDocType : string;
+    FDocDescription : string;
+    FDocAmount : Double;
+    FType : Byte; //expense, impact
+    FCategory : Integer;
   public
-    property ExecutionDate   : TDate  read FExecutionDate write FExecutionDate;
-    property OrderDate       : TDate  read FOrderDate     write FOrderDate;
-    property TransactionType : string read FType          write FType;
-    property Description     : string read FDescription   write FDescription;
-    property Amount          : Double read FAmount        write FAmount;
+    property DocExecutionDate   : TDate  read FDocExecutionDate write FDocExecutionDate;
+    property DocOrderDate       : TDate  read FDocOrderDate     write FDocOrderDate;
+    property DocTransactionType : string read FDocType          write FDocType;
+    property DocDescription     : string read FDocDescription   write FDocDescription;
+    property DocAmount          : Double read FDocAmount        write FDocAmount;
   end;
 
 implementation

@@ -14,7 +14,10 @@ uses
   ConstXMLLoader in 'Others\ConstXMLLoader.pas',
   WindowSkeleton in 'Windows\WindowSkeleton.pas' {WndSkeleton},
   PanelTransactionList in 'Windows\PanelTransactionList.pas' {frmTransactionList: TFrame},
-  InterfaceModuleTransactionLoader in 'Interfaces\InterfaceModuleTransactionLoader.pas';
+  InterfaceModuleTransactionLoader in 'Interfaces\InterfaceModuleTransactionLoader.pas',
+  Category in 'Classes\Category.pas',
+  ModuleCategories in 'Classes\ModuleCategories.pas',
+  InterfaceModuleCategory in 'Interfaces\InterfaceModuleCategory.pas';
 
 {$R *.res}
 

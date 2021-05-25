@@ -25,7 +25,7 @@ implementation
 
 uses
   System.SysUtils, ModuleTransactionLoader, Winapi.Windows,
-  PanelTransactionList, InterfaceModuleTransactionLoader;
+  PanelTransactionList, InterfaceModuleTransactionLoader, ModuleCategories;
 
 { TMain }
 
@@ -33,7 +33,8 @@ constructor TMain.Create;
 begin
   FObjectList := TList<IModule>.Create;
 
-  FObjectList.Add(TModuleTransactionLoader.Create);
+  FObjectList.Add (TModuleTransactionLoader.Create);
+  FObjectList.Add (TModuleCategories.Create);
 end;
 
 destructor TMain.Destroy;

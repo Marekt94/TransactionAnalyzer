@@ -24,7 +24,9 @@ type
     pnlNavigation: TPanel;
     btnLoad: TButton;
     ofdOpenTransactionFile: TOpenTextFileDialog;
+    butShowCategories: TButton;
     procedure btnLoadClick(Sender: TObject);
+    procedure butShowCategoriesClick(Sender: TObject);
   strict private
     function FindColIndex (p_Title : string) : integer;  
     procedure InitStringList;
@@ -38,7 +40,7 @@ type
 implementation
 
 uses
-  Main, InterfaceModuleTransactionLoader;
+  Main, InterfaceModuleTransactionLoader, InterfaceModuleCategory;
 
 {$R *.dfm}
 
@@ -50,11 +52,11 @@ begin
   try
     with strTransaction do
     begin
-      Cells [FindColIndex (cExecutionDate),   p_Row] := DateToStr (p_Transaction.ExecutionDate);
-      Cells [FindColIndex (cOrderDate),       p_Row] := DateToStr (p_Transaction.OrderDate);
-      Cells [FindColIndex (cTransactionType), p_Row] := p_Transaction.TransactionType;
-      Cells [FindColIndex (cDescription),     p_Row] := p_Transaction.Description;
-      Cells [FindColIndex (cAmount),          p_Row] := FloatToStr (p_Transaction.Amount);
+      Cells [FindColIndex (cExecutionDate),   p_Row] := DateToStr (p_Transaction.DocExecutionDate);
+      Cells [FindColIndex (cOrderDate),       p_Row] := DateToStr (p_Transaction.DocOrderDate);
+      Cells [FindColIndex (cTransactionType), p_Row] := p_Transaction.DocTransactionType;
+      Cells [FindColIndex (cDescription),     p_Row] := p_Transaction.DocDescription;
+      Cells [FindColIndex (cAmount),          p_Row] := FloatToStr (p_Transaction.DocAmount);
     end;
   except
     strTransaction.RowCount := cDefaultRowCount;
@@ -71,6 +73,18 @@ begin
     if pomLoader.LoadTransactions (ofdOpenTransactionFile.FileName) then;
       FillList (pomLoader.TransactionList);
   end
+end;
+
+procedure TfrmTransactionList.butShowCategoriesClick(Sender: TObject);
+var
+  pomCat : IModuleCategories;
+begin
+  pomCat := GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  var pomTekst : string;
+  for var i := 0 to pomCat.CategoryList.Count - 1 do
+    pomTekst := pomTekst + pomCat.CategoryList.Items [i].CategoryName + ' ';
+
+  ShowMessage (pomTekst);
 end;
 
 constructor TfrmTransactionList.Create (AOwner: TComponent);
