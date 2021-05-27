@@ -9,6 +9,7 @@ type
   TModuleCategories = class (TBaseModule, IModuleCategories)
   strict private
     FCategoryList : TObjectList <TCategory>;
+    FPeriodicityList : TObjectList <TCategory>;
   public
     constructor Create;
     destructor Destroy; override;
@@ -16,7 +17,9 @@ type
     function LoadCategories (p_Path : string) : boolean;
     function SaveCategories (p_Path : string) : boolean;
     function GetCateogryList : TObjectList <TCategory>;
+    function GetPeriodicityList : TObjectList <TCategory>;
     property CategoryList : TObjectList <TCategory> read GetCateogryList;
+    property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;
 
 implementation
@@ -35,6 +38,7 @@ constructor TModuleCategories.Create;
 begin
   inherited;
   FCategoryList := TObjectList <TCategory>.Create;
+  FPeriodicityList := TObjectList <TCategory>.Create;
   LoadCategories ('');
 end;
 
@@ -42,6 +46,7 @@ destructor TModuleCategories.Destroy;
 begin
   SaveCategories ('');
   FreeAndNil (FCategoryList);
+  FreeAndNil (FPeriodicityList);
   inherited;
 end;
 
@@ -50,10 +55,19 @@ begin
   Result := FCategoryList
 end;
 
+function TModuleCategories.GetPeriodicityList: TObjectList<TCategory>;
+begin
+  Result := FPeriodicityList;
+end;
+
 function TModuleCategories.LoadCategories(p_Path: string): boolean;
 begin
-  FCategoryList.Add(TCategory.Create (0, 'zakupy'));
-  FCategoryList.Add(TCategory.Create (1, 'paliwo'));
+  FCategoryList.Add (TCategory.Create (0, 'zakupy'));
+  FCategoryList.Add (TCategory.Create (1, 'paliwo'));
+
+  FPeriodicityList.Add (TCategory.Create (0, 'sta³e'));
+  FPeriodicityList.Add (TCategory.Create (0, 'zmienne'));
+
   Result := true;
 end;
 

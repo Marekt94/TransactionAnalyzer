@@ -11,7 +11,9 @@ type
     function LoadCategories (p_Path : string) : boolean;
     function SaveCategories (p_Path : string) : boolean;
     function GetCateogryList : TObjectList <TCategory>;
+    function GetPeriodicityList : TObjectList <TCategory>;
     property CategoryList : TObjectList <TCategory> read GetCateogryList;
+    property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;
 
 implementation

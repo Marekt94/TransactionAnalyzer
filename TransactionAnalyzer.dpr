@@ -17,7 +17,10 @@ uses
   InterfaceModuleTransactionLoader in 'Interfaces\InterfaceModuleTransactionLoader.pas',
   Category in 'Classes\Category.pas',
   ModuleCategories in 'Classes\ModuleCategories.pas',
-  InterfaceModuleCategory in 'Interfaces\InterfaceModuleCategory.pas';
+  InterfaceModuleCategory in 'Interfaces\InterfaceModuleCategory.pas',
+  ModuleTransactionAnalyzer in 'Classes\ModuleTransactionAnalyzer.pas',
+  InterfaceModuleTransactionAnalyzer in 'Interfaces\InterfaceModuleTransactionAnalyzer.pas',
+  PanelTransactionAnalyzerSettings in 'Windows\PanelTransactionAnalyzerSettings.pas' {frmTransactionAnalyzerSettings: TFrame};
 
 {$R *.res}
 

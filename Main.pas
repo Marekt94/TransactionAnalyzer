@@ -4,7 +4,7 @@ interface
 
 uses
   InterfaceModule, System.Generics.Collections, InterfaceTransactionLoader,
-  Transaction, WindowSkeleton;
+  Transaction, WindowSkeleton, ModuleTransactionAnalyzer;
 
 type
   TMain = class (TInterfacedObject)
@@ -35,6 +35,7 @@ begin
 
   FObjectList.Add (TModuleTransactionLoader.Create);
   FObjectList.Add (TModuleCategories.Create);
+  FObjectList.Add (TModuleTransactionAnalyzer.Create);
 end;
 
 destructor TMain.Destroy;
@@ -44,12 +45,14 @@ begin
 end;
 
 procedure TMain.Run;
+resourcestring
+  rs_MainTitle = 'Analiza transakcji';
 var
   pomWind : TWndSkeleton;
 begin
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (TfrmTransactionList.Create(pomWind));
+    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

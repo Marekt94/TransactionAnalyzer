@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, 
   System.Generics.Collections, Transaction, Vcl.ExtDlgs, Vcl.StdCtrls,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, InterfaceModuleTransactionAnalyzer;
 
 const
   cExecutionDate   = 'Execution date';
@@ -25,13 +25,15 @@ type
     btnLoad: TButton;
     ofdOpenTransactionFile: TOpenTextFileDialog;
     butShowCategories: TButton;
+    btnAnalyzeConditions: TButton;
     procedure btnLoadClick(Sender: TObject);
     procedure butShowCategoriesClick(Sender: TObject);
+    procedure btnAnalyzeConditionsClick(Sender: TObject);
   strict private
     function FindColIndex (p_Title : string) : integer;  
     procedure InitStringList;
     procedure FillList (p_TransactionList : TObjectList <TTransaction>;
-                        p_Clear : boolean = true);
+                        p_Clear           : boolean = true);
     procedure AddTransaction (p_Transaction : TTransaction; p_Row : Integer);
   public
     constructor Create (AOwner: TComponent); override;
@@ -61,6 +63,14 @@ begin
   except
     strTransaction.RowCount := cDefaultRowCount;
   end;
+end;
+
+procedure TfrmTransactionList.btnAnalyzeConditionsClick(Sender: TObject);
+var
+  pomTrAnalSettings : IModuleTransactionAnalyzer;
+begin
+  pomTrAnalSettings := GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer;
+  pomTrAnalSettings.SetConditions;
 end;
 
 procedure TfrmTransactionList.btnLoadClick(Sender: TObject);
