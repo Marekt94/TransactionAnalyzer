@@ -1,3 +1,4 @@
+- rozszerzyć okno o walidacje
 - moduł analizy
 - autosize kolumn
 - ogarnąć uruchamianie głwónego okna, zeby nie uruchamiał się szkielet ze sztucznie dodaną ramką (uniezlażenić od jądra)
