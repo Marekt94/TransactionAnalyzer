@@ -123,11 +123,17 @@
         <DCCReference Include="Interfaces\InterfaceModuleCategory.pas"/>
         <DCCReference Include="Classes\ModuleTransactionAnalyzer.pas"/>
         <DCCReference Include="Interfaces\InterfaceModuleTransactionAnalyzer.pas"/>
-        <DCCReference Include="Windows\PanelTransactionAnalyzerSettings.pas">
-            <Form>frmTransactionAnalyzerSettings</Form>
+        <DCCReference Include="Windows\PanelRule.pas">
+            <Form>frmRule</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Windows\PanelRuleList.pas">
+            <Form>Frame1</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Classes\Rule.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

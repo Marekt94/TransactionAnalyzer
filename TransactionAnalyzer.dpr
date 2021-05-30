@@ -20,7 +20,9 @@ uses
   InterfaceModuleCategory in 'Interfaces\InterfaceModuleCategory.pas',
   ModuleTransactionAnalyzer in 'Classes\ModuleTransactionAnalyzer.pas',
   InterfaceModuleTransactionAnalyzer in 'Interfaces\InterfaceModuleTransactionAnalyzer.pas',
-  PanelTransactionAnalyzerSettings in 'Windows\PanelTransactionAnalyzerSettings.pas' {frmTransactionAnalyzerSettings: TFrame};
+  PanelRule in 'Windows\PanelRule.pas' {frmRule: TFrame},
+  PanelRuleList in 'Windows\PanelRuleList.pas' {Frame1: TFrame},
+  Rule in 'Classes\Rule.pas';
 
 {$R *.res}
 
