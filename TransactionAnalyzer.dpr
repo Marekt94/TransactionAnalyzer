@@ -21,8 +21,12 @@ uses
   ModuleTransactionAnalyzer in 'Classes\ModuleTransactionAnalyzer.pas',
   InterfaceModuleTransactionAnalyzer in 'Interfaces\InterfaceModuleTransactionAnalyzer.pas',
   PanelRule in 'Windows\PanelRule.pas' {frmRule: TFrame},
-  PanelRuleList in 'Windows\PanelRuleList.pas' {Frame1: TFrame},
-  Rule in 'Classes\Rule.pas';
+  PanelRuleList in 'Windows\PanelRuleList.pas' {frmRuleList: TFrame},
+  Rule in 'Classes\Rule.pas',
+  InterfaceModuleRuleController in 'Interfaces\InterfaceModuleRuleController.pas',
+  ModuleRuleController in 'Classes\ModuleRuleController.pas',
+  InterfaceRuleSaver in 'Interfaces\InterfaceRuleSaver.pas',
+  XMLRuleSaverLoader in 'Classes\XMLRuleSaverLoader.pas';
 
 {$R *.res}
 

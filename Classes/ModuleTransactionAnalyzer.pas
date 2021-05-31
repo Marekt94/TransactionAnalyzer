@@ -4,7 +4,7 @@ interface
 
 uses
   Module, InterfaceModuleTransactionAnalyzer, System.Generics.Collections, Transaction,
-  PanelRule, System.SysUtils;
+  System.SysUtils, PanelRuleList;
 
 type
   TModuleTransactionAnalyzer = class (TBaseModule, IModuleTransactionAnalyzer)
@@ -34,13 +34,13 @@ end;
 
 procedure TModuleTransactionAnalyzer.SetConditions;
 resourcestring
-  rs_TransactionAnalyzerSettings = 'Regu³a';
+  rs_TransactionAnalyzerSettings = 'Regu³y';
 var
   pomWindow : TWndSkeleton;
 begin
   pomWindow := TWndSkeleton.Create(nil);
   try
-    pomWindow.Init (TfrmRule.Create (pomWindow), rs_TransactionAnalyzerSettings);
+    pomWindow.Init (TfrmRuleList.Create (pomWindow), rs_TransactionAnalyzerSettings);
     pomWindow.ShowModal;
   finally
     FreeAndNil (pomWindow);

@@ -67,7 +67,7 @@ begin
   //zmiana formatu na potrzeby formatu daty oraz double-a *.xml-a
   pomFormatSettings := TFormatSettings.Create;
   pomFormatSettings.DateSeparator := '-';
-  pomFormatSettings.ShortDateFormat := 'yyy-mm-dd';
+  pomFormatSettings.ShortDateFormat := 'yyyy-mm-dd';
   pomFormatSettings.DecimalSeparator := '.';
 
   //przeiteruj po operacjach i wype³nij liste transakcji

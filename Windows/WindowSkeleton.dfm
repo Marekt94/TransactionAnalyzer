@@ -33,11 +33,38 @@ object WndSkeleton: TWndSkeleton
     Left = 0
     Top = 42
     Width = 785
-    Height = 382
+    Height = 341
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 0
-    ExplicitWidth = 680
-    ExplicitHeight = 360
+    ExplicitHeight = 382
+  end
+  object pnlNavigationKeys: TPanel
+    Left = 0
+    Top = 383
+    Width = 785
+    Height = 41
+    Align = alBottom
+    TabOrder = 1
+    ExplicitLeft = 312
+    ExplicitTop = 208
+    ExplicitWidth = 185
+    object btnCancel: TButton
+      Left = 696
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Anuluj'
+      TabOrder = 0
+      OnClick = btnCancelClick
+    end
+    object btnOk: TButton
+      Left = 615
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'Ok'
+      TabOrder = 1
+      OnClick = btnOkClick
+    end
   end
 end

@@ -10,7 +10,7 @@ type
   strict private
     FObjectList : TList<TInterfacedClass>;
   public
-    constructor Create;
+    constructor Create; virtual;
     destructor Destroy; override;
     procedure RegisterClass (p_Class : TInterfacedClass);
     procedure RegisterClasses; virtual;

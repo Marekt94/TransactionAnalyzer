@@ -18,8 +18,8 @@ type
     FDocType : string;
     FDocDescription : string;
     FDocAmount : Double;
-    FType : Byte; //expense, impact
-    FCategory : Integer;
+//    FType : Byte; //expense, impact
+//    FCategory : Integer;
   public
     property DocExecutionDate   : TDate  read FDocExecutionDate write FDocExecutionDate;
     property DocOrderDate       : TDate  read FDocOrderDate     write FDocOrderDate;

@@ -1,16 +1,9 @@
-object Frame1: TFrame1
+object frmRuleList: TfrmRuleList
   Left = 0
   Top = 0
   Width = 630
   Height = 364
   TabOrder = 0
-  object StringGrid1: TStringGrid
-    Left = 0
-    Top = 64
-    Width = 320
-    Height = 120
-    TabOrder = 0
-  end
   object Panel1: TPanel
     Left = 89
     Top = 0
@@ -18,17 +11,18 @@ object Frame1: TFrame1
     Height = 364
     Align = alClient
     Caption = 'Panel1'
-    TabOrder = 1
-    ExplicitLeft = 87
-    object StringGrid2: TStringGrid
+    TabOrder = 0
+    object strRules: TStringGrid
       Left = 1
       Top = 1
       Width = 539
       Height = 362
       Align = alClient
+      ColCount = 1
+      FixedCols = 0
+      RowCount = 1
+      FixedRows = 0
       TabOrder = 0
-      ExplicitLeft = -2
-      ExplicitTop = 2
     end
   end
   object Panel2: TPanel
@@ -38,7 +32,7 @@ object Frame1: TFrame1
     Height = 364
     Align = alLeft
     Caption = 'Panel2'
-    TabOrder = 2
+    TabOrder = 1
     object btnAdd: TButton
       Left = 6
       Top = 5
@@ -46,6 +40,7 @@ object Frame1: TFrame1
       Height = 25
       Caption = 'Dodaj'
       TabOrder = 0
+      OnClick = btnAddClick
     end
     object btnRemove: TButton
       Left = 6
@@ -54,14 +49,16 @@ object Frame1: TFrame1
       Height = 25
       Caption = 'Usu'#324
       TabOrder = 1
+      OnClick = btnRemoveClick
     end
     object btnEdit: TButton
-      Left = 6
+      Left = 8
       Top = 36
       Width = 75
       Height = 25
       Caption = 'Edytuj'
       TabOrder = 2
+      OnClick = btnEditClick
     end
   end
 end

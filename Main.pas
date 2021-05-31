@@ -25,7 +25,8 @@ implementation
 
 uses
   System.SysUtils, ModuleTransactionLoader, Winapi.Windows,
-  PanelTransactionList, InterfaceModuleTransactionLoader, ModuleCategories;
+  PanelTransactionList, InterfaceModuleTransactionLoader, ModuleCategories,
+  ModuleRuleController;
 
 { TMain }
 
@@ -36,6 +37,7 @@ begin
   FObjectList.Add (TModuleTransactionLoader.Create);
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
+  FObjectList.Add (TModuleRuleController.Create)
 end;
 
 destructor TMain.Destroy;
@@ -52,7 +54,7 @@ var
 begin
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle);
+    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

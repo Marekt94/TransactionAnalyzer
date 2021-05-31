@@ -11,7 +11,7 @@ type
   strict private
     FTransactionList : TObjectList <TTransaction>;
   public
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
     function GetTransactionList : TObjectList <TTransaction>;
     function GetSelfInterface: TGUID; override;

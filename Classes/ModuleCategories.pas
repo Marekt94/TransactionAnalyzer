@@ -11,7 +11,7 @@ type
     FCategoryList : TObjectList <TCategory>;
     FPeriodicityList : TObjectList <TCategory>;
   public
-    constructor Create;
+    constructor Create; override;
     destructor Destroy; override;
     function GetSelfInterface: TGUID; override;
     function LoadCategories (p_Path : string) : boolean;

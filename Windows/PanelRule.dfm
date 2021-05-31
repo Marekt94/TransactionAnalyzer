@@ -1,41 +1,42 @@
 object frmRule: TfrmRule
+  AlignWithMargins = True
   Left = 0
   Top = 0
-  Width = 623
-  Height = 282
+  Width = 622
+  Height = 117
+  Margins.Left = 10
+  Margins.Top = 10
+  Margins.Right = 10
+  Margins.Bottom = 10
   TabOrder = 0
+  object Label2: TLabel
+    Left = 9
+    Top = 19
+    Width = 50
+    Height = 13
+    Caption = 'Kategoria:'
+  end
   object GroupBox1: TGroupBox
     Left = 0
-    Top = 0
-    Width = 623
-    Height = 282
-    Align = alClient
+    Top = 41
+    Width = 336
+    Height = 76
+    Align = alCustom
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = 1
-    ExplicitWidth = 621
-    ExplicitHeight = 140
-    DesignSize = (
-      623
-      282)
+    ExplicitWidth = 337
+    ExplicitHeight = 241
     object Label1: TLabel
       Left = 215
-      Top = 98
+      Top = 50
       Width = 6
       Height = 13
       Caption = 'a'
     end
-    object Label2: TLabel
-      Left = 32
-      Top = 19
-      Width = 50
-      Height = 13
-      Caption = 'Kategoria:'
-    end
     object chbTitleContains: TCheckBox
       Left = 9
-      Top = 71
+      Top = 23
       Width = 97
       Height = 17
       Caption = 'Tytu'#322' zawiera:'
@@ -44,7 +45,7 @@ object frmRule: TfrmRule
     end
     object edtTitleContains: TEdit
       Left = 112
-      Top = 67
+      Top = 19
       Width = 121
       Height = 21
       TabOrder = 1
@@ -52,7 +53,7 @@ object frmRule: TfrmRule
     end
     object chbDateBetween: TCheckBox
       Left = 9
-      Top = 94
+      Top = 46
       Width = 97
       Height = 17
       Caption = 'Data pomi'#281'dzy:'
@@ -61,7 +62,7 @@ object frmRule: TfrmRule
     end
     object dtpFromDate: TDateTimePicker
       Left = 112
-      Top = 94
+      Top = 46
       Width = 97
       Height = 21
       Date = 44344.000000000000000000
@@ -71,7 +72,7 @@ object frmRule: TfrmRule
     end
     object dtpToDate: TDateTimePicker
       Left = 227
-      Top = 94
+      Top = 46
       Width = 100
       Height = 21
       Date = 44344.000000000000000000
@@ -79,24 +80,26 @@ object frmRule: TfrmRule
       TabOrder = 4
       OnChange = dtpToDateChange
     end
-    object mmoConditionsVisualizer: TMemo
-      Left = 356
-      Top = 11
-      Width = 262
-      Height = 264
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      Lines.Strings = (
-        '')
-      TabOrder = 5
-    end
-    object cmbCategories: TComboBox
-      Left = 112
-      Top = 14
-      Width = 145
-      Height = 21
-      Style = csDropDownList
-      TabOrder = 6
-      OnChange = cmbCategoriesChange
-    end
+  end
+  object cmbCategories: TComboBox
+    Left = 65
+    Top = 14
+    Width = 168
+    Height = 21
+    Style = csDropDownList
+    TabOrder = 1
+    OnChange = cmbCategoriesChange
+  end
+  object mmoConditionsVisualizer: TMemo
+    Left = 342
+    Top = 0
+    Width = 280
+    Height = 117
+    Align = alRight
+    Lines.Strings = (
+      '')
+    TabOrder = 2
+    ExplicitLeft = 343
+    ExplicitHeight = 282
   end
 end

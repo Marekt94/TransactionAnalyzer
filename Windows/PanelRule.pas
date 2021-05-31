@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.ComCtrls, Rule;
+  Vcl.ComCtrls, Rule, System.Generics.Collections, Category;
 
 resourcestring
   rs_ConditionsVisualizerMain = 'Przypisz kategoriê ''%s'' dla transakcji, które zawieraj¹ %s.';
@@ -31,7 +31,9 @@ type
     procedure chbDateBetweenClick(Sender: TObject);
     procedure chbTitleContainsClick(Sender: TObject);
     procedure cmbCategoriesChange(Sender: TObject);
-  private
+  strict private
+    FCategoryList : TObjectList <TCategory>;
+    function FindCategoryByIndex (p_Index : Integer) : TCategory;
     procedure RefreshConditionsVisualizer (p_Mmo : TMemo);
   public
     constructor Create(AOwner: TComponent); override;
@@ -43,7 +45,7 @@ type
 implementation
 
 uses
-  InterfaceModuleCategory, Main, Category;
+  InterfaceModuleCategory, Main;
 
 {$R *.dfm}
 
@@ -71,9 +73,10 @@ var
 begin
   inherited Create (AOwner);
   pomCategories := GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  FCategoryList := pomCategories.CategoryList;
   cmbCategories.AddItem('',nil);
   for var i := 0 to pomCategories.CategoryList.Count - 1 do
-    cmbCategories.AddItem (pomCategories.CategoryList.Items [i].CategoryName, pomCategories.CategoryList.Items [i]);
+    cmbCategories.AddItem (FCategoryList.Items [i].CategoryName, FCategoryList.Items [i]);
 end;
 
 procedure TfrmRule.dtpFromDateChange(Sender: TObject);
@@ -93,6 +96,15 @@ procedure TfrmRule.edtTitleContainsChange(
 begin
   if chbTitleContains.Checked then
     RefreshConditionsVisualizer(mmoConditionsVisualizer);
+end;
+
+function TfrmRule.FindCategoryByIndex(p_Index: Integer): TCategory;
+begin
+  for var i := 0 to FCategoryList.Count - 1 do
+    if FCategoryList.Items [i].CategoryIndex = p_Index then
+      Exit (FCategoryList.Items [i]);
+
+  Result := nil;
 end;
 
 procedure TfrmRule.RefreshConditionsVisualizer(
@@ -141,11 +153,13 @@ procedure TfrmRule.Unpack(const p_Rule: TRule);
 begin
   if Assigned (p_Rule) then
   begin
+    cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (FindCategoryByIndex (p_Rule.CategoryIndex));
     chbTitleContains.Checked := p_Rule.TitleContains;
-    chbDateBetween           := p_Rule.DateBetween;
+    chbDateBetween.Checked   := p_Rule.DateBetween;
     edtTitleContains.Text    := p_Rule.TitleSubstring;
     dtpFromDate.Date         := p_Rule.DateFrom;
     dtpToDate.Date           := p_Rule.DateTo;
+    RefreshConditionsVisualizer (mmoConditionsVisualizer)
   end;
 end;
 
