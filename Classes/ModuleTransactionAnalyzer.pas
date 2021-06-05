@@ -9,7 +9,7 @@ uses
 type
   TModuleTransactionAnalyzer = class (TBaseModule, IModuleTransactionAnalyzer)
   public
-    function AnalyzeTransactions (p_Transaction : TObjectList <TTransaction>) : boolean;
+    function AnalyzeTransactions (p_Transactions : TObjectList <TTransaction>) : boolean;
     function GetSelfInterface : TGUID; override;
     procedure SetConditions;
   end;
@@ -17,13 +17,25 @@ type
 implementation
 
 uses
-  WindowSkeleton;
+  WindowSkeleton, InterfaceModuleRuleController;
 
 { TModuleTransactionAnalyzer }
 
 function TModuleTransactionAnalyzer.AnalyzeTransactions(
-  p_Transaction: TObjectList<TTransaction>): boolean;
+  p_Transactions: TObjectList<TTransaction>): boolean;
+var
+  pomRuleController : IModuleRuleController;
 begin
+  pomRuleController := GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+  for var i := 0 to p_Transactions.Count - 1 do
+  begin
+    for var j := 0 to pomRuleController.RuleList.Count - 1 do
+      if pomRuleController.RuleList.Items [i].FullfilConditions (p_Transactions [i]) then
+      begin
+        p_Transactions [i].CategoryIndex := pomRuleController.RuleList.Items [i].CategoryIndex;
+        break;
+      end;
+  end;
   Result := true;
 end;
 

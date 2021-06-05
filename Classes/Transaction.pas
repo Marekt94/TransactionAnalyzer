@@ -19,13 +19,14 @@ type
     FDocDescription : string;
     FDocAmount : Double;
 //    FType : Byte; //expense, impact
-//    FCategory : Integer;
+    FCategoryIndex : Integer;
   public
-    property DocExecutionDate   : TDate  read FDocExecutionDate write FDocExecutionDate;
-    property DocOrderDate       : TDate  read FDocOrderDate     write FDocOrderDate;
-    property DocTransactionType : string read FDocType          write FDocType;
-    property DocDescription     : string read FDocDescription   write FDocDescription;
-    property DocAmount          : Double read FDocAmount        write FDocAmount;
+    property DocExecutionDate   : TDate   read FDocExecutionDate write FDocExecutionDate;
+    property DocOrderDate       : TDate   read FDocOrderDate     write FDocOrderDate;
+    property DocTransactionType : string  read FDocType          write FDocType;
+    property DocDescription     : string  read FDocDescription   write FDocDescription;
+    property DocAmount          : Double  read FDocAmount        write FDocAmount;
+    property CategoryIndex      : Integer read FCategoryIndex    write FCategoryIndex;
   end;
 
 implementation

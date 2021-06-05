@@ -2,6 +2,9 @@ unit Rule;
 
 interface
 
+uses
+  Transaction;
+
 type
   TRule = class
   strict private
@@ -12,6 +15,9 @@ type
     FTitleSubstring : string;
     FCategoryIndex  : integer;
   public
+    function FullfilTitleCondition (p_Transaction : TTransaction) : boolean;
+    function FullfilDataCondition  (p_Transaction : TTransaction) : boolean;
+    function FullfilConditions     (p_Transaction : TTransaction) : boolean;
     property TitleContains: boolean read FTitleContains write FTitleContains;
     property DateBetween: boolean read FDateBetween write FDateBetween;
     property DateFrom : TDate read FDateFrom  write FDateFrom;
@@ -21,5 +27,32 @@ type
   end;
 
 implementation
+
+uses
+  StrUtils;
+
+{ TRule }
+
+function TRule.FullfilConditions(p_Transaction: TTransaction): boolean;
+begin
+  Result := FullfilTitleCondition (p_Transaction) and FullfilDataCondition (p_Transaction);
+end;
+
+function TRule.FullfilDataCondition (p_Transaction : TTransaction): boolean;
+begin
+  if FDateBetween then
+    Result :=     (p_Transaction.DocOrderDate >= FDateFrom)
+              and (p_Transaction.DocOrderDate <= FDateTo)
+  else
+    Exit (true)
+end;
+
+function TRule.FullfilTitleCondition (p_Transaction : TTransaction) : boolean;
+begin
+  if FTitleContains then
+    Result := ContainsText (p_Transaction.DocDescription, FTitleSubstring)
+  else
+    Exit (true);
+end;
 
 end.
