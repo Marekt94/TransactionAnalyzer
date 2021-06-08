@@ -13,6 +13,7 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
+    function FindCategoryByIndex (p_Index : integer) : TCategory;
     function GetSelfInterface: TGUID; override;
     function LoadCategories (p_Path : string) : boolean;
     function SaveCategories (p_Path : string) : boolean;
@@ -50,6 +51,14 @@ begin
   inherited;
 end;
 
+function TModuleCategories.FindCategoryByIndex(p_Index: integer): TCategory;
+begin
+  for var pomCategory in FCategoryList do
+    if pomCategory.CategoryIndex = p_Index then
+      Exit (pomCategory);
+  Result := nil;
+end;
+
 function TModuleCategories.GetCateogryList: TObjectList<TCategory>;
 begin
   Result := FCategoryList
@@ -73,7 +82,7 @@ end;
 
 function TModuleCategories.SaveCategories(p_Path: string): boolean;
 begin
-  Result := true;
+  Result := true
 end;
 
 end.

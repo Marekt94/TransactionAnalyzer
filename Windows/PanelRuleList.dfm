@@ -18,11 +18,14 @@ object frmRuleList: TfrmRuleList
       Width = 539
       Height = 362
       Align = alClient
-      ColCount = 1
+      ColCount = 2
       FixedCols = 0
       RowCount = 1
       FixedRows = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
       TabOrder = 0
+      ExplicitLeft = 0
+      ExplicitTop = 2
     end
   end
   object Panel2: TPanel

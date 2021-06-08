@@ -14,8 +14,6 @@ object frmTransactionList: TfrmTransactionList
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
     TabOrder = 0
-    ExplicitLeft = 97
-    ExplicitWidth = 367
   end
   object pnlNavigation: TPanel
     Left = 0

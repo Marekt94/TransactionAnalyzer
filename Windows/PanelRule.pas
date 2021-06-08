@@ -5,13 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.ComCtrls, Rule, System.Generics.Collections, Category;
-
-resourcestring
-  rs_ConditionsVisualizerMain = 'Przypisz kategoriê ''%s'' dla transakcji, które zawieraj¹ %s.';
-  rs_TitleConditions = 'tekst ''%s'' w tytule';
-  rs_and = 'oraz';
-  rs_DateConditions = 'zosta³y przeprowadzone pomiêdzy %s a %s';
+  Vcl.ComCtrls, Rule, System.Generics.Collections, Category,
+  InterfaceModuleRuleController;
 
 type
   TfrmRule = class(TFrame)
@@ -110,43 +105,17 @@ end;
 procedure TfrmRule.RefreshConditionsVisualizer(
   p_Mmo: TMemo);
 var
-  pomTitle : string;
-  pomDate  : string;
-  pomResultText : string;
-  pomCategory : string;
+  pomRule : TRule;
 begin
-  pomTitle := '';
-  pomDate := '';
-  pomResultText := '';
-  pomCategory := '';
+  pomRule := TRule.Create;
+  try
+    Pack (pomRule);
 
-  if cmbCategories.ItemIndex = 0 then
-  begin
     mmoConditionsVisualizer.Text := '';
-    Exit;
+    mmoConditionsVisualizer.Text := (Main.GiveObjectByInterface(IModuleRuleController) as IModuleRuleController).GetRuleDescription (pomRule);
+  finally
+    pomRule.Free;
   end;
-
-  pomCategory := TCategory (cmbCategories.Items.Objects [cmbCategories.ItemIndex]).CategoryName;
-
-  if chbTitleContains.Checked then
-    pomTitle := Format (rs_TitleConditions, [edtTitleContains.Text]);
-  if chbDateBetween.Checked then
-    pomDate := Format (rs_DateConditions, [DateToStr (dtpFromDate.Date), DateToStr (dtpToDate.Date)]);
-
-  if not pomTitle.IsEmpty and not pomDate.IsEmpty then
-    pomResultText := pomTitle + ' ' + rs_and + ' ' + pomDate
-  else if not pomTitle.IsEmpty then
-    pomResultText := pomTitle
-  else if not pomDate.IsEmpty then
-    pomResultText := pomDate
-  else
-  begin
-    mmoConditionsVisualizer.Text := '';
-    Exit;
-  end;
-
-  mmoConditionsVisualizer.Text := '';
-  mmoConditionsVisualizer.Text := Format (rs_ConditionsVisualizerMain, [pomCategory, pomResultText]);
 end;
 
 procedure TfrmRule.Unpack(const p_Rule: TRule);
@@ -177,6 +146,8 @@ begin
       DateTo   := dtpToDate.Date;
       DateFrom := dtpFromDate.Date;
     end;
+
+    CategoryIndex := cmbCategories.ItemIndex - 1;
   end
 end;
 

@@ -12,6 +12,7 @@ type
     function SaveCategories (p_Path : string) : boolean;
     function GetCateogryList : TObjectList <TCategory>;
     function GetPeriodicityList : TObjectList <TCategory>;
+    function FindCategoryByIndex (p_Index : integer) : TCategory;
     property CategoryList : TObjectList <TCategory> read GetCateogryList;
     property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;

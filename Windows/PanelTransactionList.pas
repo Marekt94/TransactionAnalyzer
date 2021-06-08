@@ -111,6 +111,7 @@ begin
   strTransaction.RowCount := p_TransactionList.Count;
   for var i := 0 to p_TransactionList.Count - 1 do
     AddTransaction(p_TransactionList [i], i + 1);
+  strTransaction.FixedRows := 1;
 end;
 
 function TfrmTransactionList.FindColIndex(p_Title: string): integer;

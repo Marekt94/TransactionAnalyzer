@@ -23,6 +23,7 @@ type
     procedure UpdateView;
   public
     constructor Create (AOwner: TComponent); override;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -96,15 +97,31 @@ begin
   UpdateView;
 end;
 
+destructor TfrmRuleList.Destroy;
+var
+  pomRuleController : IModuleRuleController;
+begin
+  pomRuleController := GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+  pomRuleController.SaveRuleList;
+  inherited;
+end;
+
 procedure TfrmRuleList.UpdateView;
+var
+  pomRuleController : IModuleRuleController;
 begin
   strRules.Cells [0,0] := 'L.p.';
+  strRules.Cells [1,0] := 'Opis';
   strRules.RowCount := 1;
+  pomRuleController := GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
   for var i := 0 to FRuleList.Count - 1 do
   begin
     strRules.RowCount := strRules.RowCount + 1;
     strRules.Cells [0, strRules.RowCount - 1] := IntToStr (i + 1);
+    strRules.Cells [1, strRules.RowCount - 1] := pomRuleController.GetRuleDescription (FRuleList [i]);
   end;
+  strRules.FixedRows := 1;
+
 end;
 
 end.

@@ -6,6 +6,12 @@ uses
   Module, InterfaceModuleRuleController, System.Generics.Collections, Rule,
   XMLRuleSaverLoader;
 
+resourcestring
+  rs_Core = 'Przypisz kategoriê ''%s'' dla transakcji, które zawieraj¹ %s.';
+  rs_TitleConditions = 'tekst ''%s'' w tytule';
+  rs_and = 'oraz';
+  rs_DateConditions = 'zosta³y przeprowadzone pomiêdzy %s a %s';
+
 type
   TModuleRuleController = class(TBaseModule, IModuleRuleController)
   strict private
@@ -13,6 +19,8 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
+    function GetRuleDescription (p_Index : integer) : string; overload;
+    function GetRuleDescription (p_Rule  : TRule) : string; overload;
     procedure RegisterClasses; override;
     procedure SaveRuleList;
     procedure LoadRuleList;
@@ -24,7 +32,7 @@ type
 implementation
 
 uses
-  InterfaceRuleSaver, Main, System.SysUtils;
+  InterfaceRuleSaver, Main, System.SysUtils, InterfaceModuleCategory;
 
 
 { TModuleRuleController }
@@ -39,6 +47,48 @@ destructor TModuleRuleController.Destroy;
 begin
   FreeAndNil (FRuleList);
   inherited;
+end;
+
+function TModuleRuleController.GetRuleDescription(p_Index: integer): string;
+begin
+  if p_Index < 0 then
+    Exit ('');
+
+  Result := GetRuleDescription (FRuleList [p_Index]);
+end;
+
+function TModuleRuleController.GetRuleDescription(p_Rule: TRule): string;
+var
+  pomTitle : string;
+  pomDate  : string;
+  pomResultText : string;
+  pomCategory : string;
+begin
+  pomTitle := '';
+  pomDate := '';
+  pomResultText := '';
+  pomCategory := '';
+
+  if not Assigned (p_Rule) then
+    Exit ('');
+
+  pomCategory := (Main.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex(p_Rule.CategoryIndex).CategoryName;
+
+  if p_Rule.TitleContains then
+    pomTitle := Format (rs_TitleConditions, [p_Rule.TitleSubstring]);
+  if p_Rule.DateBetween then
+    pomDate := Format (rs_DateConditions, [DateToStr (p_Rule.DateFrom), DateToStr (p_Rule.DateTo)]);
+
+  if not pomTitle.IsEmpty and not pomDate.IsEmpty then
+    pomResultText := pomTitle + ' ' + rs_and + ' ' + pomDate
+  else if not pomTitle.IsEmpty then
+    pomResultText := pomTitle
+  else if not pomDate.IsEmpty then
+    pomResultText := pomDate
+  else
+    Exit ('');
+
+  Result := Format (rs_Core, [pomCategory, pomResultText]);
 end;
 
 function TModuleRuleController.GetRuleList: TObjectList<TRule>;
@@ -66,8 +116,11 @@ begin
 end;
 
 procedure TModuleRuleController.SaveRuleList;
+var
+  pomRuleSaver : IRuleSaver;
 begin
-
+  pomRuleSaver := GiveObjectByInterface (IRuleSaver) as IRuleSaver;
+  pomRuleSaver.SaveRules (FRuleList);
 end;
 
 end.

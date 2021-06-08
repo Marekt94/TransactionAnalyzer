@@ -25,8 +25,6 @@ object frmRule: TfrmRule
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
     TabOrder = 0
-    ExplicitWidth = 337
-    ExplicitHeight = 241
     object Label1: TLabel
       Left = 215
       Top = 50
@@ -99,7 +97,5 @@ object frmRule: TfrmRule
     Lines.Strings = (
       '')
     TabOrder = 2
-    ExplicitLeft = 343
-    ExplicitHeight = 282
   end
 end
