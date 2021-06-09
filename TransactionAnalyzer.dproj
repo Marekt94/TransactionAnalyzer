@@ -98,46 +98,53 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Classes\CSVLoader.pas"/>
-        <DCCReference Include="Classes\Module.pas"/>
-        <DCCReference Include="Classes\ModuleTransactionLoader.pas"/>
-        <DCCReference Include="Classes\Transaction.pas"/>
-        <DCCReference Include="Classes\XMLLoader.pas"/>
-        <DCCReference Include="Interfaces\InterfaceModule.pas"/>
-        <DCCReference Include="Interfaces\InterfaceTransaction.pas"/>
-        <DCCReference Include="Interfaces\InterfaceTransactionLoader.pas"/>
-        <DCCReference Include="Main.pas"/>
-        <DCCReference Include="Others\ConstXMLLoader.pas"/>
-        <DCCReference Include="Windows\WindowSkeleton.pas">
+        <DCCReference Include="Base classes\Module.pas"/>
+        <DCCReference Include="Base classes\Frames\WindowSkeleton.pas">
             <Form>WndSkeleton</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Windows\PanelTransactionList.pas">
-            <Form>frmTransactionList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Interfaces\InterfaceModuleTransactionLoader.pas"/>
-        <DCCReference Include="Classes\Category.pas"/>
-        <DCCReference Include="Classes\ModuleCategories.pas"/>
-        <DCCReference Include="Interfaces\InterfaceModuleCategory.pas"/>
-        <DCCReference Include="Classes\ModuleTransactionAnalyzer.pas"/>
-        <DCCReference Include="Interfaces\InterfaceModuleTransactionAnalyzer.pas"/>
-        <DCCReference Include="Windows\PanelRule.pas">
+        <DCCReference Include="Base classes\Interfaces\InterfaceModule.pas"/>
+        <DCCReference Include="Modules\Module categories\Category.pas"/>
+        <DCCReference Include="Modules\Module categories\ModuleCategories.pas"/>
+        <DCCReference Include="Modules\Module categories\Interfaces\InterfaceModuleCategory.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\ModuleRuleController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Rule.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\XMLRuleSaverLoader.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceModuleRuleController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRuleSaver.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Frames\PanelRule.pas">
             <Form>frmRule</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Windows\PanelRuleList.pas">
+        <DCCReference Include="Modules\Module rules cotroller\Frames\PanelRuleList.pas">
             <Form>frmRuleList</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Classes\Rule.pas"/>
-        <DCCReference Include="Interfaces\InterfaceModuleRuleController.pas"/>
-        <DCCReference Include="Classes\ModuleRuleController.pas"/>
-        <DCCReference Include="Interfaces\InterfaceRuleSaver.pas"/>
-        <DCCReference Include="Classes\XMLRuleSaverLoader.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\ConstXMLLoader.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\ModuleTransactionAnalyzer.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Transaction.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\XMLTransactionLoader.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceModuleTransactionAnalyzer.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransaction.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionList.pas">
+            <Form>frmTransactionList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Kernel.pas"/>
+        <DCCReference Include="Modules\Module categories\Frames\PanelCategoriesList.pas">
+            <Form>FrmCategoriesList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Modules\Module categories\Frames\PanelCategory.pas">
+            <Form>FrmCategory</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

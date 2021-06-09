@@ -1,4 +1,4 @@
-unit Main;
+unit Kernel;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Transaction, WindowSkeleton, ModuleTransactionAnalyzer;
 
 type
-  TMain = class (TInterfacedObject)
+  TKernel = class (TInterfacedObject)
     strict private
       FObjectList : TList<IModule>;
     public
@@ -24,29 +24,28 @@ var
 implementation
 
 uses
-  System.SysUtils, ModuleTransactionLoader, Winapi.Windows,
-  PanelTransactionList, InterfaceModuleTransactionLoader, ModuleCategories,
+  System.SysUtils, Winapi.Windows,
+  PanelTransactionList, ModuleCategories,
   ModuleRuleController;
 
-{ TMain }
+{ TKernel }
 
-constructor TMain.Create;
+constructor TKernel.Create;
 begin
   FObjectList := TList<IModule>.Create;
 
-  FObjectList.Add (TModuleTransactionLoader.Create);
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
   FObjectList.Add (TModuleRuleController.Create)
 end;
 
-destructor TMain.Destroy;
+destructor TKernel.Destroy;
 begin
   FreeAndNil(FObjectList);
   inherited;
 end;
 
-procedure TMain.Run;
+procedure TKernel.Run;
 resourcestring
   rs_MainTitle = 'Analiza transakcji';
 var
@@ -65,12 +64,12 @@ function GiveObjectByInterface(p_GUID: TGUID): IInterface;
 resourcestring
   rs_no_interface = 'Brak interfejsu';
 var
-  pomKernel : TMain;
+  pomKernel : TKernel;
   pomInterface : IInterface;
 begin
   Result := nil;
   pomInterface := nil;
-  pomKernel := MainKernel as TMain;
+  pomKernel := MainKernel as TKernel;
 
   for var i := 0 to pomKernel.ObjectList.Count - 1 do
   begin

@@ -15,8 +15,6 @@ type
     btnOk: TButton;
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
-  private
-    { Private declarations }
   public
     function Init (p_ChildPanel : TFrame; p_Title : string; p_WithNavigationKeys : boolean = true) : TForm;
     { Public declarations }
