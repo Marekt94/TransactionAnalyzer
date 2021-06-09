@@ -25,7 +25,9 @@ uses
   PanelTransactionList in 'Modules\Module transactions analyzer\Frames\PanelTransactionList.pas' {frmTransactionList: TFrame},
   Kernel in 'Kernel.pas',
   PanelCategoriesList in 'Modules\Module categories\Frames\PanelCategoriesList.pas' {FrmCategoriesList: TFrame},
-  PanelCategory in 'Modules\Module categories\Frames\PanelCategory.pas' {FrmCategory: TFrame};
+  PanelCategory in 'Modules\Module categories\Frames\PanelCategory.pas' {FrmCategory: TFrame},
+  XMLCategoriesLoaderSaver in 'Modules\Module categories\XMLCategoriesLoaderSaver.pas',
+  InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas';
 
 {$R *.res}
 
