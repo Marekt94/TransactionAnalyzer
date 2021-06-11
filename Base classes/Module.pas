@@ -12,6 +12,9 @@ type
   public
     constructor Create; virtual;
     destructor Destroy; override;
+    function OpenMainWindow : Integer; virtual;
+    function OpenModule : boolean; virtual;
+    function CloseModule : boolean; virtual;
     procedure RegisterClass (p_Class : TInterfacedClass);
     procedure RegisterClasses; virtual;
     function GetObjectList : TList<TInterfacedClass>;
@@ -23,9 +26,14 @@ type
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, Vcl.Controls;
 
 { TBaseModule }
+
+function TBaseModule.CloseModule: boolean;
+begin
+  Result := True;
+end;
 
 constructor TBaseModule.Create;
 begin
@@ -66,6 +74,16 @@ begin
   for var i := 0 to FObjectList.Count - 1 do
     if Assigned (FObjectList.Items [i].GetInterfaceEntry(p_GUID)) then
       Exit (True);
+end;
+
+function TBaseModule.OpenMainWindow: Integer;
+begin
+  Result := mrOk
+end;
+
+function TBaseModule.OpenModule: boolean;
+begin
+  Result := true;
 end;
 
 procedure TBaseModule.RegisterClass(p_Class : TInterfacedClass);

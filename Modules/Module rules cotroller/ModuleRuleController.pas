@@ -4,7 +4,7 @@ interface
 
 uses
   Module, InterfaceModuleRuleController, System.Generics.Collections, Rule,
-  XMLRuleSaverLoader;
+  XMLRuleSaverLoader, WindowObjectControllerSteeringClass;
 
 resourcestring
   rs_Core = 'Przypisz kategoriê ''%s'' dla transakcji, które zawieraj¹ %s.';
@@ -19,6 +19,9 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
+    function OpenMainWindow : Integer; override;
+    function OpenModule : boolean; override;
+    function CloseModule : boolean; override;
     function GetRuleDescription (p_Index : integer) : string; overload;
     function GetRuleDescription (p_Rule  : TRule) : string; overload;
     procedure RegisterClasses; override;
@@ -33,10 +36,16 @@ implementation
 
 uses
   InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
-  Category;
+  Category, PanelRule, Vcl.Grids, WindowSkeleton;
 
 
 { TModuleRuleController }
+
+function TModuleRuleController.CloseModule: boolean;
+begin
+  SaveRuleList;
+  Result := inherited;
+end;
 
 constructor TModuleRuleController.Create;
 begin
@@ -109,6 +118,55 @@ var
 begin
   pomRuleSaver := GiveObjectByInterface (IRuleSaver) as IRuleSaver;
   pomRuleSaver.LoadRules (FRuleList);
+end;
+
+function TModuleRuleController.OpenMainWindow: Integer;
+resourcestring
+  rs_CategoriesPanelTitle = 'Kategorie';
+var
+  pomSteeringObj : TWndObjControllerSteeringClass;
+begin
+  pomSteeringObj := TWndObjControllerSteeringClass.Create;
+  try
+    with pomSteeringObj do
+    begin
+      ObjectClass := TRule;
+      ObjectFrame := TfrmRule.Create (nil);
+      UpdateView := procedure (p_Grid : TStringGrid)
+                    var
+                      pomRuleController : IModuleRuleController;
+                    begin
+                      p_Grid.ColCount := 2;
+                      p_Grid.RowCount := 1;
+                      p_Grid.Cells [0,0] := 'L.p.';
+                      p_Grid.Cells [1,0] := 'Opis';
+                      p_Grid.RowCount := FRuleList.Count + 1;
+                      pomRuleController := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+                      if FRuleList.Count > 0 then
+                      begin
+                        for var i := 0 to FRuleList.Count - 1 do
+                        begin
+                          p_Grid.Cells [0, i + 1] := IntToStr (i + 1);
+                          p_Grid.Cells [1, i + 1] := pomRuleController.GetRuleDescription (FRuleList [i]);
+                        end;
+                        p_Grid.FixedRows := 1;
+                      end;
+                    end;
+      ObjectList := FRuleList;
+      WndTitle := 'Regu³y';
+      NavigationKeys := False;
+      FullScreen := True;
+    end;
+    Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
+  finally
+    pomSteeringObj.Free;
+  end
+end;
+
+function TModuleRuleController.OpenModule: boolean;
+begin
+  Result := inherited;
+  LoadRuleList;
 end;
 
 procedure TModuleRuleController.RegisterClasses;

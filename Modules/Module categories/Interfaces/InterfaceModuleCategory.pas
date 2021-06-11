@@ -13,7 +13,6 @@ type
     function GetCateogryList : TObjectList <TCategory>;
     function GetPeriodicityList : TObjectList <TCategory>;
     function FindCategoryByIndex (p_Index : integer) : TCategory;
-    procedure SetCategories;
     property CategoriesList : TObjectList <TCategory> read GetCateogryList;
     property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;

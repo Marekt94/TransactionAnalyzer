@@ -14,6 +14,9 @@ type
     function GetObjectList : TList<TInterfacedClass>;
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
     function InterfaceExists (p_GUID : TGUID) : boolean;
+    function OpenModule : boolean;
+    function CloseModule : boolean;
+    function OpenMainWindow : Integer;
     property ObjectList: TList<TInterfacedClass> read GetObjectList;
     property SelfInterface : TGUID read GetSelfInterface;
   end;

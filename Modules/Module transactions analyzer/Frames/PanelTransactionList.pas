@@ -42,7 +42,8 @@ type
 implementation
 
 uses
-  Kernel, InterfaceModuleCategory, InterfaceModuleTransactionAnalyzer;
+  Kernel, InterfaceModuleCategory, InterfaceModuleTransactionAnalyzer,
+  InterfaceModuleRuleController;
 
 {$R *.dfm}
 
@@ -67,10 +68,10 @@ end;
 
 procedure TfrmTransactionList.btnRulesClick(Sender: TObject);
 var
-  pomTrAnalSettings : IModuleTransactionAnalyzer;
+  pomRulesModul : IModuleRuleController;
 begin
-  pomTrAnalSettings := GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer;
-  pomTrAnalSettings.SetConditions;
+  pomRulesModul := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+  pomRulesModul.OpenMainWindow;
 end;
 
 procedure TfrmTransactionList.btnLoadClick(Sender: TObject);
@@ -90,7 +91,7 @@ var
   pomCategoriesModul : IModuleCategories;
 begin
   pomCategoriesModul := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-  pomCategoriesModul.SetCategories;
+  pomCategoriesModul.OpenMainWindow;
 end;
 
 constructor TfrmTransactionList.Create (AOwner: TComponent);

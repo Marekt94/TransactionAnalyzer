@@ -117,11 +117,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Modules\Module rules cotroller\Frames\PanelRuleList.pas">
-            <Form>frmRuleList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\ConstXMLLoader.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\ModuleTransactionAnalyzer.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Transaction.pas"/>
@@ -135,11 +130,6 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Kernel.pas"/>
-        <DCCReference Include="Modules\Module categories\Frames\PanelCategoriesList.pas">
-            <Form>FrmCategoriesList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module categories\Frames\PanelCategory.pas">
             <Form>FrmCategory</Form>
             <FormType>dfm</FormType>
@@ -147,6 +137,17 @@
         </DCCReference>
         <DCCReference Include="Modules\Module categories\XMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas"/>
+        <DCCReference Include="Base classes\Frames\BaseListPanel.pas">
+            <Form>FrmBaseListPanel</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Base classes\Frames\BasePanel.pas">
+            <Form>FrmBasePanel</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Base classes\WindowObjectControllerSteeringClass.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

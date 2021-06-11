@@ -12,7 +12,6 @@ type
     function SaveTransactions (p_Path : string) : boolean;
     function GetTransactionList : TObjectList<TTransaction>;
     function AnalyzeTransactions (p_Transaction : TObjectList <TTransaction>) : boolean;
-    procedure SetConditions;
     property TransactionList: TObjectList <TTransaction> read GetTransactionList;
   end;
 

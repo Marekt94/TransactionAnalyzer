@@ -13,6 +13,8 @@ type
     public
       constructor Create;
       destructor Destroy; override;
+      procedure OpenModules;
+      procedure CloseModules;
       procedure Run;
       property ObjectList: TList<IModule> read FObjectList;
   end;
@@ -30,6 +32,12 @@ uses
 
 { TKernel }
 
+procedure TKernel.CloseModules;
+begin
+  for var i := 0 to FObjectList.Count - 1 do
+    FObjectList [i].CloseModule;
+end;
+
 constructor TKernel.Create;
 begin
   FObjectList := TList<IModule>.Create;
@@ -45,12 +53,21 @@ begin
   inherited;
 end;
 
+procedure TKernel.OpenModules;
+begin
+  for var i := 0 to FObjectList.Count - 1 do
+    FObjectList [i].OpenModule;
+end;
+
 procedure TKernel.Run;
 resourcestring
   rs_MainTitle = 'Analiza transakcji';
 var
   pomWind : TWndSkeleton;
 begin
+  OpenModules;
+
+  //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
     pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false);
@@ -58,6 +75,8 @@ begin
   finally
     FreeAndNil (pomWind);
   end;
+
+  CloseModules;
 end;
 //------------------------------------------------------------------------------
 function GiveObjectByInterface(p_GUID: TGUID): IInterface;

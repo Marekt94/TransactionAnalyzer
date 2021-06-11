@@ -14,7 +14,6 @@ uses
   InterfaceModuleRuleController in 'Modules\Module rules cotroller\Interfaces\InterfaceModuleRuleController.pas',
   InterfaceRuleSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceRuleSaver.pas',
   PanelRule in 'Modules\Module rules cotroller\Frames\PanelRule.pas' {frmRule: TFrame},
-  PanelRuleList in 'Modules\Module rules cotroller\Frames\PanelRuleList.pas' {frmRuleList: TFrame},
   ConstXMLLoader in 'Modules\Module transactions analyzer\ConstXMLLoader.pas',
   ModuleTransactionAnalyzer in 'Modules\Module transactions analyzer\ModuleTransactionAnalyzer.pas',
   Transaction in 'Modules\Module transactions analyzer\Transaction.pas',
@@ -24,10 +23,12 @@ uses
   InterfaceTransactionLoader in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas',
   PanelTransactionList in 'Modules\Module transactions analyzer\Frames\PanelTransactionList.pas' {frmTransactionList: TFrame},
   Kernel in 'Kernel.pas',
-  PanelCategoriesList in 'Modules\Module categories\Frames\PanelCategoriesList.pas' {FrmCategoriesList: TFrame},
   PanelCategory in 'Modules\Module categories\Frames\PanelCategory.pas' {FrmCategory: TFrame},
   XMLCategoriesLoaderSaver in 'Modules\Module categories\XMLCategoriesLoaderSaver.pas',
-  InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas';
+  InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas',
+  BaseListPanel in 'Base classes\Frames\BaseListPanel.pas' {FrmBaseListPanel: TFrame},
+  BasePanel in 'Base classes\Frames\BasePanel.pas' {FrmBasePanel: TFrame},
+  WindowObjectControllerSteeringClass in 'Base classes\WindowObjectControllerSteeringClass.pas';
 
 {$R *.res}
 

@@ -4,7 +4,7 @@ interface
 
 uses
   Module, InterfaceModuleTransactionAnalyzer, System.Generics.Collections, Transaction,
-  System.SysUtils, PanelRuleList, XMLTransactionLoader,
+  System.SysUtils, XMLTransactionLoader,
   InterfaceTransactionLoader;
 
 type
@@ -19,7 +19,6 @@ type
     procedure RegisterClasses; override;
     function AnalyzeTransactions (p_Transactions : TObjectList <TTransaction>) : boolean;
     function GetSelfInterface : TGUID; override;
-    procedure SetConditions;
     function GetTransactionList : TObjectList<TTransaction>;
   end;
 
@@ -84,21 +83,6 @@ end;
 function TModuleTransactionAnalyzer.SaveTransactions (p_Path : string) : boolean;
 begin
   Result := true;
-end;
-
-procedure TModuleTransactionAnalyzer.SetConditions;
-resourcestring
-  rs_TransactionAnalyzerSettings = 'Regu³y';
-var
-  pomWindow : TWndSkeleton;
-begin
-  pomWindow := TWndSkeleton.Create(nil);
-  try
-    pomWindow.Init (TfrmRuleList.Create (pomWindow), rs_TransactionAnalyzerSettings, false);
-    pomWindow.ShowModal;
-  finally
-    FreeAndNil (pomWindow);
-  end
 end;
 
 end.

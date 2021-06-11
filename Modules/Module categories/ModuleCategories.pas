@@ -4,7 +4,8 @@ interface
 
 uses
   Module, InterfaceModuleCategory, System.Generics.Collections, Category,
-  PanelCategoriesList, WindowSkeleton, InterfaceCategoriesLoaderSaver;
+  WindowSkeleton, InterfaceCategoriesLoaderSaver,
+  PanelCategory, WindowObjectControllerSteeringClass;
 
 type
   TModuleCategories = class (TBaseModule, IModuleCategories)
@@ -15,6 +16,9 @@ type
     constructor Create; override;
     destructor Destroy; override;
     procedure RegisterClasses; override;
+    function OpenModule : boolean; override;
+    function OpenMainWindow : Integer; override;
+    function CloseModule : boolean; override;
     function FindCategoryByIndex (p_Index : integer) : TCategory;
     function GetSelfInterface: TGUID; override;
     function LoadCategories (p_Path : string) : boolean;
@@ -22,7 +26,6 @@ type
     function GetCateogryList : TObjectList <TCategory>;
     function GetPeriodicityList : TObjectList <TCategory>;
     procedure SetIndexes;
-    procedure SetCategories;
     property CategoryList : TObjectList <TCategory> read GetCateogryList;
     property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;
@@ -30,13 +33,19 @@ type
 implementation
 
 uses
-  System.SysUtils, XMLCategoriesLoaderSaver, Kernel;
+  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids;
 
 { TModuleCategories }
 
 function TModuleCategories.GetSelfInterface: TGUID;
 begin
   Result := IModuleCategories;
+end;
+
+function TModuleCategories.CloseModule: boolean;
+begin
+  SaveCategories('');
+  Result := inherited;
 end;
 
 constructor TModuleCategories.Create;
@@ -76,6 +85,45 @@ begin
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList, '');
 end;
 
+function TModuleCategories.OpenMainWindow: Integer;
+resourcestring
+  rs_CategoriesPanelTitle = 'Kategorie';
+var
+  pomSteeringObj : TWndObjControllerSteeringClass;
+begin
+  pomSteeringObj := TWndObjControllerSteeringClass.Create;
+  try
+    with pomSteeringObj do
+    begin
+      ObjectClass := TCategory;
+      ObjectFrame := TFrmCategory.Create (nil);
+      UpdateView := procedure (p_Grid : TStringGrid)
+                    begin
+                      p_Grid.ColCount := 1;
+                      p_Grid.RowCount := 1;
+                      p_Grid.Cells[0,0] := 'Kategoria';
+                      p_Grid.RowCount := FCategoryList.Count + 1;
+                      for var i := 0 to FCategoryList.Count - 1 do
+                        p_Grid.Cells [0, i + 1] := FCategoryList [i].CategoryName;
+                      p_Grid.FixedRows := 1;
+                    end;
+      ObjectList := FCategoryList;
+      WndTitle := 'Kategorie';
+      NavigationKeys := False;
+      FullScreen := True;
+    end;
+    Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
+  finally
+    pomSteeringObj.Free;
+  end
+end;
+
+function TModuleCategories.OpenModule: boolean;
+begin
+  Result := inherited;
+  LoadCategories ('');
+end;
+
 procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
@@ -86,21 +134,6 @@ function TModuleCategories.SaveCategories(p_Path: string): boolean;
 begin
   SetIndexes;
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList, '');
-end;
-
-procedure TModuleCategories.SetCategories;
-resourcestring
-  rs_CategoriesPanelTitle = 'Kategorie';
-var
-  pomWindow : TWndSkeleton;
-begin
-  pomWindow := TWndSkeleton.Create(nil);
-  try
-    pomWindow.Init (TFrmCategoriesList.Create (pomWindow), rs_CategoriesPanelTitle, false);
-    pomWindow.ShowModal;
-  finally
-    FreeAndNil (pomWindow);
-  end
 end;
 
 procedure TModuleCategories.SetIndexes;

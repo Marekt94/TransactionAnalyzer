@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.ComCtrls, Rule, System.Generics.Collections, Category,
-  InterfaceModuleRuleController;
+  InterfaceModuleRuleController, BasePanel;
 
 type
-  TfrmRule = class(TFrame)
+  TfrmRule = class(TFrmBasePanel)
     GroupBox1: TGroupBox;
     chbTitleContains: TCheckBox;
     edtTitleContains: TEdit;
@@ -32,8 +32,8 @@ type
     procedure RefreshConditionsVisualizer (p_Mmo : TMemo);
   public
     constructor Create(AOwner: TComponent); override;
-    procedure Unpack (const p_Rule : TRule);
-    procedure Pack (var p_Rule : TRule);
+    function Unpack (p_Object : TObject) : boolean; override;
+    function Pack   (p_Object : TObject) : boolean; override;
     { Public declarations }
   end;
 
@@ -118,25 +118,31 @@ begin
   end;
 end;
 
-procedure TfrmRule.Unpack(const p_Rule: TRule);
+function TfrmRule.Unpack (p_Object : TObject) : boolean;
+var
+  pomRule : TRule;
 begin
-  if Assigned (p_Rule) then
+  Result := inherited Unpack(p_Object);
+  pomRule := p_Object as TRule;
+  if Assigned (pomRule) then
   begin
-    cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (FindCategoryByIndex (p_Rule.CategoryIndex));
-    chbTitleContains.Checked := p_Rule.TitleContains;
-    chbDateBetween.Checked   := p_Rule.DateBetween;
-    edtTitleContains.Text    := p_Rule.TitleSubstring;
-    dtpFromDate.Date         := p_Rule.DateFrom;
-    dtpToDate.Date           := p_Rule.DateTo;
+    cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (FindCategoryByIndex (pomRule.CategoryIndex));
+    chbTitleContains.Checked := pomRule.TitleContains;
+    chbDateBetween.Checked   := pomRule.DateBetween;
+    edtTitleContains.Text    := pomRule.TitleSubstring;
+    dtpFromDate.Date         := pomRule.DateFrom;
+    dtpToDate.Date           := pomRule.DateTo;
     RefreshConditionsVisualizer (mmoConditionsVisualizer)
   end;
 end;
 
-procedure TfrmRule.Pack(var p_Rule: TRule);
+function TfrmRule.Pack(p_Object : TObject) : boolean;
 var
   pomCategory : TCategory;
+  pomRule     : TRule;
 begin
-  with p_Rule do
+  pomRule := p_Object as TRule;
+  with pomRule do
   begin
     TitleContains := chbTitleContains.Checked;
     if TitleContains then
@@ -154,7 +160,8 @@ begin
       CategoryIndex := -1
     else
       CategoryIndex := pomCategory.CategoryIndex;
-  end
+  end;
+  Result := inherited Pack(p_Object);
 end;
 
 end.

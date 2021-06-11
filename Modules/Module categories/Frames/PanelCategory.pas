@@ -4,17 +4,19 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Category;
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Category,
+  BasePanel;
 
 type
-  TFrmCategory = class(TFrame)
+  TFrmCategory = class(TFrmBasePanel)
     lblCategory: TLabel;
     edtCategory: TEdit;
   private
     { Private declarations }
   public
-    procedure Unpack (p_Category : TCategory);
-    procedure Pack   (p_Category : TCategory);
+   procedure Clean; override;
+   function Unpack (p_Object : TObject) : boolean; override;
+   function Pack   (p_Object : TObject) : boolean; override;
     { Public declarations }
   end;
 
@@ -24,14 +26,29 @@ implementation
 
 { TFrmCategory }
 
-procedure TFrmCategory.Pack(p_Category: TCategory);
+{ TFrmCategory }
+
+procedure TFrmCategory.Clean;
 begin
-  p_Category.CategoryName := edtCategory.Text;
+  inherited;
+  edtCategory.Text := '';
 end;
 
-procedure TFrmCategory.Unpack(p_Category: TCategory);
+function TFrmCategory.Pack(p_Object: TObject): boolean;
 begin
-  edtCategory.Text := p_Category.CategoryName;
+  if not Assigned (p_Object) then
+    Exit (True);
+  (p_Object as TCategory).CategoryName := edtCategory.Text;
+  Result := True;
+end;
+
+function TFrmCategory.Unpack(p_Object: TObject): boolean;
+begin
+  Clean;
+  if not Assigned (p_Object) then
+    Exit (True);
+  edtCategory.Text := (p_Object as TCategory).CategoryName;
+  Result := True;
 end;
 
 end.
