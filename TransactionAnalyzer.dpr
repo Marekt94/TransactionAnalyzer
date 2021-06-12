@@ -28,7 +28,10 @@ uses
   InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas',
   BaseListPanel in 'Base classes\Frames\BaseListPanel.pas' {FrmBaseListPanel: TFrame},
   BasePanel in 'Base classes\Frames\BasePanel.pas' {FrmBasePanel: TFrame},
-  WindowObjectControllerSteeringClass in 'Base classes\WindowObjectControllerSteeringClass.pas';
+  WindowObjectControllerSteeringClass in 'Base classes\WindowObjectControllerSteeringClass.pas',
+  ConstXMLCategoriesLoaderSaver in 'Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas',
+  ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
+  GUIMethods in 'Base classes\GUIMethods.pas';
 
 {$R *.res}
 

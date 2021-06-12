@@ -4,6 +4,7 @@ object frmTransactionList: TfrmTransactionList
   Width = 464
   Height = 240
   TabOrder = 0
+  OnResize = FrameResize
   object strTransaction: TStringGrid
     Left = 129
     Top = 0
@@ -32,7 +33,7 @@ object frmTransactionList: TfrmTransactionList
       OnClick = btnLoadClick
     end
     object butShowCategories: TButton
-      Left = 12
+      Left = 10
       Top = 41
       Width = 111
       Height = 25

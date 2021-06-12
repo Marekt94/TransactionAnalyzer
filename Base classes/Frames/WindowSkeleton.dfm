@@ -11,6 +11,7 @@ object WndSkeleton: TWndSkeleton
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object lblTitle: TLabel
@@ -36,6 +37,7 @@ object WndSkeleton: TWndSkeleton
     Height = 341
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 609
   end
   object pnlNavigationKeys: TPanel
     Left = 0

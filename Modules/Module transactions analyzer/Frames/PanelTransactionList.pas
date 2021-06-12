@@ -3,10 +3,9 @@ unit PanelTransactionList;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, 
-  System.Generics.Collections, Transaction, Vcl.ExtDlgs, Vcl.StdCtrls,
-  Vcl.ExtCtrls;
+  Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections,
+  Transaction, GUIMethods;
 
 const
   cExecutionDate   = 'Execution date';
@@ -29,6 +28,7 @@ type
     procedure btnLoadClick(Sender: TObject);
     procedure butShowCategoriesClick(Sender: TObject);
     procedure btnRulesClick(Sender: TObject);
+    procedure FrameResize(Sender: TObject);
   strict private
     function FindColIndex (p_Title : string) : integer;  
     procedure InitStringList;
@@ -42,8 +42,8 @@ type
 implementation
 
 uses
-  Kernel, InterfaceModuleCategory, InterfaceModuleTransactionAnalyzer,
-  InterfaceModuleRuleController;
+  System.SysUtils, InterfaceModuleRuleController, Kernel,
+  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory;
 
 {$R *.dfm}
 
@@ -134,6 +134,11 @@ begin
     Cells [3,0] := cDescription;
     Cells [4,0] := cAmount;
   end;
+end;
+
+procedure TfrmTransactionList.FrameResize(Sender: TObject);
+begin
+  GUIMethods.FitGridAlClient (strTransaction);
 end;
 
 end.

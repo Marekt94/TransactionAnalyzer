@@ -11,12 +11,10 @@ type
   TFrmCategory = class(TFrmBasePanel)
     lblCategory: TLabel;
     edtCategory: TEdit;
-  private
-    { Private declarations }
   public
    procedure Clean; override;
-   function Unpack (p_Object : TObject) : boolean; override;
-   function Pack   (p_Object : TObject) : boolean; override;
+   function Unpack (const p_Object : TObject) : boolean; override;
+   function Pack   (var p_Object : TObject) : boolean; override;
     { Public declarations }
   end;
 
@@ -34,7 +32,7 @@ begin
   edtCategory.Text := '';
 end;
 
-function TFrmCategory.Pack(p_Object: TObject): boolean;
+function TFrmCategory.Pack(var p_Object: TObject): boolean;
 begin
   if not Assigned (p_Object) then
     Exit (True);
@@ -42,7 +40,7 @@ begin
   Result := True;
 end;
 
-function TFrmCategory.Unpack(p_Object: TObject): boolean;
+function TFrmCategory.Unpack(const p_Object: TObject): boolean;
 begin
   Clean;
   if not Assigned (p_Object) then

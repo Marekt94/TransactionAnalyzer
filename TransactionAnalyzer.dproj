@@ -148,6 +148,9 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Base classes\WindowObjectControllerSteeringClass.pas"/>
+        <DCCReference Include="Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
+        <DCCReference Include="Base classes\GUIMethods.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

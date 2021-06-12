@@ -8,12 +8,13 @@ uses
 type
   TWndObjControllerSteeringClass = class
   private
-    FObjectClass : TClass;
-    FObjectFrame : TFrmBasePanel;
-    FUpdateView : TProc<TStringGrid>;
-    FObjectList : TObject;
-    FWndTitle : string;
-    FFullScreen : boolean;
+    FObjectClass    : TClass;
+    FObjectFrame    : TFrmBasePanel;
+    FUpdateView     : TProc<TStringGrid>;
+    FObjectList     : TObject;
+    FWndListTitle   : string;
+    FWndObjTitle    : string;
+    FFullScreen     : boolean;
     FNavigationKeys : boolean;
   public
     destructor Destroy; override;
@@ -21,9 +22,10 @@ type
     property ObjectFrame: TFrmBasePanel read FObjectFrame write FObjectFrame;
     property UpdateView: TProc<TStringGrid> read FUpdateView write FUpdateView;
     property ObjectList: TObject read FObjectList write FObjectList;
-    property WndTitle: string read FWndTitle write FWndTitle;
+    property WndListTitle: string read FWndListTitle write FWndListTitle;
     property FullScreen: boolean read FFullScreen write FFullScreen;
     property NavigationKeys: boolean read FNavigationKeys write FNavigationKeys;
+    property WndObjTitle: string read FWndObjTitle write FWndObjTitle;
   end;
 
 implementation

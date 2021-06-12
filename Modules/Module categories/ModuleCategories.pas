@@ -21,8 +21,8 @@ type
     function CloseModule : boolean; override;
     function FindCategoryByIndex (p_Index : integer) : TCategory;
     function GetSelfInterface: TGUID; override;
-    function LoadCategories (p_Path : string) : boolean;
-    function SaveCategories (p_Path : string) : boolean;
+    function LoadCategories : boolean;
+    function SaveCategories : boolean;
     function GetCateogryList : TObjectList <TCategory>;
     function GetPeriodicityList : TObjectList <TCategory>;
     procedure SetIndexes;
@@ -44,7 +44,7 @@ end;
 
 function TModuleCategories.CloseModule: boolean;
 begin
-  SaveCategories('');
+  SaveCategories;
   Result := inherited;
 end;
 
@@ -80,7 +80,7 @@ begin
   Result := FPeriodicityList;
 end;
 
-function TModuleCategories.LoadCategories(p_Path: string): boolean;
+function TModuleCategories.LoadCategories : boolean;
 begin
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList, '');
 end;
@@ -108,7 +108,8 @@ begin
                       p_Grid.FixedRows := 1;
                     end;
       ObjectList := FCategoryList;
-      WndTitle := 'Kategorie';
+      WndListTitle := 'Kategorie';
+      WndObjTitle  := 'Kategoria';
       NavigationKeys := False;
       FullScreen := True;
     end;
@@ -121,7 +122,7 @@ end;
 function TModuleCategories.OpenModule: boolean;
 begin
   Result := inherited;
-  LoadCategories ('');
+  LoadCategories;
 end;
 
 procedure TModuleCategories.RegisterClasses;
@@ -130,7 +131,7 @@ begin
   RegisterClass(TXMLCategoriesLoaderSaver);
 end;
 
-function TModuleCategories.SaveCategories(p_Path: string): boolean;
+function TModuleCategories.SaveCategories : boolean;
 begin
   SetIndexes;
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList, '');

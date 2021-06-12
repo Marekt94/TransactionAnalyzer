@@ -8,18 +8,19 @@ uses
 type
   TXMLRuleSaverLoader = class (TInterfacedObject, IRuleSaver)
   public
-    procedure SaveRules (p_RuleList : TObjectList <TRule>);
-    procedure LoadRules (var p_RuleList : TObjectList <TRule>);
+    procedure SaveRules (const p_RuleList : TObjectList <TRule>; p_Path : string);
+    procedure LoadRules (var   p_RuleList : TObjectList <TRule>; p_Path : string);
   end;
 
 implementation
 
 uses
-  Xml.XMLIntf, XMLDoc;
+  Xml.XMLIntf, XMLDoc, ConstXMLRuleSaverLoader;
 
 { TXMLRuleSaverLoader }
 
-procedure TXMLRuleSaverLoader.LoadRules (var p_RuleList: TObjectList<TRule>);
+procedure TXMLRuleSaverLoader.LoadRules (var p_RuleList: TObjectList<TRule>;
+                                             p_Path : string);
 var
   pomRule         : TRule;
   pomDocument     : IXMLDocument;
@@ -31,10 +32,11 @@ begin
 
   pomRuleListNode := nil;
   pomDocument := TXMLDocument.Create(nil);
-  if FileExists ('rules.xml') then
+  p_Path := p_Path + rs_FileName;
+  if FileExists (p_Path) then
   begin
-    pomDocument.LoadFromFile ('rules.xml');
-    pomRuleListNode := pomDocument.ChildNodes.FindNode ('rules');
+    pomDocument.LoadFromFile (p_Path);
+    pomRuleListNode := pomDocument.ChildNodes.FindNode (rs_NN_Rules);
 
     if Assigned (pomRuleListNode) then
     begin
@@ -44,16 +46,16 @@ begin
         pomRule := TRule.Create;
         pomRuleNode := pomRuleListNode.ChildNodes.Get (i);
 
-        pomRule.TitleContains  := pomRuleNode.ChildNodes.FindNode ('titlecontains').NodeValue;
+        pomRule.TitleContains  := pomRuleNode.ChildNodes.FindNode (rs_NN_TitleContains).NodeValue;
         if pomRule.TitleContains then
-          pomRule.TitleSubstring := pomRuleNode.ChildNodes.FindNode ('titlesubstring').NodeValue;
-        pomRule.DateBetween    := pomRuleNode.ChildNodes.FindNode ('datebetween').NodeValue;
+          pomRule.TitleSubstring := pomRuleNode.ChildNodes.FindNode (rs_NN_TitleSubstring).NodeValue;
+        pomRule.DateBetween    := pomRuleNode.ChildNodes.FindNode (rs_NN_DateBetween).NodeValue;
         if pomRule.DateBetween then
         begin
-          pomRule.DateFrom       := pomRuleNode.ChildNodes.FindNode ('datefrom').NodeValue;
-          pomRule.DateTo         := pomRuleNode.ChildNodes.FindNode ('dateto').NodeValue;
+          pomRule.DateFrom       := pomRuleNode.ChildNodes.FindNode (rs_NN_DateFrom).NodeValue;
+          pomRule.DateTo         := pomRuleNode.ChildNodes.FindNode (rs_NN_DateTo).NodeValue;
         end;
-        pomRule.CategoryIndex  := pomRuleNode.ChildNodes.FindNode ('categoryindex').NodeValue;
+        pomRule.CategoryIndex  := pomRuleNode.ChildNodes.FindNode (rs_NN_CategoryIndex).NodeValue;
 
         p_RuleList.Add (pomRule);
       end;
@@ -61,7 +63,8 @@ begin
   end;
 end;
 
-procedure TXMLRuleSaverLoader.SaveRules (p_RuleList: TObjectList<TRule>);
+procedure TXMLRuleSaverLoader.SaveRules (const p_RuleList: TObjectList<TRule>;
+                                               p_Path : string );
 var
   pomDocument  : IXMLDocument;
   pomRule      : IXMLNode;
@@ -70,31 +73,31 @@ begin
   pomDocument := TXMLDocument.Create(nil);
   pomDocument.Active := True;
 
-  pomDocument.DocumentElement := pomDocument.CreateNode ('rules', ntElement, '');
+  pomDocument.DocumentElement := pomDocument.CreateNode (rs_NN_Rules, ntElement, '');
   for var i := 0 to p_RuleList.Count - 1 do
   begin
-    pomRule := pomDocument.DocumentElement.AddChild('rule');
+    pomRule := pomDocument.DocumentElement.AddChild(rs_NN_Rule);
 
-    pomRuleNodes := pomRule.AddChild('titlecontains');
+    pomRuleNodes := pomRule.AddChild(rs_NN_TitleContains);
     pomRuleNodes.NodeValue := p_RuleList [i].TitleContains;
 
-    pomRuleNodes := pomRule.AddChild('titlesubstring');
+    pomRuleNodes := pomRule.AddChild(rs_NN_TitleSubstring);
     pomRuleNodes.NodeValue := p_RuleList [i].TitleSubstring;
 
-    pomRuleNodes := pomRule.AddChild('datebetween');
+    pomRuleNodes := pomRule.AddChild(rs_NN_DateBetween);
     pomRuleNodes.NodeValue := p_RuleList [i].DateBetween;
 
-    pomRuleNodes := pomRule.AddChild('datefrom');
+    pomRuleNodes := pomRule.AddChild(rs_NN_DateFrom);
     pomRuleNodes.NodeValue := p_RuleList [i].DateFrom;
 
-    pomRuleNodes := pomRule.AddChild('dateto');
+    pomRuleNodes := pomRule.AddChild(rs_NN_DateTo);
     pomRuleNodes.NodeValue := p_RuleList [i].DateTo;
 
-    pomRuleNodes := pomRule.AddChild('categoryindex');
+    pomRuleNodes := pomRule.AddChild(rs_NN_CategoryIndex);
     pomRuleNodes.NodeValue := p_RuleList [i].CategoryIndex;
   end;
 
-  pomDocument.SaveToFile('rules.xml');
+  pomDocument.SaveToFile(p_Path + rs_FileName);
 end;
 
 end.

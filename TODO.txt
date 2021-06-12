@@ -1,3 +1,7 @@
+- tłumaczenia na polski
+- zrobić xmlloader saver bardziej uniwersalny
+- zrobić updateview bardziej uniwersalne
+- dokońcyc refactoring od modułu analizy
 - rozszerzyć okno o walidacje
 - moduł analizy
 - autosize kolumn

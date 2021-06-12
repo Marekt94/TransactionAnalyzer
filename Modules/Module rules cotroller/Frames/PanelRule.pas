@@ -3,10 +3,8 @@ unit PanelRule;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls,
-  Vcl.ComCtrls, Rule, System.Generics.Collections, Category,
-  InterfaceModuleRuleController, BasePanel;
+  BasePanel, Vcl.StdCtrls, Vcl.ComCtrls, System.Generics.Collections, Category,
+  System.Classes, Vcl.Controls;
 
 type
   TfrmRule = class(TFrmBasePanel)
@@ -28,19 +26,17 @@ type
     procedure cmbCategoriesChange(Sender: TObject);
   strict private
     FCategoryList : TObjectList <TCategory>;
-    function FindCategoryByIndex (p_Index : Integer) : TCategory;
-    procedure RefreshConditionsVisualizer (p_Mmo : TMemo);
+    procedure RefreshRulesVisualizer (p_Mmo : TMemo);
   public
     constructor Create(AOwner: TComponent); override;
-    function Unpack (p_Object : TObject) : boolean; override;
-    function Pack   (p_Object : TObject) : boolean; override;
-    { Public declarations }
+    function Unpack (const p_Object : TObject) : boolean; override;
+    function Pack   (var   p_Object : TObject) : boolean; override;
   end;
 
 implementation
 
 uses
-  InterfaceModuleCategory, Kernel;
+  InterfaceModuleCategory, Kernel, Rule, InterfaceModuleRuleController;
 
 {$R *.dfm}
 
@@ -48,18 +44,17 @@ uses
 
 procedure TfrmRule.chbDateBetweenClick(Sender: TObject);
 begin
-  RefreshConditionsVisualizer(mmoConditionsVisualizer);
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
-procedure TfrmRule.chbTitleContainsClick(
-  Sender: TObject);
+procedure TfrmRule.chbTitleContainsClick(Sender: TObject);
 begin
-  RefreshConditionsVisualizer(mmoConditionsVisualizer);
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
 procedure TfrmRule.cmbCategoriesChange(Sender: TObject);
 begin
-  RefreshConditionsVisualizer(mmoConditionsVisualizer);
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
 constructor TfrmRule.Create(AOwner: TComponent);
@@ -77,39 +72,28 @@ end;
 procedure TfrmRule.dtpFromDateChange(Sender: TObject);
 begin
   if chbDateBetween.Checked then
-    RefreshConditionsVisualizer(mmoConditionsVisualizer);
+    RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
 procedure TfrmRule.dtpToDateChange(Sender: TObject);
 begin
   if chbDateBetween.Checked then
-    RefreshConditionsVisualizer(mmoConditionsVisualizer);
+    RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
-procedure TfrmRule.edtTitleContainsChange(
-  Sender: TObject);
+procedure TfrmRule.edtTitleContainsChange(Sender: TObject);
 begin
   if chbTitleContains.Checked then
-    RefreshConditionsVisualizer(mmoConditionsVisualizer);
+    RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
-function TfrmRule.FindCategoryByIndex(p_Index: Integer): TCategory;
-begin
-  for var i := 0 to FCategoryList.Count - 1 do
-    if FCategoryList.Items [i].CategoryIndex = p_Index then
-      Exit (FCategoryList.Items [i]);
-
-  Result := nil;
-end;
-
-procedure TfrmRule.RefreshConditionsVisualizer(
-  p_Mmo: TMemo);
+procedure TfrmRule.RefreshRulesVisualizer(p_Mmo: TMemo);
 var
   pomRule : TRule;
 begin
   pomRule := TRule.Create;
   try
-    Pack (pomRule);
+    Pack (TObject (pomRule));
 
     mmoConditionsVisualizer.Text := '';
     mmoConditionsVisualizer.Text := (Kernel.GiveObjectByInterface(IModuleRuleController) as IModuleRuleController).GetRuleDescription (pomRule);
@@ -118,25 +102,33 @@ begin
   end;
 end;
 
-function TfrmRule.Unpack (p_Object : TObject) : boolean;
+function TfrmRule.Unpack (const p_Object : TObject) : boolean;
 var
-  pomRule : TRule;
+  pomRule           : TRule;
+  pomRuleController : IModuleCategories;
+  pomCategory       : TCategory;
 begin
   Result := inherited Unpack(p_Object);
   pomRule := p_Object as TRule;
   if Assigned (pomRule) then
   begin
-    cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (FindCategoryByIndex (pomRule.CategoryIndex));
+    pomRuleController := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+    if Assigned (pomRuleController) then
+    begin
+      pomCategory := pomRuleController.FindCategoryByIndex(pomRule.CategoryIndex);
+      if Assigned (pomCategory) then
+        cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (pomCategory);
+    end;
     chbTitleContains.Checked := pomRule.TitleContains;
     chbDateBetween.Checked   := pomRule.DateBetween;
     edtTitleContains.Text    := pomRule.TitleSubstring;
     dtpFromDate.Date         := pomRule.DateFrom;
     dtpToDate.Date           := pomRule.DateTo;
-    RefreshConditionsVisualizer (mmoConditionsVisualizer)
+    RefreshRulesVisualizer (mmoConditionsVisualizer)
   end;
 end;
 
-function TfrmRule.Pack(p_Object : TObject) : boolean;
+function TfrmRule.Pack(var p_Object : TObject) : boolean;
 var
   pomCategory : TCategory;
   pomRule     : TRule;

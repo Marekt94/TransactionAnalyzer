@@ -70,7 +70,7 @@ begin
   //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false);
+    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false, true);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

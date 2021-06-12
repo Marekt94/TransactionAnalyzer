@@ -1,9 +1,9 @@
-object FrmCategory: TFrmCategory
-  Left = 0
-  Top = 0
-  Width = 212
-  Height = 46
-  TabOrder = 0
+inherited FrmCategory: TFrmCategory
+  Width = 217
+  Height = 47
+  ParentFont = False
+  ExplicitWidth = 217
+  ExplicitHeight = 47
   object lblCategory: TLabel
     Left = 24
     Top = 16

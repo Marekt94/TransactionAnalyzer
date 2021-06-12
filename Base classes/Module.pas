@@ -15,18 +15,18 @@ type
     function OpenMainWindow : Integer; virtual;
     function OpenModule : boolean; virtual;
     function CloseModule : boolean; virtual;
-    procedure RegisterClass (p_Class : TInterfacedClass);
-    procedure RegisterClasses; virtual;
     function GetObjectList : TList<TInterfacedClass>;
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
     function GetSelfInterface : TGUID; virtual;
     function InterfaceExists (p_GUID : TGUID) : boolean;
+    procedure RegisterClass (p_Class : TInterfacedClass);
+    procedure RegisterClasses; virtual;
   end;
 
 implementation
 
 uses
-  System.SysUtils, Vcl.Controls;
+  System.SysUtils, System.UITypes;
 
 { TBaseModule }
 
@@ -58,8 +58,7 @@ begin
   //to be covered in descendant
 end;
 
-function TBaseModule.GiveObjectByInterface(
-  p_GUID: TGUID): IInterface;
+function TBaseModule.GiveObjectByInterface(p_GUID: TGUID): IInterface;
 begin
   for var i := 0 to FObjectList.Count - 1 do
     if Assigned (FObjectList.Items [i].GetInterfaceEntry(p_GUID)) then

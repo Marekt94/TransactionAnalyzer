@@ -3,10 +3,9 @@ unit BaseListPanel;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  System.Generics.Collections, Vcl.Grids, Vcl.StdCtrls, Vcl.ExtCtrls,
-  WindowSkeleton, BasePanel;
+  Vcl.Forms, Vcl.Grids, Vcl.StdCtrls, System.Classes, Vcl.Controls, Vcl.ExtCtrls,
+  System.Generics.Collections, BasePanel, System.SysUtils;
+
 
 type
   TFrmBaseListPanel = class(TFrame)
@@ -19,18 +18,26 @@ type
     procedure btnAddClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure FrameResize(Sender: TObject);
   strict private
     FObjectList     : TObjectList<TObject>;
     FObjectClass    : TClass;
     FBasePanel      : TFrmBasePanel;
     FUpdateView     : TProc <TStringGrid>;
+    FWndObjectTitle : string;
     procedure UpdateView;
   public
-    procedure Init (p_ObjectClass : TClass; p_ObjectPanel : TFrmBasePanel; p_FunUpdateView : TProc <TStringGrid>);
     function UnpackFrame (p_ObjectList : TObject) : boolean;
+    procedure Init (p_ObjectClass    : TClass;
+                    p_ObjectPanel    : TFrmBasePanel;
+                    p_FunUpdateView  : TProc <TStringGrid>;
+                    p_WndObjectTitle : String);
   end;
 
 implementation
+
+uses
+  WindowSkeleton, System.Math, GUIMethods;
 
 {$R *.dfm}
 
@@ -38,18 +45,22 @@ implementation
 
 procedure TFrmBaseListPanel.btnAddClick (Sender: TObject);
 var
-  pomWnd : TWndSkeleton;
+  pomWnd    : TWndSkeleton;
   pomObject : TObject;
 begin
   pomWnd := TWndSkeleton.Create(nil);
   try
-    pomWnd.Init (FBasePanel, '');
+    pomWnd.Init (FBasePanel, FWndObjectTitle);
     FBasePanel.Unpack (nil);
     if pomWnd.ShowModal = mrOk then
     begin
       pomObject := FObjectClass.Create;
-      FBasePanel.Pack (pomObject);
-      FObjectList.Add (pomObject)
+      try
+        FBasePanel.Pack (pomObject);
+        FObjectList.Add (pomObject)
+      except
+        pomObject.Free;
+      end;
     end
   finally
     pomWnd.Free;
@@ -71,7 +82,7 @@ begin
   pomWnd := TWndSkeleton.Create(nil);
   try
     pomObject := FObjectList.Items [strList.Row - 1];
-    pomWnd.Init (FBasePanel, '');
+    pomWnd.Init (FBasePanel, FWndObjectTitle);
     FBasePanel.Unpack (pomObject);
     if pomWnd.ShowModal = mrOk then
       FBasePanel.Pack (pomObject);
@@ -81,13 +92,20 @@ begin
   UpdateView;
 end;
 
-procedure TFrmBaseListPanel.Init (p_ObjectClass: TClass;
-                                  p_ObjectPanel : TFrmBasePanel;
-                                  p_FunUpdateView : TProc <TStringGrid>);
+procedure TFrmBaseListPanel.FrameResize(Sender: TObject);
 begin
-  FObjectClass := p_ObjectClass;
-  FBasePanel   := p_ObjectPanel;
-  FUpdateView  := p_FunUpdateView;
+  GUIMethods.FitGridAlClient (strList);
+end;
+
+procedure TFrmBaseListPanel.Init (p_ObjectClass    : TClass;
+                                  p_ObjectPanel    : TFrmBasePanel;
+                                  p_FunUpdateView  : TProc <TStringGrid>;
+                                  p_WndObjectTitle : String);
+begin
+  FObjectClass    := p_ObjectClass;
+  FBasePanel      := p_ObjectPanel;
+  FWndObjectTitle := p_WndObjectTitle;
+  FUpdateView     := p_FunUpdateView;
 end;
 
 function TFrmBaseListPanel.UnpackFrame (p_ObjectList: TObject): boolean;

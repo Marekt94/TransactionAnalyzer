@@ -3,8 +3,10 @@ unit XMLCategoriesLoaderSaver;
 interface
 
 uses
-  InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category,
-  Xml.XMLIntf, Xml.XMLDoc;
+  InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category;
+
+const
+  rs_FileName = 'categories.xml';
 
 type
   TXMLCategoriesLoaderSaver = class (TInterfacedObject, ICategoriesLoaderSaver)
@@ -16,7 +18,7 @@ type
 implementation
 
 uses
-  System.SysUtils;
+  Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, ConstXMLCategoriesLoaderSaver;
 
 { TXMLCategoriesLoaderSaver }
 
@@ -33,10 +35,11 @@ begin
 
   pomListNode := nil;
   pomDocument := TXMLDocument.Create(nil);
-  if FileExists ('categories.xml') then
+  p_Path := p_Path + rs_FileName;
+  if FileExists (p_Path) then
   begin
-    pomDocument.LoadFromFile ('categories.xml');
-    pomListNode := pomDocument.ChildNodes.FindNode ('categories');
+    pomDocument.LoadFromFile (p_Path);
+    pomListNode := pomDocument.ChildNodes.FindNode (rs_NN_Categories);
 
     if Assigned (pomListNode) then
     begin
@@ -46,8 +49,8 @@ begin
         pomCategory := TCategory.Create;
         pomCategoryNode := pomListNode.ChildNodes.Get (i);
 
-        pomCategory.CategoryIndex := pomCategoryNode.ChildNodes.FindNode ('index').NodeValue;
-        pomCategory.CategoryName  := pomCategoryNode.ChildNodes.FindNode ('name').NodeValue;
+        pomCategory.CategoryIndex := pomCategoryNode.ChildNodes.FindNode (rs_NN_Index).NodeValue;
+        pomCategory.CategoryName  := pomCategoryNode.ChildNodes.FindNode (rs_NN_Name).NodeValue;
 
         p_List.Add (pomCategory);
       end;
@@ -67,19 +70,19 @@ begin
   pomDocument := TXMLDocument.Create(nil);
   pomDocument.Active := True;
 
-  pomDocument.DocumentElement := pomDocument.CreateNode ('categories', ntElement, '');
+  pomDocument.DocumentElement := pomDocument.CreateNode (rs_NN_Categories, ntElement, '');
   for var i := 0 to p_List.Count - 1 do
   begin
-    pomCategory := pomDocument.DocumentElement.AddChild('category');
+    pomCategory := pomDocument.DocumentElement.AddChild(rs_NN_Category);
 
-    pomCategoryNodes := pomCategory.AddChild('index');
+    pomCategoryNodes := pomCategory.AddChild(rs_NN_Index);
     pomCategoryNodes.NodeValue := p_List [i].CategoryIndex;
 
-    pomCategoryNodes := pomCategory.AddChild('name');
+    pomCategoryNodes := pomCategory.AddChild(rs_NN_Name);
     pomCategoryNodes.NodeValue := p_List [i].CategoryName;
   end;
 
-  pomDocument.SaveToFile('categories.xml');
+  pomDocument.SaveToFile(p_Path + rs_FileName);
 
   Result := true
 end;

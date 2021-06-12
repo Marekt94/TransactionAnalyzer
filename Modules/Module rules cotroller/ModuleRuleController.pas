@@ -8,7 +8,7 @@ uses
 
 resourcestring
   rs_Core = 'Przypisz kategoriê ''%s'' dla transakcji, które zawieraj¹ %s.';
-  rs_TitleConditions = 'tekst ''%s'' w tytule';
+  rs_TitleConditions = '''%s'' w tytule';
   rs_and = 'oraz';
   rs_DateConditions = 'zosta³y przeprowadzone pomiêdzy %s a %s';
 
@@ -24,11 +24,11 @@ type
     function CloseModule : boolean; override;
     function GetRuleDescription (p_Index : integer) : string; overload;
     function GetRuleDescription (p_Rule  : TRule) : string; overload;
+    function GetSelfInterface : TGUID; override;
+    function GetRuleList      : TObjectList<TRule>;
     procedure RegisterClasses; override;
     procedure SaveRuleList;
     procedure LoadRuleList;
-    function GetSelfInterface : TGUID; override;
-    function GetRuleList      : TObjectList<TRule>;
     property RuleList         : TObjectList<TRule> read GetRuleList;
   end;
 
@@ -69,10 +69,10 @@ end;
 
 function TModuleRuleController.GetRuleDescription(p_Rule: TRule): string;
 var
-  pomTitle : string;
-  pomDate  : string;
+  pomCategory   : TCategory;
+  pomTitle      : string;
+  pomDate       : string;
   pomResultText : string;
-  pomCategory : TCategory;
 begin
   pomTitle := '';
   pomDate := '';
@@ -117,7 +117,7 @@ var
   pomRuleSaver : IRuleSaver;
 begin
   pomRuleSaver := GiveObjectByInterface (IRuleSaver) as IRuleSaver;
-  pomRuleSaver.LoadRules (FRuleList);
+  pomRuleSaver.LoadRules (FRuleList, '');
 end;
 
 function TModuleRuleController.OpenMainWindow: Integer;
@@ -153,7 +153,8 @@ begin
                       end;
                     end;
       ObjectList := FRuleList;
-      WndTitle := 'Regu³y';
+      WndListTitle := 'Regu³y';
+      WndObjTitle  := 'Regu³a';
       NavigationKeys := False;
       FullScreen := True;
     end;
@@ -180,7 +181,7 @@ var
   pomRuleSaver : IRuleSaver;
 begin
   pomRuleSaver := GiveObjectByInterface (IRuleSaver) as IRuleSaver;
-  pomRuleSaver.SaveRules (FRuleList);
+  pomRuleSaver.SaveRules (FRuleList, '');
 end;
 
 end.

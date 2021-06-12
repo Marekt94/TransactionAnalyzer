@@ -4,6 +4,7 @@ object FrmBaseListPanel: TFrmBaseListPanel
   Width = 717
   Height = 436
   TabOrder = 0
+  OnResize = FrameResize
   object Panel1: TPanel
     Left = 0
     Top = 0
@@ -53,8 +54,11 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Width = 578
       Height = 434
       Align = alClient
+      FixedCols = 0
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
       TabOrder = 0
+      ExplicitLeft = 6
+      ExplicitTop = 2
     end
   end
 end
