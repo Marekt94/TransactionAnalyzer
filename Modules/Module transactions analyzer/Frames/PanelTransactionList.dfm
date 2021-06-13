@@ -50,6 +50,15 @@ object frmTransactionList: TfrmTransactionList
       TabOrder = 2
       OnClick = btnRulesClick
     end
+    object btnAnalyze: TButton
+      Left = 10
+      Top = 103
+      Width = 111
+      Height = 25
+      Caption = 'Analizuj'
+      TabOrder = 3
+      OnClick = btnAnalyzeClick
+    end
   end
   object ofdOpenTransactionFile: TOpenTextFileDialog
     DefaultExt = '*.xml'

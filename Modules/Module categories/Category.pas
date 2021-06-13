@@ -8,8 +8,7 @@ type
     FCategoryIndex : Integer;
     FCategoryName  : string;
   public
-    constructor Create; overload;
-    constructor Create (p_Index : Integer; p_CategoryName : string); overload;
+    procedure AfterConstruction;override;
     property CategoryIndex: Integer read FCategoryIndex write FCategoryIndex;
     property CategoryName: string read FCategoryName write FCategoryName;
   end;
@@ -17,17 +16,10 @@ type
 implementation
 
 { TCategory }
-
-constructor TCategory.Create(p_Index: Integer; p_CategoryName: string);
+procedure TCategory.AfterConstruction;
 begin
-  Self.FCategoryIndex := p_Index;
-  Self.FCategoryName  := p_CategoryName;
-end;
-
-constructor TCategory.Create;
-begin
+  inherited;
   Self.FCategoryIndex := -1;
   Self.FCategoryName  := '';
 end;
-
 end.

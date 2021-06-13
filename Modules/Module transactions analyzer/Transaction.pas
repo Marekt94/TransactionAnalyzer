@@ -3,7 +3,7 @@ unit Transaction;
 interface
 
 uses
-  InterfaceTransaction;
+  InterfaceTransaction, System.SysUtils, System.Generics.Collections;
 
 const
   cExpense = 0;
@@ -19,18 +19,32 @@ type
     FDocDescription : string;
     FDocAmount : Double;
 //    FType : Byte; //expense, impact
-    FCategoryIndex : Integer;
+    FArrayCategoryIndex : TList<Integer>;
   public
-    property DocExecutionDate   : TDate   read FDocExecutionDate write FDocExecutionDate;
-    property DocOrderDate       : TDate   read FDocOrderDate     write FDocOrderDate;
-    property DocTransactionType : string  read FDocType          write FDocType;
-    property DocDescription     : string  read FDocDescription   write FDocDescription;
-    property DocAmount          : Double  read FDocAmount        write FDocAmount;
-    property CategoryIndex      : Integer read FCategoryIndex    write FCategoryIndex;
+    constructor Create;
+    destructor Destroy; override;
+    property DocExecutionDate   : TDate          read FDocExecutionDate   write FDocExecutionDate;
+    property DocOrderDate       : TDate          read FDocOrderDate       write FDocOrderDate;
+    property DocTransactionType : string         read FDocType            write FDocType;
+    property DocDescription     : string         read FDocDescription     write FDocDescription;
+    property DocAmount          : Double         read FDocAmount          write FDocAmount;
+    property ArrayCategoryIndex : TList<Integer> read FArrayCategoryIndex write FArrayCategoryIndex;
   end;
 
 implementation
 
 { TTransaction }
+
+constructor TTransaction.Create;
+begin
+  inherited;
+  FArrayCategoryIndex := TList<Integer>.Create;
+end;
+
+destructor TTransaction.Destroy;
+begin
+  FreeAndNil (FArrayCategoryIndex);
+  inherited;
+end;
 
 end.

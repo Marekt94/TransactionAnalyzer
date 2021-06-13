@@ -29,7 +29,7 @@ type
 implementation
 
 uses
-  StrUtils;
+  System.StrUtils;
 
 { TRule }
 

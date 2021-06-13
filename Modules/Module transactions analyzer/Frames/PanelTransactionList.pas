@@ -13,9 +13,10 @@ const
   cTransactionType = 'Transaction type';
   cDescription     = 'Description';
   cAmount          = 'Amount';
+  cCategories      = 'Categories';
 
   cDefaultRowCount = 1;
-  cDefaultColCount = 5;
+  cDefaultColCount = 6;
 
 type
   TfrmTransactionList = class(TFrame)
@@ -25,10 +26,12 @@ type
     ofdOpenTransactionFile: TOpenTextFileDialog;
     butShowCategories: TButton;
     btnRules: TButton;
+    btnAnalyze: TButton;
     procedure btnLoadClick(Sender: TObject);
     procedure butShowCategoriesClick(Sender: TObject);
     procedure btnRulesClick(Sender: TObject);
     procedure FrameResize(Sender: TObject);
+    procedure btnAnalyzeClick(Sender: TObject);
   strict private
     function FindColIndex (p_Title : string) : integer;  
     procedure InitStringList;
@@ -43,7 +46,7 @@ implementation
 
 uses
   System.SysUtils, InterfaceModuleRuleController, Kernel,
-  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory;
+  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory, UsefullMethods;
 
 {$R *.dfm}
 
@@ -51,6 +54,21 @@ uses
 
 procedure TfrmTransactionList.AddTransaction (p_Transaction: TTransaction;
   p_Row: Integer);
+  function CategoriesToLine : string;
+  var
+    pomCategoriesModul : IModuleCategories;
+  begin
+    if not Assigned (p_Transaction.ArrayCategoryIndex) then
+      Exit ('');
+    for var i := 0 to p_Transaction.ArrayCategoryIndex.Count - 1 do
+    begin
+      pomCategoriesModul := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+      Result := '';
+      for var j := 0 to p_Transaction.ArrayCategoryIndex.Count - 2 do
+        Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex [j]).CategoryName + ',';
+      Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex.Last).CategoryName
+    end;
+  end;
 begin
   try
     with strTransaction do
@@ -60,6 +78,7 @@ begin
       Cells [FindColIndex (cTransactionType), p_Row] := p_Transaction.DocTransactionType;
       Cells [FindColIndex (cDescription),     p_Row] := p_Transaction.DocDescription;
       Cells [FindColIndex (cAmount),          p_Row] := FloatToStr (p_Transaction.DocAmount);
+      Cells [FindColIndex (cCategories),      p_Row] := CategoriesToLine;
     end;
   except
     strTransaction.RowCount := cDefaultRowCount;
@@ -72,6 +91,15 @@ var
 begin
   pomRulesModul := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
   pomRulesModul.OpenMainWindow;
+end;
+
+procedure TfrmTransactionList.btnAnalyzeClick(Sender: TObject);
+var
+  pomTransactionAnalyzer : IModuleTransactionAnalyzer;
+begin
+  pomTransactionAnalyzer := (GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer);
+  pomTransactionAnalyzer.AnalyzeTransactions (pomTransactionAnalyzer.TransactionList);
+  FillList (pomTransactionAnalyzer.TransactionList, true)
 end;
 
 procedure TfrmTransactionList.btnLoadClick(Sender: TObject);
@@ -133,6 +161,7 @@ begin
     Cells [2,0] := cTransactionType;
     Cells [3,0] := cDescription;
     Cells [4,0] := cAmount;
+    Cells [5,0] := cCategories;
   end;
 end;
 

@@ -29,7 +29,7 @@ type
     procedure RegisterClasses; override;
     procedure SaveRuleList;
     procedure LoadRuleList;
-    property RuleList         : TObjectList<TRule> read GetRuleList;
+    property RuleList : TObjectList<TRule> read GetRuleList;
   end;
 
 implementation

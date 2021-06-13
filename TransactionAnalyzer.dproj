@@ -151,6 +151,7 @@
         <DCCReference Include="Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
+        <DCCReference Include="Base classes\UsefullMethods.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

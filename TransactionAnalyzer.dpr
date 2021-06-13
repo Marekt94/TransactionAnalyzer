@@ -31,7 +31,8 @@ uses
   WindowObjectControllerSteeringClass in 'Base classes\WindowObjectControllerSteeringClass.pas',
   ConstXMLCategoriesLoaderSaver in 'Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas',
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
-  GUIMethods in 'Base classes\GUIMethods.pas';
+  GUIMethods in 'Base classes\GUIMethods.pas',
+  UsefullMethods in 'Base classes\UsefullMethods.pas';
 
 {$R *.res}
 

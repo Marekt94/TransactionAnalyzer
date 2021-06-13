@@ -114,6 +114,7 @@ begin
       FullScreen := True;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
+    SetIndexes;
   finally
     pomSteeringObj.Free;
   end
@@ -133,7 +134,6 @@ end;
 
 function TModuleCategories.SaveCategories : boolean;
 begin
-  SetIndexes;
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList, '');
 end;
 
@@ -142,18 +142,20 @@ var
   pomHighestIndex : Integer;
   pomCategory     : TCategory;
 begin
-  pomHighestIndex := Low (Integer);
+  pomHighestIndex := 0;
   for var i := 0 to FCategoryList.Count - 1 do
     if pomHighestIndex < FCategoryList [i].CategoryIndex then
       pomHighestIndex := FCategoryList [i].CategoryIndex;
 
   for var i := 0 to FCategoryList.Count - 1 do
+  begin
     if FCategoryList [i].CategoryIndex < 0 then
     begin
       Inc (pomHighestIndex);
       pomCategory := FCategoryList [i];
       pomCategory.CategoryIndex := pomHighestIndex;
     end;
+  end;
 end;
 
 end.

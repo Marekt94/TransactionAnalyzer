@@ -33,16 +33,20 @@ function TModuleTransactionAnalyzer.AnalyzeTransactions(
   p_Transactions: TObjectList<TTransaction>): boolean;
 var
   pomRuleController : IModuleRuleController;
+  pomArrayOfCategoriesIndex : TList<Integer>;
 begin
-  pomRuleController := GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+  pomRuleController := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
   for var i := 0 to p_Transactions.Count - 1 do
   begin
+    p_Transactions [i].ArrayCategoryIndex.Clear;
     for var j := 0 to pomRuleController.RuleList.Count - 1 do
-      if pomRuleController.RuleList.Items [i].FullfilConditions (p_Transactions [i]) then
+    begin
+      if pomRuleController.RuleList.Items [j].FullfilConditions (p_Transactions [i]) then
       begin
-        p_Transactions [i].CategoryIndex := pomRuleController.RuleList.Items [i].CategoryIndex;
-        break;
+        pomArrayOfCategoriesIndex := p_Transactions [i].ArrayCategoryIndex;
+        pomArrayOfCategoriesIndex.Add (pomRuleController.RuleList.Items [j].CategoryIndex);
       end;
+    end;
   end;
   Result := true;
 end;
