@@ -55,10 +55,8 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Height = 434
       Align = alClient
       FixedCols = 0
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
       TabOrder = 0
-      ExplicitLeft = 6
-      ExplicitTop = 2
     end
   end
 end

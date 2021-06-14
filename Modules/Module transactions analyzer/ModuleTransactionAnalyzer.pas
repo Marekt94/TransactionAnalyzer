@@ -14,6 +14,7 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
+    function OpenMainWindow : Integer; override;
     function LoadTransactions (p_Path : string) : boolean;
     function SaveTransactions (p_Path : string) : boolean;
     procedure RegisterClasses; override;
@@ -25,7 +26,7 @@ type
 implementation
 
 uses
-  WindowSkeleton, InterfaceModuleRuleController, Kernel;
+  WindowSkeleton, InterfaceModuleRuleController, Kernel, PanelTransactionAnalyzerBoosted;
 
 { TModuleTransactionAnalyzer }
 
@@ -47,6 +48,11 @@ begin
         pomArrayOfCategoriesIndex.Add (pomRuleController.RuleList.Items [j].CategoryIndex);
       end;
     end;
+
+    if p_Transactions [i].DocAmount >= 0 then
+      p_Transactions [i].TransactionType := cImpact
+    else
+      p_Transactions [i].TransactionType := cExpense
   end;
   Result := true;
 end;
@@ -76,6 +82,19 @@ end;
 function TModuleTransactionAnalyzer.LoadTransactions (p_Path : string) : boolean;
 begin
   Result := (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(FTransactionList, p_Path)
+end;
+
+function TModuleTransactionAnalyzer.OpenMainWindow: Integer;
+var
+  pomWndSkeleton : TWndSkeleton;
+begin
+  pomWndSkeleton := TWndSkeleton.Create(nil);
+  try
+    pomWndSkeleton.Init(TFrmTransactionAnalyzerBoosted.Create (pomWndSkeleton), 'Analiza', false, true);
+    Result := pomWndSkeleton.ShowModal;
+  finally
+    pomWndSkeleton.Free;
+  end;
 end;
 
 procedure TModuleTransactionAnalyzer.RegisterClasses;

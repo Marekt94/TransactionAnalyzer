@@ -18,7 +18,7 @@ type
     FDocType : string;
     FDocDescription : string;
     FDocAmount : Double;
-//    FType : Byte; //expense, impact
+    FType : Byte; //expense, impact
     FArrayCategoryIndex : TList<Integer>;
   public
     constructor Create;
@@ -29,6 +29,7 @@ type
     property DocDescription     : string         read FDocDescription     write FDocDescription;
     property DocAmount          : Double         read FDocAmount          write FDocAmount;
     property ArrayCategoryIndex : TList<Integer> read FArrayCategoryIndex write FArrayCategoryIndex;
+    property TransactionType    : Byte           read FType               write FType;
   end;
 
 implementation

@@ -26,8 +26,8 @@ uses
 { TXMLTransactionLoader }
 
 procedure TXMLTransactionLoader.FillTransaction(out p_Transaction    : TTransaction;
-                                         p_Node           : IXMLNode;
-                                         p_FormatSettings : TFormatSettings);
+                                                    p_Node           : IXMLNode;
+                                                    p_FormatSettings : TFormatSettings);
 resourcestring
   rs_Empty_Transaction = 'Transakcja jest pusta';
 begin

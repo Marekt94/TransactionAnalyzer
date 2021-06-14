@@ -27,7 +27,7 @@ implementation
 
 uses
   System.SysUtils, Winapi.Windows,
-  PanelTransactionList, ModuleCategories,
+  PanelMain, ModuleCategories,
   ModuleRuleController;
 
 { TKernel }
@@ -70,7 +70,7 @@ begin
   //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false, true);
+    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false, false);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

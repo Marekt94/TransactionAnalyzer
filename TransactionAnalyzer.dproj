@@ -124,11 +124,6 @@
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceModuleTransactionAnalyzer.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransaction.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas"/>
-        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionList.pas">
-            <Form>frmTransactionList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Kernel.pas"/>
         <DCCReference Include="Modules\Module categories\Frames\PanelCategory.pas">
             <Form>FrmCategory</Form>
@@ -152,6 +147,16 @@
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
         <DCCReference Include="Base classes\UsefullMethods.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas">
+            <Form>FrmTransactionAnalyzerBoosted</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="PanelMain.pas">
+            <Form>frmTransactionList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
