@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
-  Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs, InterfaceModuleTransactionAnalyzer;
+  Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs, InterfaceModuleTransactionAnalyzer,
+  Category;
 
 const
   cExecutionDate   = 'Data wykonania';
@@ -28,11 +29,15 @@ type
     ofdTransactions: TOpenTextFileDialog;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
+    procedure CheckBoxClick(Sender: TObject);
   private
     FController : IModuleTransactionAnalyzer;
+    FChoosenCategories : TList<Integer>;
+    FCategoriesAndChbDict : TDictionary <TCategory, TCheckBox>;
     procedure InitStringList;
-    procedure FillList (p_TransactionList: TObjectList<TTransaction>;
+    procedure FillList (p_TransactionList: TList<TTransaction>;
                         p_Clear : boolean = true);
+    function FillChoosenCategories : TList<Integer>;
     procedure UpdateView;
     procedure UpdateDescription;
     procedure AddTransaction (p_Transaction: TTransaction; p_Row: Integer);
@@ -40,6 +45,7 @@ type
     function CategoriesToLine (p_Transaction : TTransaction) : string;
   public
     procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
   end;
 
 implementation
@@ -109,8 +115,11 @@ begin
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.UpdateView;
+var
+  pomTransactionList : TList<TTransaction>;
 begin
-  FillList (FController.TransactionList, True);
+  pomTransactionList := FController.GetTransactionList (FillChoosenCategories, FCategoriesAndChbDict.Items [nil].Checked);
+  FillList (pomTransactionList, true);
   UpdateDescription;
 end;
 
@@ -120,8 +129,47 @@ begin
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.AfterConstruction;
+var
+  pomCategories : IModuleCategories;
 begin
   inherited;
+  FCategoriesAndChbDict := TDictionary <TCategory, TCheckBox>.Create;
+  FChoosenCategories := TList<Integer>.Create;
+
+  pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  for var i := 0 to pomCategories.CategoriesList.Count - 1 do
+  begin
+    var pomChb : TCheckbox;
+    var pomCategory := pomCategories.CategoriesList [i];
+    pomChb := TCheckBox.Create(Self);
+    with pomChb do
+    begin
+      Name     := 'chb' + pomCategory.CategoryName;
+      Caption  := pomCategory.CategoryName;
+      Left     := 10;
+      Top      := 20 * (i + 1);
+      AutoSize := true;
+      Parent   := pnlFilter;
+      Checked  := true;
+      OnClick  := CheckBoxClick;
+    end;
+    FCategoriesAndChbDict.Add (pomCategory, pomChb);
+  end;
+
+  var pomChb := TCheckBox.Create(Self);
+  with pomChb do
+  begin
+    Name     := 'chbEmpty';
+    Caption  := 'bez kategorii';
+    Left     := 10;
+    Top      := 20 * pomCategories.CategoriesList.Count;
+    AutoSize := true;
+    Parent   := pnlFilter;
+    Checked  := true;
+    OnClick  := CheckBoxClick;
+  end;
+  FCategoriesAndChbDict.Add (nil, pomChb);
+
   InitStringList;
   if ofdTransactions.Execute then
   begin
@@ -135,7 +183,28 @@ begin
   end;
 end;
 
-procedure TFrmTransactionAnalyzerBoosted.FillList (p_TransactionList : TObjectList<TTransaction>;
+procedure TFrmTransactionAnalyzerBoosted.BeforeDestruction;
+begin
+  inherited;
+  FreeAndNil (FCategoriesAndChbDict);
+  FreeAndNil (FChoosenCategories);
+end;
+
+function TFrmTransactionAnalyzerBoosted.FillChoosenCategories: TList<Integer>;
+var
+  pomCategories : TObjectList<TCategory>;
+begin
+  pomCategories := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
+  FChoosenCategories.Clear;
+
+  for var pomCat in pomCategories do
+    if FCategoriesAndChbDict.Items [pomCat].Checked then
+      FChoosenCategories.Add (pomCat.CategoryIndex);
+
+  Result := FChoosenCategories;
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.FillList (p_TransactionList : TList<TTransaction>;
                                                    p_Clear           : boolean = true);
 begin
   if p_Clear then strTransaction.RowCount := cDefaultRowCount;
@@ -190,6 +259,11 @@ begin
       Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex [j]).CategoryName + ',';
     Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex.Last).CategoryName
   end;
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.CheckBoxClick(Sender: TObject);
+begin
+  UpdateView;
 end;
 
 end.
