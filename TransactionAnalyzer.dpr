@@ -33,7 +33,9 @@ uses
   GUIMethods in 'Base classes\GUIMethods.pas',
   UsefullMethods in 'Base classes\UsefullMethods.pas',
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted: TFrame},
-  PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame};
+  PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame},
+  InterfaceTransactionsController in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas',
+  TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas';
 
 {$R *.res}
 

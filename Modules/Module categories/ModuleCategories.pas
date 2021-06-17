@@ -83,6 +83,13 @@ end;
 function TModuleCategories.LoadCategories : boolean;
 begin
   Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList, '');
+  if FCategoryList.Count < 1 then
+  begin
+    var pomCategory := TCategory.Create;
+    pomCategory.CategoryIndex := cDefaultCategoryIndex;
+    pomCategory.CategoryName  := 'bez kategorii';
+    FCategoryList.Add (pomCategory)
+  end;
 end;
 
 function TModuleCategories.OpenMainWindow: Integer;

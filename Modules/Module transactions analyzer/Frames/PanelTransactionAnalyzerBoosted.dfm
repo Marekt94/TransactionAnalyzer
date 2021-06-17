@@ -13,6 +13,13 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     Align = alClient
     Caption = 'pnlGrid'
     TabOrder = 0
+    object Label1: TLabel
+      Left = 200
+      Top = 56
+      Width = 31
+      Height = 13
+      Caption = 'Label1'
+    end
     object strTransaction: TStringGrid
       Left = 1
       Top = 1
@@ -43,19 +50,25 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     object lblDescription: TLabel
       Left = 1
       Top = 1
-      Width = 270
-      Height = 238
+      Width = 63
+      Height = 13
       Align = alClient
       Alignment = taCenter
       Caption = 'lblDescription'
       WordWrap = True
-      ExplicitWidth = 63
-      ExplicitHeight = 13
+    end
+    object lblBilans: TLabel
+      Left = 1
+      Top = 226
+      Width = 37
+      Height = 13
+      Align = alBottom
+      Caption = 'lblBilans'
     end
   end
   object ofdTransactions: TOpenTextFileDialog
     Filter = 'Transactions|*.xml'
-    Left = 392
-    Top = 104
+    Left = 744
+    Top = 184
   end
 end

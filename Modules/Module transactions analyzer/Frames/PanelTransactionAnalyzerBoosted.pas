@@ -5,8 +5,9 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
-  Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs, InterfaceModuleTransactionAnalyzer,
-  Category;
+  Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs,
+  Category, InterfaceTransactionsController, InterfaceModuleRuleController,
+  InterfaceModuleTransactionAnalyzer;
 
 const
   cExecutionDate   = 'Data wykonania';
@@ -27,20 +28,27 @@ type
     lblDescription: TLabel;
     strTransaction: TStringGrid;
     ofdTransactions: TOpenTextFileDialog;
+    Label1: TLabel;
+    lblBilans: TLabel;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
     procedure CheckBoxClick(Sender: TObject);
   private
-    FController : IModuleTransactionAnalyzer;
-    FChoosenCategories : TList<Integer>;
-    FCategoriesAndChbDict : TDictionary <TCategory, TCheckBox>;
+    FSummary                 : TList <TSummary>;
+    FTransactionListFiltered : TList <TTransaction>;
+    FChoosenCategories       : TList<Integer>;
+    FController              : ITransactionsController;
+    FCategoriesAndChbDict    : TDictionary <TCategory, TCheckBox>;
+    procedure InitCategories;
     procedure InitStringList;
-    procedure FillList (p_TransactionList: TList<TTransaction>;
-                        p_Clear : boolean = true);
-    function FillChoosenCategories : TList<Integer>;
+    procedure FillList (p_TransactionList : TList<TTransaction>;
+                        p_Clear           : boolean = true);
+    procedure FillChoosenCategories;
     procedure UpdateView;
     procedure UpdateDescription;
+    procedure UpdateBilans;
     procedure AddTransaction (p_Transaction: TTransaction; p_Row: Integer);
+    procedure LoadAndAnalyzeTransactions;
     function FindColIndex(p_Title: string): integer;
     function CategoriesToLine (p_Transaction : TTransaction) : string;
   public
@@ -51,9 +59,32 @@ type
 implementation
 
 uses
-  GUIMethods, Kernel, InterfaceModuleCategory;
+  GUIMethods, Kernel, InterfaceModuleCategory, InterfaceTransactionLoader;
 
 {$R *.dfm}
+
+procedure TFrmTransactionAnalyzerBoosted.InitCategories;
+begin
+  var pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  for var i := 0 to pomCategories.CategoriesList.Count - 1 do
+  begin
+    var pomChb : TCheckbox;
+    var pomCategory := pomCategories.CategoriesList [i];
+    pomChb := TCheckBox.Create(Self);
+    with pomChb do
+    begin
+      Name     := 'chb' + IntToStr (pomCategory.CategoryIndex);
+      Caption  := pomCategory.CategoryName;
+      Left     := 10;
+      Top      := 20 * (i + 1);
+      AutoSize := true;
+      Parent   := pnlFilter;
+      Checked  := true;
+      OnClick  := CheckBoxClick;
+    end;
+    FCategoriesAndChbDict.Add (pomCategory, pomChb);
+  end;
+end;
 
 procedure TFrmTransactionAnalyzerBoosted.InitStringList;
 begin
@@ -69,9 +100,43 @@ begin
   end;
 end;
 
+procedure TFrmTransactionAnalyzerBoosted.LoadAndAnalyzeTransactions;
+var
+  pomCategories : IModuleCategories;
+begin
+  if ofdTransactions.Execute then
+  begin
+    FController := Kernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
+    if Assigned (FController) then
+    begin
+      (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(FController.TransactionsList, ofdTransactions.FileName);
+      var pomRuleController : IModuleRuleController;
+      pomRuleController := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+      pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+      FController.AnalyzeTransactions (FController.TransactionsList, pomRuleController, pomCategories);
+      FController.UpdateSummary (FController.TransactionsList, FSummary, pomCategories);
+      UpdateView;
+    end;
+  end;
+end;
+
 procedure TFrmTransactionAnalyzerBoosted.strTransactionClick(Sender: TObject);
 begin
   UpdateDescription;
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.UpdateBilans;
+begin
+  var pomStr : string;
+  pomStr := '';
+  for var pomSummary in FSummary do
+  begin
+    var pomCategory : TCategory;
+    pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
+    pomStr := pomStr + pomCategory.CategoryName + ' - wp³yw: ' + FloatToStr(pomSummary.Impact) + ' - wydatek: ' + FloatToStr (pomSummary.Expense) + sLineBreak;
+  end;
+
+  lblBilans.Caption := pomStr;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.UpdateDescription;
@@ -84,10 +149,12 @@ var
   pomType : string;
 
   pomTransaction : TTransaction;
+  pomTransactionList : TList<TTransaction>;
 begin
-  if (strTransaction.Row > 0) and (FController.TransactionList.Count > 0) then
+  pomTransactionList := FTransactionListFiltered;
+  if (strTransaction.Row > 0) and (pomTransactionList.Count > 0) then
   begin
-    pomTransaction := FController.TransactionList [strTransaction.Row - 1];
+    pomTransaction := pomTransactionList [strTransaction.Row - 1];
 
     with pomTransaction do
     begin
@@ -115,12 +182,12 @@ begin
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.UpdateView;
-var
-  pomTransactionList : TList<TTransaction>;
 begin
-  pomTransactionList := FController.GetTransactionList (FillChoosenCategories, FCategoriesAndChbDict.Items [nil].Checked);
-  FillList (pomTransactionList, true);
+  FillChoosenCategories;
+  FController.GetTransactionsListFiltered (FController.TransactionsList, FTransactionListFiltered, FChoosenCategories);
+  FillList (FTransactionListFiltered, true);
   UpdateDescription;
+  UpdateBilans;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.FrameResize(Sender: TObject);
@@ -129,79 +196,37 @@ begin
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.AfterConstruction;
-var
-  pomCategories : IModuleCategories;
 begin
   inherited;
   FCategoriesAndChbDict := TDictionary <TCategory, TCheckBox>.Create;
+  FSummary := TList <TSummary>.Create;
+  FTransactionListFiltered := TList <TTransaction>.Create;
   FChoosenCategories := TList<Integer>.Create;
 
-  pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-  for var i := 0 to pomCategories.CategoriesList.Count - 1 do
-  begin
-    var pomChb : TCheckbox;
-    var pomCategory := pomCategories.CategoriesList [i];
-    pomChb := TCheckBox.Create(Self);
-    with pomChb do
-    begin
-      Name     := 'chb' + pomCategory.CategoryName;
-      Caption  := pomCategory.CategoryName;
-      Left     := 10;
-      Top      := 20 * (i + 1);
-      AutoSize := true;
-      Parent   := pnlFilter;
-      Checked  := true;
-      OnClick  := CheckBoxClick;
-    end;
-    FCategoriesAndChbDict.Add (pomCategory, pomChb);
-  end;
-
-  var pomChb := TCheckBox.Create(Self);
-  with pomChb do
-  begin
-    Name     := 'chbEmpty';
-    Caption  := 'bez kategorii';
-    Left     := 10;
-    Top      := 20 * pomCategories.CategoriesList.Count;
-    AutoSize := true;
-    Parent   := pnlFilter;
-    Checked  := true;
-    OnClick  := CheckBoxClick;
-  end;
-  FCategoriesAndChbDict.Add (nil, pomChb);
-
   InitStringList;
-  if ofdTransactions.Execute then
-  begin
-    FController := Kernel.GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer;
-    if Assigned (FController) then
-    begin
-      FController.LoadTransactions(ofdTransactions.FileName);
-      FController.AnalyzeTransactions (FController.TransactionList);
-      UpdateView;
-    end;
-  end;
+  InitCategories;
+
+  LoadAndAnalyzeTransactions;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.BeforeDestruction;
 begin
   inherited;
   FreeAndNil (FCategoriesAndChbDict);
+  FreeAndNil (FSummary);
+  FreeAndNil (FTransactionListFiltered);
   FreeAndNil (FChoosenCategories);
 end;
 
-function TFrmTransactionAnalyzerBoosted.FillChoosenCategories: TList<Integer>;
+procedure TFrmTransactionAnalyzerBoosted.FillChoosenCategories;
 var
   pomCategories : TObjectList<TCategory>;
 begin
-  pomCategories := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
   FChoosenCategories.Clear;
-
+  pomCategories := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
   for var pomCat in pomCategories do
     if FCategoriesAndChbDict.Items [pomCat].Checked then
       FChoosenCategories.Add (pomCat.CategoryIndex);
-
-  Result := FChoosenCategories;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.FillList (p_TransactionList : TList<TTransaction>;
@@ -209,10 +234,13 @@ procedure TFrmTransactionAnalyzerBoosted.FillList (p_TransactionList : TList<TTr
 begin
   if p_Clear then strTransaction.RowCount := cDefaultRowCount;
 
-  strTransaction.RowCount := p_TransactionList.Count;
+  strTransaction.RowCount := p_TransactionList.Count + 1;
   for var i := 0 to p_TransactionList.Count - 1 do
     AddTransaction(p_TransactionList [i], i + 1);
-  strTransaction.FixedRows := 1;
+  if strTransaction.RowCount > 1 then
+    strTransaction.FixedRows := 1
+  else
+    strTransaction.RowCount := 0;
 end;
 
 function TFrmTransactionAnalyzerBoosted.FindColIndex(p_Title: string): integer;

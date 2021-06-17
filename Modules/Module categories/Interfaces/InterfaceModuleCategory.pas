@@ -5,6 +5,9 @@ interface
 uses
   InterfaceModule, System.Generics.Collections, Category;
 
+const
+  cDefaultCategoryIndex = 0;
+
 type
   IModuleCategories = interface(IModule)
     ['{9797894E-E2BF-403C-BA3A-E6685BAA6704}']

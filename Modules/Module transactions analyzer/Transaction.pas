@@ -32,6 +32,12 @@ type
     property TransactionType    : Byte           read FType               write FType;
   end;
 
+  TSummary = record
+    CategoryIndex : Integer;
+    Impact        : Double;
+    Expense       : Double;
+  end;
+
 implementation
 
 { TTransaction }
