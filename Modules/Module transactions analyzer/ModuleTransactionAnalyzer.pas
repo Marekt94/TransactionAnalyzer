@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  WindowSkeleton, InterfaceModuleRuleController, Kernel, PanelTransactionAnalyzerBoosted,
+  WindowSkeleton, InterfaceModuleRules, Kernel, PanelTransactionAnalyzerBoosted,
   InterfaceModuleCategory, InterfaceTransactionsController,
   TransactionController;
 

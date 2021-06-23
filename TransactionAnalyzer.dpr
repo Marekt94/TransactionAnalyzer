@@ -8,10 +8,10 @@ uses
   Category in 'Modules\Module categories\Category.pas',
   ModuleCategories in 'Modules\Module categories\ModuleCategories.pas',
   InterfaceModuleCategory in 'Modules\Module categories\Interfaces\InterfaceModuleCategory.pas',
-  ModuleRuleController in 'Modules\Module rules cotroller\ModuleRuleController.pas',
+  ModuleRules in 'Modules\Module rules cotroller\ModuleRules.pas',
   Rule in 'Modules\Module rules cotroller\Rule.pas',
   XMLRuleSaverLoader in 'Modules\Module rules cotroller\XMLRuleSaverLoader.pas',
-  InterfaceModuleRuleController in 'Modules\Module rules cotroller\Interfaces\InterfaceModuleRuleController.pas',
+  InterfaceModuleRules in 'Modules\Module rules cotroller\Interfaces\InterfaceModuleRules.pas',
   InterfaceRuleSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceRuleSaver.pas',
   PanelRule in 'Modules\Module rules cotroller\Frames\PanelRule.pas' {frmRule: TFrame},
   ConstXMLLoader in 'Modules\Module transactions analyzer\ConstXMLLoader.pas',
@@ -35,7 +35,10 @@ uses
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted: TFrame},
   PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame},
   InterfaceTransactionsController in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas',
-  TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas';
+  TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas',
+  InterfaceRulesController in 'Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas',
+  RulesController in 'Modules\Module rules cotroller\RulesController.pas',
+  PanelTransactionsList in 'Modules\Module transactions analyzer\Frames\PanelTransactionsList.pas' {frmTransasctionsList: TFrame};
 
 {$R *.res}
 

@@ -23,14 +23,14 @@ type
     FObjectList     : TObjectList<TObject>;
     FObjectClass    : TClass;
     FBasePanel      : TFrmBasePanel;
-    FUpdateView     : TProc <TStringGrid>;
+    FUpdateView     : TProc <TStringGrid, TObject>;
     FWndObjectTitle : string;
     procedure UpdateView;
   public
     function UnpackFrame (p_ObjectList : TObject) : boolean;
     procedure Init (p_ObjectClass    : TClass;
                     p_ObjectPanel    : TFrmBasePanel;
-                    p_FunUpdateView  : TProc <TStringGrid>;
+                    p_FunUpdateView  : TProc <TStringGrid, TObject>;
                     p_WndObjectTitle : String);
   end;
 
@@ -99,7 +99,7 @@ end;
 
 procedure TFrmBaseListPanel.Init (p_ObjectClass    : TClass;
                                   p_ObjectPanel    : TFrmBasePanel;
-                                  p_FunUpdateView  : TProc <TStringGrid>;
+                                  p_FunUpdateView  : TProc <TStringGrid, TObject>;
                                   p_WndObjectTitle : String);
 begin
   FObjectClass    := p_ObjectClass;
@@ -117,7 +117,7 @@ end;
 
 procedure TFrmBaseListPanel.UpdateView;
 begin
-  FUpdateView (strList);
+  FUpdateView (strList, FObjectList);
 end;
 
 end.

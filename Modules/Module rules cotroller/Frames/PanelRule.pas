@@ -36,7 +36,8 @@ type
 implementation
 
 uses
-  InterfaceModuleCategory, Kernel, Rule, InterfaceModuleRuleController;
+  InterfaceModuleCategory, Kernel, Rule, InterfaceModuleRules,
+  InterfaceRulesController;
 
 {$R *.dfm}
 
@@ -96,7 +97,7 @@ begin
     Pack (TObject (pomRule));
 
     mmoConditionsVisualizer.Text := '';
-    mmoConditionsVisualizer.Text := (Kernel.GiveObjectByInterface(IModuleRuleController) as IModuleRuleController).GetRuleDescription (pomRule);
+    mmoConditionsVisualizer.Text := (Kernel.GiveObjectByInterface(IRulesController) as IRulesController).GetRuleDescription (pomRule);
   finally
     pomRule.Free;
   end;

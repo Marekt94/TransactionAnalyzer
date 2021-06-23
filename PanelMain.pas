@@ -35,7 +35,7 @@ type
 implementation
 
 uses
-  System.SysUtils, InterfaceModuleRuleController, Kernel,
+  System.SysUtils, InterfaceModuleRules, Kernel,
   InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory, UsefullMethods;
 
 {$R *.dfm}
@@ -45,9 +45,9 @@ uses
 
 procedure TfrmTransactionList.btnRulesClick(Sender: TObject);
 var
-  pomRulesModul : IModuleRuleController;
+  pomRulesModul : IModuleRules;
 begin
-  pomRulesModul := Kernel.GiveObjectByInterface (IModuleRuleController) as IModuleRuleController;
+  pomRulesModul := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
   pomRulesModul.OpenMainWindow;
 end;
 

@@ -104,7 +104,7 @@ begin
     begin
       ObjectClass := TCategory;
       ObjectFrame := TFrmCategory.Create (nil);
-      UpdateView := procedure (p_Grid : TStringGrid)
+      UpdateView := procedure (p_Grid : TStringGrid; p_Obj : TObject)
                     begin
                       p_Grid.ColCount := 1;
                       p_Grid.RowCount := 1;

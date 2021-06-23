@@ -4,8 +4,8 @@ interface
 
 uses
   InterfaceTransactionsController, Transaction, System.Generics.Collections,
-  InterfaceModuleRuleController, System.SysUtils, InterfaceModuleCategory,
-  Kernel;
+  InterfaceModuleRules, System.SysUtils, InterfaceModuleCategory,
+  Kernel, Rule;
 
 type
   TTransactionController = class (TInterfacedObject, ITransactionsController)
@@ -16,8 +16,9 @@ type
     procedure BeforeDestruction; override;
     function GetTransactionsList : TObjectList <TTransaction>;
     function AnalyzeTransactions (p_Transactions   : TObjectList <TTransaction>;
-                                  p_RuleController : IModuleRuleController;
-                                  p_Categories     : IModuleCategories) : boolean;
+                                  p_RuleController : IModuleRules;
+                                  p_Categories     : IModuleCategories;
+                                  p_Rules          : TObjectList <TRule>) : boolean;
     function UpdateSummary (    p_Transactions :  TObjectList <TTransaction>;
                             out p_Summary: TList <TSummary>;
                                 p_Categories: IModuleCategories) : boolean; overload;
@@ -34,13 +35,14 @@ implementation
 procedure TTransactionController.AfterConstruction;
 begin
   inherited;
-  FTransactionList         := TObjectList<TTransaction>.Create;
+  FTransactionList := TObjectList<TTransaction>.Create;
 end;
 
 function TTransactionController.AnalyzeTransactions(
   p_Transactions   : TObjectList <TTransaction>;
-  p_RuleController : IModuleRuleController;
-  p_Categories     : IModuleCategories) : boolean;
+  p_RuleController : IModuleRules;
+  p_Categories     : IModuleCategories;
+  p_Rules          : TObjectList <TRule>) : boolean;
 begin
   if not Assigned (p_RuleController) then
     raise Exception.Create('No rule controller');
@@ -51,7 +53,7 @@ begin
   for var pomTransaction in p_Transactions do
   begin
     pomTransaction.ArrayCategoryIndex.Clear;
-    for var pomRule in p_RuleController.RuleList do
+    for var pomRule in p_Rules do
       if pomRule.FullfilConditions (pomTransaction) then
         pomTransaction.ArrayCategoryIndex.Add (pomRule.CategoryIndex);
 

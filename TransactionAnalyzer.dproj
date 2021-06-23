@@ -107,10 +107,10 @@
         <DCCReference Include="Modules\Module categories\Category.pas"/>
         <DCCReference Include="Modules\Module categories\ModuleCategories.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceModuleCategory.pas"/>
-        <DCCReference Include="Modules\Module rules cotroller\ModuleRuleController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\ModuleRules.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Rule.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\XMLRuleSaverLoader.pas"/>
-        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceModuleRuleController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceModuleRules.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRuleSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Frames\PanelRule.pas">
             <Form>frmRule</Form>
@@ -159,6 +159,13 @@
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\TransactionController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\RulesController.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionsList.pas">
+            <Form>frmTransasctionsList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

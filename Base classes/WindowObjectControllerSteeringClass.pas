@@ -10,7 +10,7 @@ type
   private
     FObjectClass    : TClass;
     FObjectFrame    : TFrmBasePanel;
-    FUpdateView     : TProc<TStringGrid>;
+    FUpdateView     : TProc<TStringGrid, TObject>;
     FObjectList     : TObject;
     FWndListTitle   : string;
     FWndObjTitle    : string;
@@ -20,7 +20,7 @@ type
     destructor Destroy; override;
     property ObjectClass: TClass read FObjectClass write FObjectClass;
     property ObjectFrame: TFrmBasePanel read FObjectFrame write FObjectFrame;
-    property UpdateView: TProc<TStringGrid> read FUpdateView write FUpdateView;
+    property UpdateView: TProc<TStringGrid, TObject> read FUpdateView write FUpdateView;
     property ObjectList: TObject read FObjectList write FObjectList;
     property WndListTitle: string read FWndListTitle write FWndListTitle;
     property FullScreen: boolean read FFullScreen write FFullScreen;
