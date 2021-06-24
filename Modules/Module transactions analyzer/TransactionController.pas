@@ -15,10 +15,11 @@ type
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
     function GetTransactionsList : TObjectList <TTransaction>;
-    function AnalyzeTransactions (p_Transactions   : TObjectList <TTransaction>;
-                                  p_RuleController : IModuleRules;
-                                  p_Categories     : IModuleCategories;
-                                  p_Rules          : TObjectList <TRule>) : boolean;
+    function AnalyzeTransactions (p_Transactions    : TObjectList <TTransaction>;
+                                  p_RuleController  : IModuleRules;
+                                  p_Categories      : IModuleCategories;
+                                  p_Rules           : TObjectList <TRule>;
+                                  p_TransWithoutCat : TList <TTransaction>) : boolean;
     function UpdateSummary (    p_Transactions :  TObjectList <TTransaction>;
                             out p_Summary: TList <TSummary>;
                                 p_Categories: IModuleCategories) : boolean; overload;
@@ -39,10 +40,11 @@ begin
 end;
 
 function TTransactionController.AnalyzeTransactions(
-  p_Transactions   : TObjectList <TTransaction>;
-  p_RuleController : IModuleRules;
-  p_Categories     : IModuleCategories;
-  p_Rules          : TObjectList <TRule>) : boolean;
+  p_Transactions    : TObjectList <TTransaction>;
+  p_RuleController  : IModuleRules;
+  p_Categories      : IModuleCategories;
+  p_Rules           : TObjectList <TRule>;
+  p_TransWithoutCat : TList <TTransaction>) : boolean;
 begin
   if not Assigned (p_RuleController) then
     raise Exception.Create('No rule controller');
@@ -58,7 +60,11 @@ begin
         pomTransaction.ArrayCategoryIndex.Add (pomRule.CategoryIndex);
 
     if  pomTransaction.ArrayCategoryIndex.Count < 1 then
-       pomTransaction.ArrayCategoryIndex.Add (cDefaultCategoryIndex);
+    begin
+      pomTransaction.ArrayCategoryIndex.Add (cDefaultCategoryIndex);
+      if Assigned (p_TransWithoutCat) then
+        p_TransWithoutCat.Add (pomTransaction);
+    end;
 
     if pomTransaction.DocAmount >= 0 then
       pomTransaction.TransactionType := cImpact

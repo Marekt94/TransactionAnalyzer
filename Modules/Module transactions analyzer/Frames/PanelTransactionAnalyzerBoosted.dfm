@@ -19,19 +19,18 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     Height = 240
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 8
+    ExplicitLeft = 185
+    ExplicitWidth = 639
     inherited pnlDescription: TPanel
       Left = 367
-      ExplicitLeft = 467
+      ExplicitLeft = 367
     end
     inherited pnlGrid: TPanel
       Width = 367
-      ExplicitLeft = 0
-      ExplicitWidth = 467
+      ExplicitWidth = 367
       inherited strTransaction: TStringGrid
         Width = 365
-        OnClick = nil
-        ExplicitWidth = 465
+        ExplicitWidth = 365
       end
     end
   end

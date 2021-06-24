@@ -7,18 +7,8 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs,
   Category, InterfaceTransactionsController, InterfaceModuleRules,
-  InterfaceModuleTransactionAnalyzer, PanelTransactionsList;
-
-const
-  cExecutionDate   = 'Data wykonania';
-  cOrderDate       = 'Data zamówienia';
-  cTransactionType = 'Typ';
-  cDescription     = 'Tytu³';
-  cAmount          = 'Kwota';
-  cCategories      = 'Kategorie';
-
-  cDefaultRowCount = 1;
-  cDefaultColCount = 6;
+  InterfaceModuleTransactionAnalyzer, PanelTransactionsList, WindowSkeleton,
+  PanelMain;
 
 type
   TFrmTransactionAnalyzerBoosted = class(TFrame)
@@ -33,6 +23,7 @@ type
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
     FCategoriesAndChbDict    : TDictionary <TCategory, TCheckBox>;
+    FTransWithoutCat         : TList<TTransaction>;
     procedure InitCategories;
     procedure FillChoosenCategories;
     procedure UpdateView;
@@ -73,20 +64,6 @@ begin
   end;
 end;
 
-//procedure TFrmTransactionAnalyzerBoosted.InitStringList;
-//begin
-//  with frmTrnsactionsList.strTransaction do
-//  begin
-//    ColCount := cDefaultColCount;
-//    Cells [0,0] := cExecutionDate;
-//    Cells [1,0] := cOrderDate;
-//    Cells [2,0] := cTransactionType;
-//    Cells [3,0] := cDescription;
-//    Cells [4,0] := cAmount;
-//    Cells [5,0] := cCategories;
-//  end;
-//end;
-
 procedure TFrmTransactionAnalyzerBoosted.LoadAndAnalyzeTransactions;
 var
   pomCategories : IModuleCategories;
@@ -104,7 +81,8 @@ begin
         var pomRuleController : IModuleRules;
         pomRuleController := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
         pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-        FController.AnalyzeTransactions (FController.TransactionsList, pomRuleController, pomCategories, pomRules);
+        FTransWithoutCat.Clear;
+        FController.AnalyzeTransactions (FController.TransactionsList, pomRuleController, pomCategories, pomRules, FTransWithoutCat);
         FController.UpdateSummary (FController.TransactionsList, FSummary, pomCategories);
         UpdateView;
       finally
@@ -119,88 +97,45 @@ begin
   frmTrnsactionsList.UpdateDescription;
 end;
 
-//procedure TFrmTransactionAnalyzerBoosted.UpdateBilans;
-//begin
-//  var pomStr : string;
-//  pomStr := '';
-//  for var pomSummary in FSummary do
-//  begin
-//    var pomCategory : TCategory;
-//    pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
-//    pomStr := pomStr + pomCategory.CategoryName + ' - wp³yw: ' + FloatToStr(pomSummary.Impact) + ' - wydatek: ' + FloatToStr (pomSummary.Expense) + sLineBreak;
-//  end;
-//
-//  frmTrnsactionsList.lblBilans.Caption := pomStr;
-//end;
-
-//procedure TFrmTransactionAnalyzerBoosted.UpdateDescription;
-//var
-//  pomExecDate, pomOrderDate : string;
-//  pomDocTransactionType : string;
-//  pomDesc : string;
-//  pomAmount : string;
-//  pomCategories : string;
-//  pomType : string;
-//
-//  pomTransaction : TTransaction;
-//  pomTransactionList : TList<TTransaction>;
-//begin
-//  pomTransactionList := FTransactionListFiltered;
-//  if (frmTrnsactionsList.strTransaction.Row > 0) and (pomTransactionList.Count > 0) then
-//  begin
-//    pomTransaction := pomTransactionList [frmTrnsactionsList.strTransaction.Row - 1];
-//
-//    with pomTransaction do
-//    begin
-//      pomExecDate  := Format ('%s:' + sLineBreak + '%s', [cExecutionDate, DateToStr (DocExecutionDate)]);
-//      pomOrderDate := Format ('%s:' + sLineBreak + '%s', [cOrderDate,     DateToStr (DocOrderDate)]);
-//      pomDocTransactionType := Format ('%s: %s', [cTransactionType, DocTransactionType]);
-//      pomDesc := Format ('%s:' + sLineBreak + '%s', [cDescription, DocDescription]);
-//      pomAmount := Format ('%s:' + sLineBreak + '%s', [cAmount, FloatToStr (DocAmount)]);
-//      pomCategories := 'Kategorie: ' + sLineBreak + CategoriesToLine (pomTransaction);
-//      if TransactionType = cExpense then
-//        pomType := 'Typ:' + sLineBreak + 'Wydatek'
-//      else
-//        pomType := 'Typ:' + sLineBreak + 'Wp³yw';
-//    end;
-//    frmTrnsactionsList.lblDescription.Caption := pomExecDate + sLineBreak + sLineBreak +
-//                              pomOrderDate + sLineBreak + sLineBreak +
-//                              pomDocTransactionType + sLineBreak + sLineBreak +
-//                              pomDesc + sLineBreak + sLineBreak +
-//                              pomAmount + sLineBreak + sLineBreak +
-//                              pomCategories + sLineBreak + sLineBreak +
-//                              pomType;
-//  end
-//  else
-//    frmTrnsactionsList.lblDescription.Caption := '';
-//end;
-
 procedure TFrmTransactionAnalyzerBoosted.UpdateView;
 begin
   FillChoosenCategories;
   FController.GetTransactionsListFiltered (FController.TransactionsList, FTransactionListFiltered, FChoosenCategories);
-  frmTrnsactionsList.FillList (FTransactionListFiltered, true);
+  frmTrnsactionsList.Init(FTransactionListFiltered, FSummary);
+  frmTrnsactionsList.FillList;
   frmTrnsactionsList.UpdateDescription;
   frmTrnsactionsList.UpdateBilans;
 end;
 
-//procedure TFrmTransactionAnalyzerBoosted.FrameResize(Sender: TObject);
-//begin
-//  GUIMethods.FitGridAlClient (frmTrnsactionsList.strTransaction);
-//end;
-
 procedure TFrmTransactionAnalyzerBoosted.AfterConstruction;
+var
+  pomWnd : TWndSkeleton;
+  pomFrm : TfrmTransasctionsList;
 begin
   inherited;
   FCategoriesAndChbDict := TDictionary <TCategory, TCheckBox>.Create;
   FSummary := TList <TSummary>.Create;
   FTransactionListFiltered := TList <TTransaction>.Create;
   FChoosenCategories := TList<Integer>.Create;
+  FTransWithoutCat := TList <TTransaction>.Create;
 
   frmTrnsactionsList.InitStringList;
   InitCategories;
 
   LoadAndAnalyzeTransactions;
+
+  pomWnd := TWndSkeleton.Create(nil);
+  try
+    pomFrm := TfrmTransasctionsList.Create (pomWnd);
+    pomWnd.Init(pomFrm, 'Transakcje bez kategorii', false);
+    pomFrm.Init (FTransWithoutCat, nil);
+    pomFrm.InitStringList;
+    pomFrm.FillList;
+    pomFrm.UpdateDescription;
+    pomWnd.ShowModal;
+  finally
+    pomWnd.Free;
+  end;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.BeforeDestruction;
@@ -210,6 +145,7 @@ begin
   FreeAndNil (FSummary);
   FreeAndNil (FTransactionListFiltered);
   FreeAndNil (FChoosenCategories);
+  FreeAndNil (FTransWithoutCat);
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.FillChoosenCategories;
@@ -222,52 +158,6 @@ begin
     if FCategoriesAndChbDict.Items [pomCat].Checked then
       FChoosenCategories.Add (pomCat.CategoryIndex);
 end;
-
-//procedure TFrmTransactionAnalyzerBoosted.FillList (p_TransactionList : TList<TTransaction>;
-//                                                   p_Clear           : boolean = true);
-//begin
-//  if p_Clear then frmTrnsactionsList.strTransaction.RowCount := cDefaultRowCount;
-//
-//  frmTrnsactionsList.strTransaction.RowCount := p_TransactionList.Count + 1;
-//  for var i := 0 to p_TransactionList.Count - 1 do
-//    AddTransaction(p_TransactionList [i], i + 1);
-//  if frmTrnsactionsList.strTransaction.RowCount > 1 then
-//    frmTrnsactionsList.strTransaction.FixedRows := 1
-//  else
-//    frmTrnsactionsList.strTransaction.RowCount := 0;
-//end;
-
-//function TFrmTransactionAnalyzerBoosted.FindColIndex(p_Title: string): integer;
-//resourcestring
-//  rs_NoSuchColumn_s = 'Kolumna o takiej nazwie nie istnieje : %s';
-//begin
-//  for var i := 0 to frmTrnsactionsList.strTransaction.ColCount - 1 do
-//  begin
-//    if frmTrnsactionsList.strTransaction.Cells [i, 0] = p_Title then
-//      Exit (i);
-//  end;
-//  raise Exception.Create(Format (rs_NoSuchColumn_s, [p_Title]));
-//end;
-
-//procedure TFrmTransactionAnalyzerBoosted.AddTransaction (p_Transaction : TTransaction;
-//                                                         p_Row         : Integer);
-//begin
-//  try
-//    with frmTrnsactionsList.strTransaction do
-//    begin
-//      Cells [FindColIndex (cExecutionDate),   p_Row] := DateToStr (p_Transaction.DocExecutionDate);
-//      Cells [FindColIndex (cOrderDate),       p_Row] := DateToStr (p_Transaction.DocOrderDate);
-//      Cells [FindColIndex (cTransactionType), p_Row] := p_Transaction.DocTransactionType;
-//      Cells [FindColIndex (cDescription),     p_Row] := p_Transaction.DocDescription;
-//      Cells [FindColIndex (cAmount),          p_Row] := FloatToStr (p_Transaction.DocAmount);
-//      Cells [FindColIndex (cCategories),      p_Row] := CategoriesToLine (p_Transaction);
-//    end;
-//  except
-//    frmTrnsactionsList.strTransaction.RowCount := cDefaultRowCount;
-//  end;
-//end;
-
-
 
 procedure TFrmTransactionAnalyzerBoosted.CheckBoxClick(Sender: TObject);
 begin

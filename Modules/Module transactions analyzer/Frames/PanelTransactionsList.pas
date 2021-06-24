@@ -7,6 +7,18 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, Transaction, System.Generics.Collections;
 
+const
+  cLP              = 'L. p.';
+  cExecutionDate   = 'Data wykonania';
+  cOrderDate       = 'Data zamówienia';
+  cTransactionType = 'Typ';
+  cDescription     = 'Tytu³';
+  cAmount          = 'Kwota';
+  cCategories      = 'Kategorie';
+
+  cDefaultRowCount = 1;
+  cDefaultColCount = 7;
+
 type
   TfrmTransasctionsList = class(TFrame)
     pnlDescription: TPanel;
@@ -15,25 +27,32 @@ type
     pnlGrid: TPanel;
     strTransaction: TStringGrid;
     procedure FrameResize(Sender: TObject);
+    procedure strTransactionClick(Sender: TObject);
   private
+    FTransactionList : TList<TTransaction>;
+    FSummary : TList <TSummary>;
     procedure AddTransaction (p_Transaction : TTransaction;
                               p_Row         : Integer);
     function FindColIndex(p_Title: string): integer;
     function CategoriesToLine (p_Transaction : TTransaction) : string;
-  public
-    procedure UpdateDescription;
-    procedure InitStringList;
     procedure FillList (p_TransactionList : TList<TTransaction>;
-                        p_Clear           : boolean = true);
-    procedure UpdateBilans;
+                        p_Clear           : boolean = true); overload;
+    procedure UpdateBilans (p_Summary : TList <TSummary>); overload;
+    procedure UpdateDescription (p_TransactionList : TList<TTransaction>); overload;
+  public
+    procedure InitStringList;
+    procedure FillList (p_Clear : boolean = true); overload;
+    procedure UpdateBilans; overload;
+    procedure UpdateDescription; overload;
+    procedure Init (p_TransactionList : TList <TTransaction>;
+                    p_Summary         : TList <TSummary>);
   end;
 
 implementation
 
 {$R *.dfm}
 
-uses GUIMethods, PanelTransactionAnalyzerBoosted, Kernel,
-  InterfaceModuleCategory;
+uses GUIMethods, Kernel, InterfaceModuleCategory, Category;
 
 procedure TfrmTransasctionsList.AddTransaction (p_Transaction : TTransaction;
                                                 p_Row         : Integer);
@@ -41,6 +60,7 @@ begin
   try
     with strTransaction do
     begin
+      Cells [FindColIndex (cLP),              p_Row] := IntToStr(p_Row) + '.';
       Cells [FindColIndex (cExecutionDate),   p_Row] := DateToStr (p_Transaction.DocExecutionDate);
       Cells [FindColIndex (cOrderDate),       p_Row] := DateToStr (p_Transaction.DocOrderDate);
       Cells [FindColIndex (cTransactionType), p_Row] := p_Transaction.DocTransactionType;
@@ -51,6 +71,11 @@ begin
   except
     strTransaction.RowCount := cDefaultRowCount;
   end;
+end;
+
+procedure TfrmTransasctionsList.FillList(p_Clear: boolean);
+begin
+  FillList(FTransactionList, p_Clear);
 end;
 
 function TfrmTransasctionsList.FindColIndex(p_Title: string): integer;
@@ -66,7 +91,7 @@ begin
 end;
 
 procedure TfrmTransasctionsList.FillList (p_TransactionList : TList<TTransaction>;
-                                                   p_Clear           : boolean = true);
+                                          p_Clear           : boolean = true);
 begin
   if p_Clear then strTransaction.RowCount := cDefaultRowCount;
 
@@ -84,7 +109,7 @@ begin
   GUIMethods.FitGridAlClient (strTransaction);
 end;
 
-procedure TfrmTransasctionsList.UpdateDescription;
+procedure TfrmTransasctionsList.UpdateDescription (p_TransactionList : TList<TTransaction>);
 var
   pomExecDate, pomOrderDate : string;
   pomDocTransactionType : string;
@@ -94,36 +119,41 @@ var
   pomType : string;
 
   pomTransaction : TTransaction;
-  pomTransactionList : TList<TTransaction>;
 begin
-//  pomTransactionList := FTransactionListFiltered;
-//  if (strTransaction.Row > 0) and (pomTransactionList.Count > 0) then
-//  begin
-//    pomTransaction := pomTransactionList [t.strTransaction.Row - 1];
-//
-//    with pomTransaction do
-//    begin
-//      pomExecDate  := Format ('%s:' + sLineBreak + '%s', [cExecutionDate, DateToStr (DocExecutionDate)]);
-//      pomOrderDate := Format ('%s:' + sLineBreak + '%s', [cOrderDate,     DateToStr (DocOrderDate)]);
-//      pomDocTransactionType := Format ('%s: %s', [cTransactionType, DocTransactionType]);
-//      pomDesc := Format ('%s:' + sLineBreak + '%s', [cDescription, DocDescription]);
-//      pomAmount := Format ('%s:' + sLineBreak + '%s', [cAmount, FloatToStr (DocAmount)]);
-//      pomCategories := 'Kategorie: ' + sLineBreak + CategoriesToLine (pomTransaction);
-//      if TransactionType = cExpense then
-//        pomType := 'Typ:' + sLineBreak + 'Wydatek'
-//      else
-//        pomType := 'Typ:' + sLineBreak + 'Wp³yw';
-//    end;
-//    t.lblDescription.Caption := pomExecDate + sLineBreak + sLineBreak +
-//                              pomOrderDate + sLineBreak + sLineBreak +
-//                              pomDocTransactionType + sLineBreak + sLineBreak +
-//                              pomDesc + sLineBreak + sLineBreak +
-//                              pomAmount + sLineBreak + sLineBreak +
-//                              pomCategories + sLineBreak + sLineBreak +
-//                              pomType;
-//  end
-//  else
-//    t.lblDescription.Caption := '';
+  if (strTransaction.Row > 0) and (p_TransactionList.Count > 0) then
+  begin
+    pomTransaction := p_TransactionList [strTransaction.Row - 1];
+
+    with pomTransaction do
+    begin
+      pomExecDate  := Format ('%s:' + sLineBreak + '%s', [cExecutionDate, DateToStr (DocExecutionDate)]);
+      pomOrderDate := Format ('%s:' + sLineBreak + '%s', [cOrderDate,     DateToStr (DocOrderDate)]);
+      pomDocTransactionType := Format ('%s: %s', [cTransactionType, DocTransactionType]);
+      pomDesc := Format ('%s:' + sLineBreak + '%s', [cDescription, DocDescription]);
+      pomAmount := Format ('%s:' + sLineBreak + '%s', [cAmount, FloatToStr (DocAmount)]);
+      pomCategories := 'Kategorie: ' + sLineBreak + CategoriesToLine (pomTransaction);
+      if TransactionType = cExpense then
+        pomType := 'Typ:' + sLineBreak + 'Wydatek'
+      else
+        pomType := 'Typ:' + sLineBreak + 'Wp³yw';
+    end;
+    lblDescription.Caption := pomExecDate + sLineBreak + sLineBreak +
+                              pomOrderDate + sLineBreak + sLineBreak +
+                              pomDocTransactionType + sLineBreak + sLineBreak +
+                              pomDesc + sLineBreak + sLineBreak +
+                              pomAmount + sLineBreak + sLineBreak +
+                              pomCategories + sLineBreak + sLineBreak +
+                              pomType;
+  end
+  else
+    lblDescription.Caption := '';
+end;
+
+procedure TfrmTransasctionsList.Init(p_TransactionList: TList<TTransaction>;
+  p_Summary: TList<TSummary>);
+begin
+  FTransactionList := p_TransactionList;
+  FSummary := p_Summary;
 end;
 
 procedure TfrmTransasctionsList.InitStringList;
@@ -131,13 +161,19 @@ begin
   with strTransaction do
   begin
     ColCount := cDefaultColCount;
-    Cells [0,0] := cExecutionDate;
-    Cells [1,0] := cOrderDate;
-    Cells [2,0] := cTransactionType;
-    Cells [3,0] := cDescription;
-    Cells [4,0] := cAmount;
-    Cells [5,0] := cCategories;
+    Cells [0,0] := cLP;
+    Cells [1,0] := cExecutionDate;
+    Cells [2,0] := cOrderDate;
+    Cells [3,0] := cTransactionType;
+    Cells [4,0] := cDescription;
+    Cells [5,0] := cAmount;
+    Cells [6,0] := cCategories;
   end;
+end;
+
+procedure TfrmTransasctionsList.strTransactionClick(Sender: TObject);
+begin
+  UpdateDescription;
 end;
 
 function TfrmTransasctionsList.CategoriesToLine (p_Transaction : TTransaction) : string;
@@ -156,18 +192,29 @@ begin
   end;
 end;
 
+procedure TfrmTransasctionsList.UpdateBilans (p_Summary : TList <TSummary>);
+begin
+  var pomStr : string;
+  pomStr := '';
+  if Assigned (p_Summary) then
+    for var pomSummary in p_Summary do
+    begin
+      var pomCategory : TCategory;
+      pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
+      pomStr := pomStr + pomCategory.CategoryName + ' - wp³yw: ' + FloatToStr(pomSummary.Impact) + ' - wydatek: ' + FloatToStr (pomSummary.Expense) + sLineBreak;
+    end;
+
+  lblBilans.Caption := pomStr;
+end;
+
 procedure TfrmTransasctionsList.UpdateBilans;
 begin
-//  var pomStr : string;
-//  pomStr := '';
-//  for var pomSummary in FSummary do
-//  begin
-//    var pomCategory : TCategory;
-//    pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
-//    pomStr := pomStr + pomCategory.CategoryName + ' - wp³yw: ' + FloatToStr(pomSummary.Impact) + ' - wydatek: ' + FloatToStr (pomSummary.Expense) + sLineBreak;
-//  end;
-//
-//  frmTrnsactionsList.lblBilans.Caption := pomStr;
+  UpdateBilans (FSummary);
+end;
+
+procedure TfrmTransasctionsList.UpdateDescription;
+begin
+  UpdateDescription (FTransactionList)
 end;
 
 end.

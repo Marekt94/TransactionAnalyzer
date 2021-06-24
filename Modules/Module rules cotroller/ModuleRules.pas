@@ -76,7 +76,7 @@ begin
       ObjectList := pomRulesList;
       WndListTitle := 'Regu³y';
       WndObjTitle  := 'Regu³a';
-      NavigationKeys := False;
+      NavigationKeys := true;
       FullScreen := True;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);

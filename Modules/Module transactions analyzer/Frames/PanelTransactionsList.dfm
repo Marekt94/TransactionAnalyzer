@@ -2,22 +2,22 @@ object frmTransasctionsList: TfrmTransasctionsList
   Left = 0
   Top = 0
   Width = 739
-  Height = 240
+  Height = 346
   TabOrder = 0
   OnResize = FrameResize
   object pnlDescription: TPanel
     Left = 467
     Top = 0
     Width = 272
-    Height = 240
+    Height = 346
     Align = alRight
     TabOrder = 0
-    ExplicitLeft = 48
+    ExplicitHeight = 240
     object lblDescription: TLabel
       Left = 1
       Top = 1
       Width = 270
-      Height = 225
+      Height = 331
       Align = alClient
       Alignment = taCenter
       Caption = 'lblDescription'
@@ -27,34 +27,33 @@ object frmTransasctionsList: TfrmTransasctionsList
     end
     object lblBilans: TLabel
       Left = 1
-      Top = 226
+      Top = 332
       Width = 270
       Height = 13
       Align = alBottom
-      Caption = 'lblBilans'
-      ExplicitWidth = 37
+      ExplicitWidth = 3
     end
   end
   object pnlGrid: TPanel
     Left = 0
     Top = 0
     Width = 467
-    Height = 240
+    Height = 346
     Align = alClient
     Caption = 'pnlGrid'
     TabOrder = 1
-    ExplicitLeft = -31
-    ExplicitWidth = 351
+    ExplicitHeight = 240
     object strTransaction: TStringGrid
       Left = 1
       Top = 1
       Width = 465
-      Height = 238
+      Height = 344
       Align = alClient
       FixedCols = 0
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
       TabOrder = 0
-      ExplicitWidth = 349
+      OnClick = strTransactionClick
+      ExplicitHeight = 238
     end
   end
 end
