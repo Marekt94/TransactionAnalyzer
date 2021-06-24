@@ -47,7 +47,7 @@ begin
   try
     pomRulesList := TObjectList <TRule>.Create;
     pomRuleSaver := (Kernel.GiveObjectByInterface (IRuleSaver) as IRuleSaver);
-    pomRuleSaver.LoadRules (pomRulesList, '');
+    pomRuleSaver.LoadRules (pomRulesList);
     with pomSteeringObj do
     begin
       ObjectClass := TRule;
@@ -81,7 +81,7 @@ begin
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then
-      pomRuleSaver.SaveRules (pomRulesList, '');
+      pomRuleSaver.SaveRules (pomRulesList);
   finally
     pomSteeringObj.Free;
     pomRulesList.Free;

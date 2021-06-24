@@ -21,6 +21,7 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     TabOrder = 1
     ExplicitLeft = 185
     ExplicitWidth = 639
+    ExplicitHeight = 240
     inherited pnlDescription: TPanel
       Left = 367
       ExplicitLeft = 367

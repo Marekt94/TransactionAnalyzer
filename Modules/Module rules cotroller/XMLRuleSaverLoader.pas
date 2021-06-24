@@ -3,13 +3,16 @@ unit XMLRuleSaverLoader;
 interface
 
 uses
-  InterfaceRuleSaver, System.Generics.Collections, Rule, System.SysUtils;
+  InterfaceRuleSaver, System.Generics.Collections, Rule, System.SysUtils,
+  InterfaceModuleSettings, Kernel;
 
 type
   TXMLRuleSaverLoader = class (TInterfacedObject, IRuleSaver)
   public
-    procedure SaveRules (const p_RuleList : TObjectList <TRule>; p_Path : string);
-    procedure LoadRules (var   p_RuleList : TObjectList <TRule>; p_Path : string);
+    procedure SaveRules (const p_RuleList : TObjectList <TRule>; p_Path : string); overload;
+    procedure LoadRules (var   p_RuleList : TObjectList <TRule>; p_Path : string); overload;
+    procedure SaveRules (const p_RuleList : TObjectList <TRule>); overload;
+    procedure LoadRules (var   p_RuleList : TObjectList <TRule>); overload;
   end;
 
 implementation
@@ -32,7 +35,7 @@ begin
 
   pomRuleListNode := nil;
   pomDocument := TXMLDocument.Create(nil);
-  p_Path := p_Path + rs_FileName;
+  p_Path := p_Path + '\' + rs_FileName;
   if FileExists (p_Path) then
   begin
     pomDocument.LoadFromFile (p_Path);
@@ -97,7 +100,35 @@ begin
     pomRuleNodes.NodeValue := p_RuleList [i].CategoryIndex;
   end;
 
-  pomDocument.SaveToFile(p_Path + rs_FileName);
+  pomDocument.SaveToFile(p_Path + '\' + rs_FileName);
+end;
+
+procedure TXMLRuleSaverLoader.LoadRules(var p_RuleList: TObjectList<TRule>);
+var
+  pomSettings : IModuleSettings;
+  pomFolderPath : string;
+begin
+  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  if Assigned (pomSettings) then
+    pomFolderPath := pomSettings.Settings.MainFolderPath
+  else
+    pomFolderPath := '';
+
+  LoadRules (p_RuleList, pomFolderPath);
+end;
+
+procedure TXMLRuleSaverLoader.SaveRules(const p_RuleList: TObjectList<TRule>);
+var
+  pomSettings : IModuleSettings;
+  pomFolderPath : string;
+begin
+  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  if Assigned (pomSettings) then
+    pomFolderPath := pomSettings.Settings.MainFolderPath
+  else
+    pomFolderPath := '';
+
+  SaveRules (p_RuleList, pomFolderPath);
 end;
 
 end.

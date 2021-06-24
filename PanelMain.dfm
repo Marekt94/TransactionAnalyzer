@@ -1,16 +1,15 @@
 object frmTransactionList: TfrmTransactionList
   Left = 0
   Top = 0
-  Width = 354
-  Height = 73
+  Width = 321
+  Height = 138
   TabOrder = 0
   object GridPanel1: TGridPanel
     Left = 0
     Top = 0
-    Width = 354
-    Height = 73
+    Width = 321
+    Height = 138
     Align = alClient
-    Caption = 'GridPanel1'
     ColumnCollection = <
       item
         Value = 100.000000000000000000
@@ -30,50 +29,74 @@ object frmTransactionList: TfrmTransactionList
         Column = 0
         Control = btnAnalyze
         Row = 0
+      end
+      item
+        Column = 0
+        Control = btnSettings
+        Row = 3
       end>
     RowCollection = <
       item
-        Value = 33.501554856890690000
+        Value = 25.126190104870190000
       end
       item
-        Value = 33.501554856890690000
+        Value = 25.126190104870190000
       end
       item
-        Value = 32.996890286218630000
+        Value = 24.747691315901570000
+      end
+      item
+        Value = 24.999928474358060000
       end>
     TabOrder = 0
+    ExplicitWidth = 354
+    ExplicitHeight = 73
     DesignSize = (
-      354
-      73)
+      321
+      138)
     object butShowCategories: TButton
-      Left = 121
-      Top = 24
+      Left = 105
+      Top = 37
       Width = 111
-      Height = 23
-      Anchors = []
+      Height = 30
+      Anchors = [akTop, akBottom]
       Caption = 'Kategorie'
       TabOrder = 0
       OnClick = butShowCategoriesClick
+      ExplicitLeft = 109
     end
     object btnRules: TButton
-      Left = 121
-      Top = 47
+      Left = 105
+      Top = 70
       Width = 111
-      Height = 25
-      Anchors = []
+      Height = 30
+      Anchors = [akTop, akBottom]
       Caption = 'Zasady'
       TabOrder = 1
       OnClick = btnRulesClick
+      ExplicitLeft = 109
     end
     object btnAnalyze: TButton
-      Left = 121
-      Top = 1
+      Left = 105
+      Top = 3
       Width = 111
-      Height = 23
-      Anchors = []
+      Height = 30
+      Anchors = [akTop, akBottom]
       Caption = 'Transakcje'
       TabOrder = 2
       OnClick = btnAnalyzeClick
+      ExplicitLeft = 109
+    end
+    object btnSettings: TButton
+      Left = 105
+      Top = 104
+      Width = 111
+      Height = 30
+      Anchors = [akTop, akBottom]
+      Caption = 'Ustawienia'
+      TabOrder = 3
+      OnClick = btnSettingsClick
+      ExplicitLeft = 109
     end
   end
   object ofdOpenTransactionFile: TOpenTextFileDialog

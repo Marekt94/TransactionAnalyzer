@@ -3,7 +3,8 @@ unit XMLCategoriesLoaderSaver;
 interface
 
 uses
-  InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category;
+  InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category,
+  InterfaceModuleSettings, Kernel;
 
 const
   rs_FileName = 'categories.xml';
@@ -11,8 +12,10 @@ const
 type
   TXMLCategoriesLoaderSaver = class (TInterfacedObject, ICategoriesLoaderSaver)
   public
-    function Load (p_List : TObjectList <TCategory>; p_Path : string) : boolean;
-    function Save (p_List : TObjectList <TCategory>; p_Path : string) : boolean;
+    function Load (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
+    function Save (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
+    function Load (p_List : TObjectList <TCategory>) : boolean; overload;
+    function Save (p_List : TObjectList <TCategory>) : boolean; overload;
   end;
 
 implementation
@@ -85,6 +88,36 @@ begin
   pomDocument.SaveToFile(p_Path + rs_FileName);
 
   Result := true
+end;
+
+function TXMLCategoriesLoaderSaver.Load(
+  p_List: TObjectList<TCategory>): boolean;
+var
+  pomSettings : IModuleSettings;
+  pomFolderPath : string;
+begin
+  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  if Assigned (pomSettings) then
+    pomFolderPath := pomSettings.Settings.MainFolderPath
+  else
+    pomFolderPath := '';
+
+  Result := Load(p_List, pomFolderPath);
+end;
+
+function TXMLCategoriesLoaderSaver.Save(
+  p_List: TObjectList<TCategory>): boolean;
+var
+  pomSettings : IModuleSettings;
+  pomFolderPath : string;
+begin
+  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  if Assigned (pomSettings) then
+    pomFolderPath := pomSettings.Settings.MainFolderPath
+  else
+    pomFolderPath := '';
+
+  Result := Save (p_List, pomFolderPath);
 end;
 
 end.

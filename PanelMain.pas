@@ -25,9 +25,11 @@ type
     btnRules: TButton;
     btnAnalyze: TButton;
     GridPanel1: TGridPanel;
+    btnSettings: TButton;
     procedure butShowCategoriesClick(Sender: TObject);
     procedure btnRulesClick(Sender: TObject);
     procedure btnAnalyzeClick(Sender: TObject);
+    procedure btnSettingsClick(Sender: TObject);
   public
     constructor Create (AOwner: TComponent); override;
   end;
@@ -36,7 +38,8 @@ implementation
 
 uses
   System.SysUtils, InterfaceModuleRules, Kernel,
-  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory, UsefullMethods;
+  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory, UsefullMethods,
+  InterfaceModuleSettings;
 
 {$R *.dfm}
 
@@ -49,6 +52,14 @@ var
 begin
   pomRulesModul := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
   pomRulesModul.OpenMainWindow;
+end;
+
+procedure TfrmTransactionList.btnSettingsClick(Sender: TObject);
+var
+  pomSettings : IModuleSettings;
+begin
+  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  pomSettings.OpenMainWindow;
 end;
 
 procedure TfrmTransactionList.btnAnalyzeClick(Sender: TObject);

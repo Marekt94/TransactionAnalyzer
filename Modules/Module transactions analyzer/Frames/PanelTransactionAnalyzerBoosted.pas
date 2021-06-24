@@ -77,7 +77,7 @@ begin
       pomRules := TObjectList<TRule>.Create;
       try
         (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(FController.TransactionsList, ofdTransactions.FileName);
-        (Kernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules, 'C:\Users\Marek\Documents\GitHub\TransactionAnalyzer\TransactionAnalyzer\Win32\Debug\');
+        (Kernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
         var pomRuleController : IModuleRules;
         pomRuleController := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
         pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;

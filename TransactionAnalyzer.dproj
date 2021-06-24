@@ -166,6 +166,17 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
+        <DCCReference Include="Modules\Module settings\ModuleSettings.pas"/>
+        <DCCReference Include="Modules\Module settings\Interfaces\InterfaceSettingsLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module settings\Settings.pas"/>
+        <DCCReference Include="Modules\Module settings\XMLSettingsLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module settings\ConstXMLSettingsLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module settings\Frames\PanelSettings.pas">
+            <Form>frmSettings</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

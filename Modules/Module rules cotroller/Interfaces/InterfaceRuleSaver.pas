@@ -8,8 +8,8 @@ uses
 type
   IRuleSaver = interface (IInterface)
   ['{514BD503-C314-43EA-8ED1-B9C3BBFFCC5D}']
-    procedure SaveRules (const p_RuleList : TObjectList <TRule>; p_Path : string);
-    procedure LoadRules (var   p_RuleList : TObjectList <TRule>; p_Path : string);
+    procedure SaveRules (const p_RuleList : TObjectList <TRule>);
+    procedure LoadRules (var   p_RuleList : TObjectList <TRule>);
   end;
 
 implementation

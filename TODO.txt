@@ -1,10 +1,9 @@
+- reguła po zakresie kwot
 - tłumaczenia na polski
 - zrobić xmlloader saver bardziej uniwersalny
 - zrobić updateview bardziej uniwersalne
 - dokońcyc refactoring od modułu analizy
 - rozszerzyć okno o walidacje
-- moduł analizy
-- autosize kolumn
 - ogarnąć uruchamianie głwónego okna, zeby nie uruchamiał się szkielet ze sztucznie dodaną ramką (uniezlażenić od jądra)
 - znaleźć dobry logger
 - wyczyścić niepotrzebne unity
@@ -18,3 +17,5 @@ opcjonalne
 SKOŃCZONE
 - dodać w jądrze, żeby moduł również dodawał się do listy interfejsów i zwracał siebie
 - w module wczytywania powinna byc lista transakcji
+- moduł analizy
+- autosize kolumn

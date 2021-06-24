@@ -4,7 +4,8 @@ interface
 
 uses
   InterfaceModule, System.Generics.Collections, InterfaceTransactionLoader,
-  Transaction, WindowSkeleton, ModuleTransactionAnalyzer;
+  Transaction, WindowSkeleton, ModuleTransactionAnalyzer, ModuleSettings,
+  Settings;
 
 type
   TKernel = class (TInterfacedObject)
@@ -34,7 +35,7 @@ uses
 
 procedure TKernel.CloseModules;
 begin
-  for var i := 0 to FObjectList.Count - 1 do
+  for var i := FObjectList.Count - 1 downto 0 do
     FObjectList [i].CloseModule;
 end;
 
@@ -42,9 +43,10 @@ constructor TKernel.Create;
 begin
   FObjectList := TList<IModule>.Create;
 
+  FObjectList.Add (TModuleSettings.Create);
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
-  FObjectList.Add (TModuleRules.Create)
+  FObjectList.Add (TModuleRules.Create);
 end;
 
 destructor TKernel.Destroy;

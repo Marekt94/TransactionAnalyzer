@@ -82,7 +82,7 @@ end;
 
 function TModuleCategories.LoadCategories : boolean;
 begin
-  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList, '');
+  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList);
   if FCategoryList.Count < 1 then
   begin
     var pomCategory := TCategory.Create;
@@ -141,7 +141,7 @@ end;
 
 function TModuleCategories.SaveCategories : boolean;
 begin
-  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList, '');
+  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList);
 end;
 
 procedure TModuleCategories.SetIndexes;
