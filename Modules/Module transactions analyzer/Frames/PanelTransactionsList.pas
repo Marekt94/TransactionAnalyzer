@@ -26,10 +26,15 @@ type
     lblBilans: TLabel;
     pnlGrid: TPanel;
     strTransaction: TStringGrid;
+    pnlFoot: TPanel;
+    chbImpact: TCheckBox;
+    chbExpense: TCheckBox;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
+    procedure chbExpenseClick(Sender: TObject);
   private
     FTransactionList : TList<TTransaction>;
+    FTransactionListFiltered : TList<TTransaction>;
     FSummary : TList <TSummary>;
     procedure AddTransaction (p_Transaction : TTransaction;
                               p_Row         : Integer);
@@ -46,6 +51,8 @@ type
     procedure UpdateDescription; overload;
     procedure Init (p_TransactionList : TList <TTransaction>;
                     p_Summary         : TList <TSummary>);
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
   end;
 
 implementation
@@ -75,7 +82,16 @@ end;
 
 procedure TfrmTransasctionsList.FillList(p_Clear: boolean);
 begin
-  FillList(FTransactionList, p_Clear);
+  FTransactionListFiltered.Clear;
+  for var pomTransaction in FTransactionList do
+  begin
+    if chbImpact.Checked and (pomTransaction.TransactionType = cImpact) then
+      FTransactionListFiltered.Add (pomTransaction);
+
+    if chbExpense.Checked and (pomTransaction.TransactionType = cExpense) then
+      FTransactionListFiltered.Add (pomTransaction);
+  end;
+  FillList(FTransactionListFiltered, p_Clear);
 end;
 
 function TfrmTransasctionsList.FindColIndex(p_Title: string): integer;
@@ -176,6 +192,18 @@ begin
   UpdateDescription;
 end;
 
+procedure TfrmTransasctionsList.AfterConstruction;
+begin
+  inherited;
+  FTransactionListFiltered := TList<TTransaction>.Create;
+end;
+
+procedure TfrmTransasctionsList.BeforeDestruction;
+begin
+  FreeAndNil (FTransactionListFiltered);
+  inherited;
+end;
+
 function TfrmTransasctionsList.CategoriesToLine (p_Transaction : TTransaction) : string;
 var
   pomCategoriesModul : IModuleCategories;
@@ -190,6 +218,13 @@ begin
       Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex [j]).CategoryName + ',';
     Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex.Last).CategoryName
   end;
+end;
+
+procedure TfrmTransasctionsList.chbExpenseClick(Sender: TObject);
+begin
+  FillList(true);
+  UpdateBilans;
+  UpdateDescription;
 end;
 
 procedure TfrmTransasctionsList.UpdateBilans (p_Summary : TList <TSummary>);
@@ -214,7 +249,7 @@ end;
 
 procedure TfrmTransasctionsList.UpdateDescription;
 begin
-  UpdateDescription (FTransactionList)
+  UpdateDescription (FTransactionListFiltered)
 end;
 
 end.

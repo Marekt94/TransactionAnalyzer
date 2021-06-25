@@ -117,8 +117,8 @@ begin
       ObjectList := FCategoryList;
       WndListTitle := 'Kategorie';
       WndObjTitle  := 'Kategoria';
-      NavigationKeys := False;
-      FullScreen := True;
+      NavigationKeys := true;
+      FullScreen := false;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     SetIndexes;

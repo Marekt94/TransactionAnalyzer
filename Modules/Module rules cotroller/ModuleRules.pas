@@ -77,7 +77,7 @@ begin
       WndListTitle := 'Regu³y';
       WndObjTitle  := 'Regu³a';
       NavigationKeys := true;
-      FullScreen := True;
+      FullScreen := false;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then
