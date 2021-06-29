@@ -12,6 +12,9 @@ const
   rs_NN_DateFrom       = 'datefrom';
   rs_NN_DateTo         = 'dateto';
   rs_NN_CategoryIndex  = 'categoryindex';
+  rs_NN_PriceBetween   = 'pricebetween';
+  rs_NN_PriceLow       = 'pricelow';
+  rs_NN_PriceHigh      = 'pricehigh';
 
 
 implementation

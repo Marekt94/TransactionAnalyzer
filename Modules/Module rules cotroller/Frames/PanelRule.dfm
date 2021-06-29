@@ -1,14 +1,14 @@
 inherited frmRule: TfrmRule
   AlignWithMargins = True
   Width = 628
-  Height = 123
+  Height = 150
   Margins.Left = 10
   Margins.Top = 10
   Margins.Right = 10
   Margins.Bottom = 10
   ParentFont = False
   ExplicitWidth = 628
-  ExplicitHeight = 123
+  ExplicitHeight = 150
   object Label2: TLabel
     Left = 9
     Top = 19
@@ -20,15 +20,22 @@ inherited frmRule: TfrmRule
     Left = 0
     Top = 41
     Width = 342
-    Height = 79
+    Height = 106
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
     TabOrder = 0
-    ExplicitHeight = 199
+    ExplicitHeight = 79
     object Label1: TLabel
       Left = 215
       Top = 50
+      Width = 6
+      Height = 13
+      Caption = 'a'
+    end
+    object Label3: TLabel
+      Left = 215
+      Top = 70
       Width = 6
       Height = 13
       Caption = 'a'
@@ -61,7 +68,7 @@ inherited frmRule: TfrmRule
     end
     object dtpFromDate: TDateTimePicker
       Left = 112
-      Top = 46
+      Top = 43
       Width = 97
       Height = 21
       Date = 44344.000000000000000000
@@ -71,13 +78,42 @@ inherited frmRule: TfrmRule
     end
     object dtpToDate: TDateTimePicker
       Left = 227
-      Top = 46
+      Top = 44
       Width = 100
       Height = 21
       Date = 44344.000000000000000000
       Time = 0.656119016202865200
       TabOrder = 4
       OnChange = dtpToDateChange
+    end
+    object chbPrice: TCheckBox
+      Left = 9
+      Top = 69
+      Width = 97
+      Height = 17
+      Caption = 'Kwota pomi'#281'dzy: '
+      TabOrder = 5
+      OnClick = chbPriceClick
+    end
+    object edtPriceLow: TEdit
+      Left = 112
+      Top = 69
+      Width = 97
+      Height = 21
+      NumbersOnly = True
+      TabOrder = 6
+      Text = '0'
+      OnChange = edtPriceLowChange
+    end
+    object edtPriceMax: TEdit
+      Left = 227
+      Top = 71
+      Width = 100
+      Height = 21
+      NumbersOnly = True
+      TabOrder = 7
+      Text = '0'
+      OnChange = edtPriceMaxChange
     end
   end
   object cmbCategories: TComboBox
@@ -93,12 +129,11 @@ inherited frmRule: TfrmRule
     Left = 348
     Top = 0
     Width = 280
-    Height = 123
+    Height = 150
     Align = alRight
     Lines.Strings = (
       '')
     TabOrder = 2
-    ExplicitLeft = 40
-    ExplicitHeight = 240
+    ExplicitHeight = 123
   end
 end

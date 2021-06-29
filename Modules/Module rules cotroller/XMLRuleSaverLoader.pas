@@ -60,6 +60,20 @@ begin
         end;
         pomRule.CategoryIndex  := pomRuleNode.ChildNodes.FindNode (rs_NN_CategoryIndex).NodeValue;
 
+        var pomPriceBetweenNode : IXMLNode;
+        pomPriceBetweenNode := nil;
+
+        pomPriceBetweenNode := pomRuleNode.ChildNodes.FindNode (rs_NN_PriceBetween);
+        if Assigned (pomPriceBetweenNode) then
+        begin
+          pomRule.PriceBetween := pomPriceBetweenNode.NodeValue;
+          if pomRule.PriceBetween then
+          begin
+            pomRule.PriceLow  := pomRuleNode.ChildNodes.FindNode (rs_NN_PriceLow).NodeValue;
+            pomRule.PriceHigh := pomRuleNode.ChildNodes.FindNode (rs_NN_PriceHigh).NodeValue;
+          end;
+        end;
+
         p_RuleList.Add (pomRule);
       end;
     end;
@@ -98,6 +112,15 @@ begin
 
     pomRuleNodes := pomRule.AddChild(rs_NN_CategoryIndex);
     pomRuleNodes.NodeValue := p_RuleList [i].CategoryIndex;
+
+    pomRuleNodes := pomRule.AddChild (rs_NN_PriceBetween);
+    pomRuleNodes.NodeValue := p_RuleList [i].PriceBetween;
+
+    pomRuleNodes := pomRule.AddChild (rs_NN_PriceLow);
+    pomRuleNodes.NodeValue := p_RuleList [i].PriceLow;
+
+    pomRuleNodes := pomRule.AddChild (rs_NN_PriceHigh);
+    pomRuleNodes.NodeValue := p_RuleList [i].PriceHigh;
   end;
 
   pomDocument.SaveToFile(p_Path + '\' + rs_FileName);

@@ -4,7 +4,7 @@ interface
 
 uses
   BasePanel, Vcl.StdCtrls, Vcl.ComCtrls, System.Generics.Collections, Category,
-  System.Classes, Vcl.Controls;
+  System.Classes, Vcl.Controls, System.SysUtils;
 
 type
   TfrmRule = class(TFrmBasePanel)
@@ -18,12 +18,19 @@ type
     mmoConditionsVisualizer: TMemo;
     Label2: TLabel;
     cmbCategories: TComboBox;
+    chbPrice: TCheckBox;
+    edtPriceLow: TEdit;
+    Label3: TLabel;
+    edtPriceMax: TEdit;
     procedure edtTitleContainsChange(Sender: TObject);
     procedure dtpFromDateChange(Sender: TObject);
     procedure dtpToDateChange(Sender: TObject);
     procedure chbDateBetweenClick(Sender: TObject);
     procedure chbTitleContainsClick(Sender: TObject);
     procedure cmbCategoriesChange(Sender: TObject);
+    procedure chbPriceClick(Sender: TObject);
+    procedure edtPriceLowChange(Sender: TObject);
+    procedure edtPriceMaxChange(Sender: TObject);
   strict private
     FCategoryList : TObjectList <TCategory>;
     procedure RefreshRulesVisualizer (p_Mmo : TMemo);
@@ -44,6 +51,11 @@ uses
 { TfrmTransactionAnalyzerSettings }
 
 procedure TfrmRule.chbDateBetweenClick(Sender: TObject);
+begin
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
+end;
+
+procedure TfrmRule.chbPriceClick(Sender: TObject);
 begin
   RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
@@ -80,6 +92,16 @@ procedure TfrmRule.dtpToDateChange(Sender: TObject);
 begin
   if chbDateBetween.Checked then
     RefreshRulesVisualizer (mmoConditionsVisualizer);
+end;
+
+procedure TfrmRule.edtPriceLowChange(Sender: TObject);
+begin
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
+end;
+
+procedure TfrmRule.edtPriceMaxChange(Sender: TObject);
+begin
+  RefreshRulesVisualizer (mmoConditionsVisualizer);
 end;
 
 procedure TfrmRule.edtTitleContainsChange(Sender: TObject);
@@ -122,9 +144,12 @@ begin
     end;
     chbTitleContains.Checked := pomRule.TitleContains;
     chbDateBetween.Checked   := pomRule.DateBetween;
+    chbPrice.Checked         := pomRule.PriceBetween;
     edtTitleContains.Text    := pomRule.TitleSubstring;
     dtpFromDate.Date         := pomRule.DateFrom;
     dtpToDate.Date           := pomRule.DateTo;
+    edtPriceLow.Text         := FloatToStr (pomRule.PriceLow);
+    edtPriceMax.Text         := FloatToStr (pomRule.PriceHigh);
     RefreshRulesVisualizer (mmoConditionsVisualizer)
   end;
 end;
@@ -146,6 +171,13 @@ begin
     begin
       DateTo   := dtpToDate.Date;
       DateFrom := dtpFromDate.Date;
+    end;
+
+    PriceBetween := chbPrice.Checked;
+    if PriceBetween then
+    begin
+      PriceLow  := StrToFloat (edtPriceLow.Text);
+      PriceHigh := StrToFloat (edtPriceMax.Text);
     end;
 
     pomCategory := TCategory (cmbCategories.Items.Objects [cmbCategories.ItemIndex]);

@@ -13,7 +13,8 @@ type
 implementation
 
 uses
-  Category, Kernel, InterfaceModuleCategory, ModuleRules, System.SysUtils;
+  Category, Kernel, InterfaceModuleCategory, ModuleRules, System.SysUtils,
+  System.StrUtils;
 
 { TRulesController }
 
@@ -23,6 +24,8 @@ var
   pomTitle      : string;
   pomDate       : string;
   pomResultText : string;
+  pomPrice      : string;
+  pomIndex      : Integer;
 begin
   pomTitle := '';
   pomDate := '';
@@ -35,19 +38,27 @@ begin
   if not Assigned (pomCategory) then
     Exit ('');
 
+  if p_Rule.PriceBetween then
+    pomPrice := Format (rs_PriceCondition, [p_Rule.PriceLow, p_Rule.PriceHigh]);
   if p_Rule.TitleContains then
     pomTitle := Format (rs_TitleConditions, [p_Rule.TitleSubstring]);
   if p_Rule.DateBetween then
     pomDate := Format (rs_DateConditions, [DateToStr (p_Rule.DateFrom), DateToStr (p_Rule.DateTo)]);
 
-  if not pomTitle.IsEmpty and not pomDate.IsEmpty then
-    pomResultText := pomTitle + ' ' + rs_and + ' ' + pomDate
-  else if not pomTitle.IsEmpty then
-    pomResultText := pomTitle
-  else if not pomDate.IsEmpty then
-    pomResultText := pomDate
+  if not pomTitle.IsEmpty then
+    pomResultText := pomResultText + pomTitle + ' ' + rs_and + ' ';
+  if not pomDate.IsEmpty then
+    pomResultText := pomResultText + pomDate + ' ' + rs_and + ' ';
+  if not pomPrice.IsEmpty then
+    pomResultText := pomResultText + pomPrice + ' ' + rs_and + ' ';
+
+  if pomResultText.IsEmpty then
+    Exit ('')
   else
-    Exit ('');
+  begin
+    pomIndex := LastDelimiter (rs_and, pomResultText) - Length (rs_and);
+    System.Delete(pomResultText, pomIndex, Length (rs_and)+2);
+  end;
 
   Result := Format (rs_Core, [pomCategory.CategoryName, pomResultText]);
 end;

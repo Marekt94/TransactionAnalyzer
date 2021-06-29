@@ -11,6 +11,7 @@ resourcestring
   rs_TitleConditions = '''%s'' w tytule';
   rs_and = 'oraz';
   rs_DateConditions = 'zosta³y przeprowadzone pomiêdzy %s a %s';
+  rs_PriceCondition = 'zawieraj¹ siê w kwocie %f a %f';
 
 type
   TModuleRules = class(TBaseModule, IModuleRules)
