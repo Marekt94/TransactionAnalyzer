@@ -1,14 +1,14 @@
 inherited frmRule: TfrmRule
   AlignWithMargins = True
-  Width = 628
-  Height = 150
+  Width = 651
+  Height = 166
   Margins.Left = 10
   Margins.Top = 10
   Margins.Right = 10
   Margins.Bottom = 10
   ParentFont = False
-  ExplicitWidth = 628
-  ExplicitHeight = 150
+  ExplicitWidth = 651
+  ExplicitHeight = 166
   object Label2: TLabel
     Left = 9
     Top = 19
@@ -19,13 +19,14 @@ inherited frmRule: TfrmRule
   object GroupBox1: TGroupBox
     Left = 0
     Top = 41
-    Width = 342
-    Height = 106
+    Width = 365
+    Height = 122
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
     TabOrder = 0
-    ExplicitHeight = 79
+    ExplicitWidth = 342
+    ExplicitHeight = 106
     object Label1: TLabel
       Left = 215
       Top = 50
@@ -126,14 +127,15 @@ inherited frmRule: TfrmRule
     OnChange = cmbCategoriesChange
   end
   object mmoConditionsVisualizer: TMemo
-    Left = 348
+    Left = 371
     Top = 0
     Width = 280
-    Height = 150
+    Height = 166
     Align = alRight
     Lines.Strings = (
       '')
     TabOrder = 2
-    ExplicitHeight = 123
+    ExplicitLeft = 348
+    ExplicitHeight = 150
   end
 end

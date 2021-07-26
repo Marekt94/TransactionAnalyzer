@@ -12,9 +12,9 @@ uses
 
 type
   TFrmTransactionAnalyzerBoosted = class(TFrame)
-    pnlFilter: TPanel;
     ofdTransactions: TOpenTextFileDialog;
     frmTrnsactionsList: TfrmTransasctionsList;
+    grpFilter: TGroupBox;
     procedure strTransactionClick(Sender: TObject);
     procedure CheckBoxClick(Sender: TObject);
   private
@@ -51,14 +51,15 @@ begin
     pomChb := TCheckBox.Create(Self);
     with pomChb do
     begin
-      Name     := 'chb' + IntToStr (pomCategory.CategoryIndex);
-      Caption  := pomCategory.CategoryName;
-      Left     := 10;
-      Top      := 20 * (i + 1);
-      AutoSize := true;
-      Parent   := pnlFilter;
-      Checked  := true;
-      OnClick  := CheckBoxClick;
+      Name       := 'chb' + IntToStr (pomCategory.CategoryIndex);
+      Caption    := pomCategory.CategoryName;
+      Left       := 10;
+      Top        := 20 * (i + 1);
+      AutoSize   := true;
+      ParentFont := False;
+      Parent     := grpFilter;
+      Checked    := true;
+      OnClick    := CheckBoxClick;
     end;
     FCategoriesAndChbDict.Add (pomCategory, pomChb);
   end;
