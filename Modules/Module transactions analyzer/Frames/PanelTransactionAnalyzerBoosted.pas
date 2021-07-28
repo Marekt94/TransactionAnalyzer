@@ -15,11 +15,10 @@ type
     ofdTransactions: TOpenTextFileDialog;
     frmTrnsactionsList: TfrmTransasctionsList;
     grpFilter: TGroupBox;
-    pnlCateogries: TPanel;
-    btnGraphically: TButton;
     procedure strTransactionClick(Sender: TObject);
     procedure CheckBoxClick(Sender: TObject);
-    procedure btnGraphicallyClick(Sender: TObject);
+    procedure frmTrnsactionsListchbImpactClick(Sender: TObject);
+    procedure frmTrnsactionsListchbGraphicallyClick(Sender: TObject);
   private
     FSummary                 : TList <TSummary>;
     FTransactionListFiltered : TList <TTransaction>;
@@ -31,6 +30,7 @@ type
     procedure FillChoosenCategories;
     procedure UpdateView;
     procedure LoadAndAnalyzeTransactions;
+    procedure UpdateChart;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
@@ -102,6 +102,15 @@ begin
   frmTrnsactionsList.UpdateDescription;
 end;
 
+procedure TFrmTransactionAnalyzerBoosted.UpdateChart;
+begin
+  if frmTrnsactionsList.chbGraphically.Checked then
+  begin
+    frmTrnsactionsList.frmTransactionInGraphic.UpdateData(FChoosenCategories, FSummary);
+    frmTrnsactionsList.UpdateChart;
+  end;
+end;
+
 procedure TFrmTransactionAnalyzerBoosted.UpdateView;
 begin
   FillChoosenCategories;
@@ -109,6 +118,7 @@ begin
   frmTrnsactionsList.Init(FTransactionListFiltered, FSummary);
   frmTrnsactionsList.FillList;
   frmTrnsactionsList.UpdateDescription;
+  UpdateChart;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.AfterConstruction;
@@ -132,6 +142,7 @@ begin
   try
     pomFrm := TfrmTransasctionsList.Create (pomWnd);
     pomWnd.Init(pomFrm, 'Transakcje bez kategorii', false);
+    pomFrm.frmBilans.Visible := False;
     pomFrm.Init (FTransWithoutCat, nil);
     pomFrm.InitStringList;
     pomFrm.FillList;
@@ -152,21 +163,6 @@ begin
   FreeAndNil (FTransWithoutCat);
 end;
 
-procedure TFrmTransactionAnalyzerBoosted.btnGraphicallyClick(Sender: TObject);
-var
-  pomWnd : TWndSkeleton;
-begin
-  pomWnd := TWndSkeleton.Create(nil);
-  try
-    var pomFrm := TfrmTransactionsInGraphic.Create (pomWnd);
-    pomFrm.Init (FChoosenCategories, FSummary);
-    pomWnd.Init (pomFrm, 'Wydatki/Wp³ywy', false, true);
-    pomWnd.ShowModal;
-  finally
-    pomWnd.Free;
-  end;
-end;
-
 procedure TFrmTransactionAnalyzerBoosted.FillChoosenCategories;
 var
   pomCategories : TObjectList<TCategory>;
@@ -176,6 +172,20 @@ begin
   for var pomCat in pomCategories do
     if FCategoriesAndChbDict.Items [pomCat].Checked then
       FChoosenCategories.Add (pomCat.CategoryIndex);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.frmTrnsactionsListchbGraphicallyClick(
+  Sender: TObject);
+begin
+  UpdateChart;
+  frmTrnsactionsList.chbGraphicallyClick(Sender);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.frmTrnsactionsListchbImpactClick(
+  Sender: TObject);
+begin
+  frmTrnsactionsList.chbExpenseClick(Sender);
+  UpdateChart;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.CheckBoxClick(Sender: TObject);

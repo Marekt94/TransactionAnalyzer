@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans;
+  Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans,
+  PanelTransactionsInGraphic, Vcl.ComCtrls;
 
 const
   cLP              = 'L. p.';
@@ -30,9 +31,15 @@ type
     grpDescription: TGroupBox;
     grpFoot: TGroupBox;
     frmBilans: TfrmBilans;
+    frmTransactionInGraphic: TfrmTransactionsInGraphic;
+    pgcTransactions: TPageControl;
+    tabGrid: TTabSheet;
+    tabChart: TTabSheet;
+    chbGraphically: TCheckBox;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
+    procedure chbGraphicallyClick(Sender: TObject);
   private
     FTransactionList : TList<TTransaction>;
     FTransactionListFiltered : TList<TTransaction>;
@@ -53,7 +60,7 @@ type
                     p_Summary         : TList <TSummary>);
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property TransactionListRaw: TList <TTransaction> read FTransactionList;
+    procedure UpdateChart;
   end;
 
 implementation
@@ -197,6 +204,9 @@ procedure TfrmTransasctionsList.AfterConstruction;
 begin
   inherited;
   FTransactionListFiltered := TList <TTransaction>.Create;
+  for var i := 0 to pgcTransactions.PageCount - 1 do
+    pgcTransactions.Pages [i].TabVisible := false;
+  chbGraphicallyClick (nil);
 end;
 
 procedure TfrmTransasctionsList.BeforeDestruction;
@@ -225,11 +235,26 @@ procedure TfrmTransasctionsList.chbExpenseClick(Sender: TObject);
 begin
   FillList(true);
   UpdateDescription;
+  UpdateChart;
+end;
+
+procedure TfrmTransasctionsList.chbGraphicallyClick(Sender: TObject);
+begin
+  if chbGraphically.Checked then
+    pgcTransactions.ActivePageIndex := 1
+  else
+    pgcTransactions.ActivePageIndex := 0;
 end;
 
 procedure TfrmTransasctionsList.UpdateBilans;
 begin
   frmBilans.UpdateBilans (FSummary);
+end;
+
+procedure TfrmTransasctionsList.UpdateChart;
+begin
+  frmTransactionInGraphic.ssImpact.Visible   := chbImpact.Checked;
+  frmTransactionInGraphic.ssExpenses.Visible := chbExpense.Checked;
 end;
 
 procedure TfrmTransasctionsList.UpdateDescription;

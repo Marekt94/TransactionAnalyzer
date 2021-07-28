@@ -25,8 +25,6 @@ inherited frmRule: TfrmRule
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
     TabOrder = 0
-    ExplicitWidth = 342
-    ExplicitHeight = 106
     object Label1: TLabel
       Left = 215
       Top = 50
@@ -108,7 +106,7 @@ inherited frmRule: TfrmRule
     end
     object edtPriceMax: TEdit
       Left = 227
-      Top = 71
+      Top = 69
       Width = 100
       Height = 21
       NumbersOnly = True
@@ -135,7 +133,5 @@ inherited frmRule: TfrmRule
     Lines.Strings = (
       '')
     TabOrder = 2
-    ExplicitLeft = 348
-    ExplicitHeight = 150
   end
 end

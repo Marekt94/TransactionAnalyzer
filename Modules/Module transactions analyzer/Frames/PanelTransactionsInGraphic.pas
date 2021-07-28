@@ -13,48 +13,44 @@ type
     Chart1: TChart;
     ssExpenses: TPieSeries;
     ssImpact: TPieSeries;
-    frmBilans: TfrmBilans;
-    Panel1: TPanel;
-    rbgExpensesImpact: TRadioGroup;
-    procedure rbgExpensesImpactClick(Sender: TObject);
-  private
   public
-    procedure Init (p_ChoosenCategories : TList<Integer>;
-                    p_Summary : TList <TSummary>);
+    procedure UpdateData (p_ChoosenCategories : TList<Integer>;
+                          p_Summary : TList <TSummary>);
   end;
 
 implementation
 
 uses
-  Kernel, InterfaceModuleCategory;
+  Kernel, InterfaceModuleCategory, InterfaceTransactionsController, System.Math;
 
 {$R *.dfm}
 
-procedure TfrmTransactionsInGraphic.Init(p_ChoosenCategories : TList<Integer>;
+procedure TfrmTransactionsInGraphic.UpdateData(p_ChoosenCategories : TList<Integer>;
                                          p_Summary: TList<TSummary>);
 var
   pomCategoryModule : IModuleCategories;
+  pomExpensePerc    : Integer;
+  pomImpactPerc     : Integer;
+  pomController     : ITransactionsController;
+  pomExpensesSum    : Double;
+  pomImpactSum      : Double;
 begin
   ssExpenses.Clear;
   ssImpact.Clear;
   pomCategoryModule := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories);
+  pomController := (GiveObjectByInterface(ITransactionsController) as ITransactionsController);
+  pomExpensesSum := pomController.EvaluateExpenseSum (p_Summary, p_ChoosenCategories);
+  pomImpactSum   := pomController.EvaluateImpactSum (p_Summary, p_ChoosenCategories);
   for var pomSummary in p_Summary do
   begin
     if p_ChoosenCategories.Contains (pomSummary.CategoryIndex) then
     begin
-      ssExpenses.Add (pomSummary.Expense, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName);
-      ssImpact.Add (pomSummary.Impact, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName);
+      pomExpensePerc := Round (Abs (pomSummary.Expense) / pomExpensesSum * 100);
+      pomImpactPerc  := Round (Abs (pomSummary.Impact)  / pomImpactSum   * 100);
+      ssExpenses.Add (pomSummary.Expense, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName + ' - ' + IntToStr (pomExpensePerc) + '%');
+      ssImpact.Add (pomSummary.Impact, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName + ' - ' + IntToStr (pomImpactPerc) + '%');
     end;
   end;
-
-  frmBilans.UpdateBilans (p_Summary);
-  rbgExpensesImpactClick(nil);
-end;
-
-procedure TfrmTransactionsInGraphic.rbgExpensesImpactClick(Sender: TObject);
-begin
-  ssExpenses.Visible := rbgExpensesImpact.ItemIndex = 0;
-  ssImpact.  Visible := rbgExpensesImpact.ItemIndex = 1;
 end;
 
 end.

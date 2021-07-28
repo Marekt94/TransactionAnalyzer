@@ -27,6 +27,10 @@ type
           p_TransactionList         : TObjectList <TTransaction>;
       out p_TransactionListFiltered : TList <TTransaction>;
           p_ChoosenCategories       : TList<Integer>): boolean; overload;
+    function EvaluateExpenseSum (p_Summary : TList <TSummary>;
+                                 p_ChoosenCat : TList<Integer>) : Double;
+    function EvaluateImpactSum (p_Summary : TList <TSummary>;
+                                p_ChoosenCat : TList<Integer>) : Double;
   end;
 
 implementation
@@ -79,6 +83,36 @@ procedure TTransactionController.BeforeDestruction;
 begin
   inherited;
   FreeAndNil (FTransactionList);
+end;
+
+function TTransactionController.EvaluateExpenseSum (
+  p_Summary : TList <TSummary>; p_ChoosenCat : TList<Integer>) : Double;
+begin
+  Result := 0;
+  for var pomSummary in p_Summary do
+  begin
+    if     Assigned (p_ChoosenCat)
+       and p_ChoosenCat.Contains (pomSummary.CategoryIndex)
+    then
+      Result := Result + pomSummary.Expense;
+  end;
+
+  Result := Abs (Result);
+end;
+
+function TTransactionController.EvaluateImpactSum (
+  p_Summary : TList <TSummary>; p_ChoosenCat : TList<Integer>) : Double;
+begin
+  Result := 0;
+  for var pomSummary in p_Summary do
+  begin
+    if     Assigned (p_ChoosenCat)
+       and p_ChoosenCat.Contains (pomSummary.CategoryIndex)
+    then
+      Result := Result + pomSummary.Impact;
+  end;
+
+  Result := Abs (Result);
 end;
 
 function TTransactionController.GetTransactionsList: TObjectList<TTransaction>;

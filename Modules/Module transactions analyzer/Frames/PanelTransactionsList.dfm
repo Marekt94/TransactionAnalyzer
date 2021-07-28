@@ -26,12 +26,11 @@ object frmTransasctionsList: TfrmTransasctionsList
       Align = alClient
       Caption = 'Szczeg'#243#322'y transakcji'
       TabOrder = 0
-      ExplicitHeight = 183
       object lblDescription: TLabel
         Left = 2
         Top = 15
-        Width = 63
-        Height = 13
+        Width = 266
+        Height = 87
         Align = alClient
         Alignment = taCenter
         Caption = 'lblDescription'
@@ -42,6 +41,8 @@ object frmTransasctionsList: TfrmTransasctionsList
         Font.Style = []
         ParentFont = False
         WordWrap = True
+        ExplicitWidth = 63
+        ExplicitHeight = 13
       end
     end
     inline frmBilans: TfrmBilans
@@ -57,18 +58,16 @@ object frmTransasctionsList: TfrmTransasctionsList
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = -48
+      ExplicitLeft = 1
       ExplicitTop = 105
       ExplicitWidth = 270
       inherited grpBilans: TGroupBox
         Width = 270
         ExplicitLeft = 0
         ExplicitTop = 0
-        ExplicitWidth = 320
         ExplicitHeight = 240
         inherited grdBilans: TGridPanel
           Width = 266
-          ExplicitWidth = 316
           ExplicitHeight = 223
         end
       end
@@ -88,23 +87,6 @@ object frmTransasctionsList: TfrmTransasctionsList
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    object strTransaction: TStringGrid
-      Left = 1
-      Top = 1
-      Width = 465
-      Height = 303
-      Align = alClient
-      FixedCols = 0
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
-      ParentFont = False
-      TabOrder = 0
-      OnClick = strTransactionClick
-    end
     object grpFoot: TGroupBox
       Left = 1
       Top = 304
@@ -112,7 +94,10 @@ object frmTransasctionsList: TfrmTransasctionsList
       Height = 41
       Align = alBottom
       Caption = 'Typ'
-      TabOrder = 1
+      TabOrder = 0
+      DesignSize = (
+        465
+        41)
       object chbExpense: TCheckBox
         Left = 79
         Top = 17
@@ -146,6 +131,78 @@ object frmTransasctionsList: TfrmTransasctionsList
         State = cbChecked
         TabOrder = 1
         OnClick = chbExpenseClick
+      end
+      object chbGraphically: TCheckBox
+        Left = 384
+        Top = 17
+        Width = 77
+        Height = 17
+        Anchors = [akTop, akRight]
+        Caption = 'Graficznie'
+        TabOrder = 2
+        Visible = False
+        OnClick = chbGraphicallyClick
+      end
+    end
+    object pgcTransactions: TPageControl
+      Left = 1
+      Top = 1
+      Width = 465
+      Height = 303
+      ActivePage = tabChart
+      Align = alClient
+      TabOrder = 1
+      object tabGrid: TTabSheet
+        Caption = 'tabGrid'
+        object strTransaction: TStringGrid
+          Left = 0
+          Top = 0
+          Width = 457
+          Height = 275
+          Align = alClient
+          FixedCols = 0
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
+          ParentFont = False
+          TabOrder = 0
+          OnClick = strTransactionClick
+        end
+      end
+      object tabChart: TTabSheet
+        Caption = 'tabChart'
+        ImageIndex = 1
+        ExplicitWidth = 281
+        ExplicitHeight = 165
+        inline frmTransactionInGraphic: TfrmTransactionsInGraphic
+          Left = 0
+          Top = 0
+          Width = 457
+          Height = 275
+          Align = alClient
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          ExplicitWidth = 281
+          ExplicitHeight = 165
+          inherited Chart1: TChart
+            Width = 457
+            Height = 275
+            Title.Text.Strings = (
+              'TChart')
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 281
+            ExplicitHeight = 165
+          end
+        end
       end
     end
   end

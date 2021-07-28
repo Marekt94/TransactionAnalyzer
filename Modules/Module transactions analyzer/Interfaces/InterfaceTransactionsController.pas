@@ -23,6 +23,10 @@ type
           p_TransactionList : TObjectList <TTransaction>;
       out p_TransactionListFiltered : TList <TTransaction>;
           p_ChoosenCategories : TList<Integer>): boolean;
+    function EvaluateExpenseSum (p_Summary : TList <TSummary>;
+                                 p_ChoosenCat : TList<Integer>) : Double;
+    function EvaluateImpactSum (p_Summary : TList <TSummary>;
+                                p_ChoosenCat : TList<Integer>) : Double;
   end;
 
 implementation

@@ -1,5 +1,7 @@
-- reguła po zakresie kwot
-- tłumaczenia na polski
+- dodanie kategorii do bezkategori
+- dodanie procentów do legendy w graficznym
+- poprawki wizualne
+- poprawić funckje updateview, bo psuje sie przy drugim odswiezeniu,
 - zrobić xmlloader saver bardziej uniwersalny
 - zrobić updateview bardziej uniwersalne
 - dokońcyc refactoring od modułu analizy
@@ -19,3 +21,6 @@ SKOŃCZONE
 - w module wczytywania powinna byc lista transakcji
 - moduł analizy
 - autosize kolumn
+- reguła po zakresie kwot
+- tłumaczenia na polski
+- graficzne przedstawienie transakcji
