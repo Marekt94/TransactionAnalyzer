@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
-  Vcl.ExtCtrls, Transaction, System.Generics.Collections;
+  Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans;
 
 const
   cLP              = 'L. p.';
@@ -28,9 +28,8 @@ type
     chbImpact: TCheckBox;
     chbExpense: TCheckBox;
     grpDescription: TGroupBox;
-    grpBilans: TGroupBox;
     grpFoot: TGroupBox;
-    grdBilans: TGridPanel;
+    frmBilans: TfrmBilans;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
@@ -38,28 +37,23 @@ type
     FTransactionList : TList<TTransaction>;
     FTransactionListFiltered : TList<TTransaction>;
     FSummary : TList <TSummary>;
-    FLabelList : TList <TLabel>;
     procedure AddTransaction (p_Transaction : TTransaction;
                               p_Row         : Integer);
     function FindColIndex(p_Title: string): integer;
     function CategoriesToLine (p_Transaction : TTransaction) : string;
     procedure FillList (p_TransactionList : TList<TTransaction>;
                         p_Clear           : boolean = true); overload;
-    procedure UpdateBilans (p_Summary : TList <TSummary>); overload;
     procedure UpdateDescription (p_TransactionList : TList<TTransaction>); overload;
-    procedure OnLabelListClear (p_Sender : TObject; const p_Item : TLabel;
-                                p_Action : TCollectionNotification);
-    procedure AddLabel (p_Caption : string; p_Row : Integer; p_Column : Integer;
-                        p_ClearLabelList : boolean = false);
   public
     procedure InitStringList;
     procedure FillList (p_Clear : boolean = true); overload;
-    procedure UpdateBilans; overload;
     procedure UpdateDescription; overload;
+    procedure UpdateBilans;
     procedure Init (p_TransactionList : TList <TTransaction>;
                     p_Summary         : TList <TSummary>);
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
+    property TransactionListRaw: TList <TTransaction> read FTransactionList;
   end;
 
 implementation
@@ -67,22 +61,6 @@ implementation
 {$R *.dfm}
 
 uses GUIMethods, Kernel, InterfaceModuleCategory, Category, System.Math;
-
-procedure TfrmTransasctionsList.AddLabel(p_Caption: string; p_Row,
-  p_Column: Integer; p_ClearLabelList: boolean);
-var
-  pomLabel : TLabel;
-begin
-  FLabelList.Add (TLabel.Create (nil));
-  pomLabel := FLabelList.Last;
-  with pomLabel do
-  begin
-    pomLabel.Parent := grdBilans;
-    pomLabel.Caption := p_Caption;
-  end;
-  grdBilans.ControlCollection [FLabelList.Count - 1].Row := p_Row;
-  grdBilans.ControlCollection [FLabelList.Count - 1].Column := p_Column;
-end;
 
 procedure TfrmTransasctionsList.AddTransaction (p_Transaction : TTransaction;
                                                 p_Row         : Integer);
@@ -210,13 +188,6 @@ begin
   end;
 end;
 
-procedure TfrmTransasctionsList.OnLabelListClear(p_Sender: TObject;
-  const p_Item: TLabel; p_Action: TCollectionNotification);
-begin
-  if p_Action = cnRemoved then
-    p_Item.Free;
-end;
-
 procedure TfrmTransasctionsList.strTransactionClick(Sender: TObject);
 begin
   UpdateDescription;
@@ -226,14 +197,11 @@ procedure TfrmTransasctionsList.AfterConstruction;
 begin
   inherited;
   FTransactionListFiltered := TList <TTransaction>.Create;
-  FLabelList := TList <TLabel>.Create;
-  FLabelList.OnNotify := OnLabelListClear;
 end;
 
 procedure TfrmTransasctionsList.BeforeDestruction;
 begin
   FreeAndNil (FTransactionListFiltered);
-  FreeAndNil (FLabelList);
   inherited;
 end;
 
@@ -256,56 +224,12 @@ end;
 procedure TfrmTransasctionsList.chbExpenseClick(Sender: TObject);
 begin
   FillList(true);
-  UpdateBilans;
   UpdateDescription;
-end;
-
-procedure TfrmTransasctionsList.UpdateBilans (p_Summary : TList <TSummary>);
-  procedure InitGrdBilans;
-  begin
-    grdBilans.ColumnCollection.Clear;
-    grdBilans.RowCollection.Clear;
-    for var i := 1 to 3 do
-    begin
-      var pomCol := grdBilans.ColumnCollection.Add;
-      pomCol.SizeStyle := ssPercent;
-      pomCol.Value := 30;
-    end;
-    for var i := 1 to p_Summary.Count + 1 do
-    begin
-      var pomRow := grdBilans.RowCollection.Add;
-      pomRow.SizeStyle := ssPercent;
-      pomRow.Value := Floor (100 / (p_Summary.Count + 1));
-    end;
-  end;
-
-var
-  pomRowIndex : Integer;
-begin
-  var pomStr : string;
-  pomStr := '';
-  pomRowIndex := 0;
-  if Assigned (p_Summary) then
-  begin
-    InitGrdBilans;
-    AddLabel ('',        0, 0, true);
-    AddLabel ('Wp³yw',   0, 1);
-    AddLabel ('Wydatek', 0, 2);
-    for var pomSummary in p_Summary do
-    begin
-      Inc (pomRowIndex);
-      var pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
-
-      AddLabel (pomCategory.CategoryName,        pomRowIndex, 0);
-      AddLabel (FloatToStr (pomSummary.Impact),  pomRowIndex, 1);
-      AddLabel (FloatToStr (pomSummary.Expense), pomRowIndex, 2);
-    end;
-  end;
 end;
 
 procedure TfrmTransasctionsList.UpdateBilans;
 begin
-  UpdateBilans (FSummary);
+  frmBilans.UpdateBilans (FSummary);
 end;
 
 procedure TfrmTransasctionsList.UpdateDescription;

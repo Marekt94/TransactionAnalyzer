@@ -26,20 +26,22 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
       ExplicitLeft = 367
       ExplicitHeight = 240
       inherited grpDescription: TGroupBox
-        Height = 77
-        ExplicitLeft = 1
-        ExplicitTop = 1
-        ExplicitWidth = 270
-        ExplicitHeight = 77
+        Height = 238
+        ExplicitHeight = 238
         inherited lblDescription: TLabel
-          Height = 60
+          Width = 266
+          Height = 221
         end
       end
-      inherited grpBilans: TGroupBox
-        Top = 78
-        ExplicitTop = 78
-        inherited lblBilans: TLabel
-          ExplicitTop = 15
+      inherited frmBilans: TfrmBilans
+        Top = -1
+        ExplicitLeft = 1
+        ExplicitTop = -1
+        inherited grpBilans: TGroupBox
+          ExplicitWidth = 270
+          inherited grdBilans: TGridPanel
+            ExplicitWidth = 266
+          end
         end
       end
     end
@@ -51,10 +53,8 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
       inherited strTransaction: TStringGrid
         Width = 365
         Height = 197
-        Font.Style = []
-        ParentFont = False
         ExplicitWidth = 365
-        ExplicitHeight = 203
+        ExplicitHeight = 197
       end
       inherited grpFoot: TGroupBox
         Top = 198
@@ -64,16 +64,32 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
       end
     end
   end
-  object grpFilter: TGroupBox
+  object pnlCateogries: TPanel
     Left = 0
     Top = 0
     Width = 185
     Height = 240
     Align = alLeft
-    Caption = 'Kategorie'
     TabOrder = 1
-    ExplicitTop = 72
-    ExplicitHeight = 105
+    object grpFilter: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 183
+      Height = 203
+      Align = alClient
+      Caption = 'Kategorie'
+      TabOrder = 0
+    end
+    object btnGraphically: TButton
+      Left = 1
+      Top = 204
+      Width = 183
+      Height = 35
+      Align = alBottom
+      Caption = 'Graficznie'
+      TabOrder = 1
+      OnClick = btnGraphicallyClick
+    end
   end
   object ofdTransactions: TOpenTextFileDialog
     Filter = 'Transactions|*.xml'

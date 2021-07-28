@@ -22,19 +22,16 @@ object frmTransasctionsList: TfrmTransasctionsList
       Left = 1
       Top = 1
       Width = 270
-      Height = 183
+      Height = 104
       Align = alClient
       Caption = 'Szczeg'#243#322'y transakcji'
       TabOrder = 0
-      ExplicitLeft = 48
-      ExplicitTop = 120
-      ExplicitWidth = 185
-      ExplicitHeight = 105
+      ExplicitHeight = 183
       object lblDescription: TLabel
         Left = 2
         Top = 15
-        Width = 266
-        Height = 166
+        Width = 63
+        Height = 13
         Align = alClient
         Alignment = taCenter
         Caption = 'lblDescription'
@@ -45,48 +42,35 @@ object frmTransasctionsList: TfrmTransasctionsList
         Font.Style = []
         ParentFont = False
         WordWrap = True
-        ExplicitWidth = 63
-        ExplicitHeight = 13
       end
     end
-    object grpBilans: TGroupBox
+    inline frmBilans: TfrmBilans
       Left = 1
-      Top = 184
+      Top = 105
       Width = 270
-      Height = 161
+      Height = 240
       Align = alBottom
-      Caption = 'Bilans'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
       TabOrder = 1
-      object grdBilans: TGridPanel
-        Left = 2
-        Top = 15
-        Width = 266
-        Height = 144
-        Align = alClient
-        ColumnCollection = <
-          item
-            SizeStyle = ssAuto
-            Value = 50.000000000000000000
-          end
-          item
-            SizeStyle = ssAuto
-            Value = 50.000000000000000000
-          end>
-        ControlCollection = <>
-        RowCollection = <
-          item
-            SizeStyle = ssAuto
-            Value = 50.000000000000000000
-          end
-          item
-            SizeStyle = ssAuto
-            Value = 50.000000000000000000
-          end>
-        TabOrder = 0
-        ExplicitLeft = 40
-        ExplicitTop = 64
-        ExplicitWidth = 185
-        ExplicitHeight = 41
+      ExplicitLeft = -48
+      ExplicitTop = 105
+      ExplicitWidth = 270
+      inherited grpBilans: TGroupBox
+        Width = 270
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 320
+        ExplicitHeight = 240
+        inherited grdBilans: TGridPanel
+          Width = 266
+          ExplicitWidth = 316
+          ExplicitHeight = 223
+        end
       end
     end
   end
@@ -120,7 +104,6 @@ object frmTransasctionsList: TfrmTransasctionsList
       ParentFont = False
       TabOrder = 0
       OnClick = strTransactionClick
-      ExplicitHeight = 309
     end
     object grpFoot: TGroupBox
       Left = 1

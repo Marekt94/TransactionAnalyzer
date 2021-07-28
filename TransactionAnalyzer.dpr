@@ -45,7 +45,9 @@ uses
   Settings in 'Modules\Module settings\Settings.pas',
   XMLSettingsLoaderSaver in 'Modules\Module settings\XMLSettingsLoaderSaver.pas',
   ConstXMLSettingsLoaderSaver in 'Modules\Module settings\ConstXMLSettingsLoaderSaver.pas',
-  PanelSettings in 'Modules\Module settings\Frames\PanelSettings.pas' {frmSettings: TFrame};
+  PanelSettings in 'Modules\Module settings\Frames\PanelSettings.pas' {frmSettings: TFrame},
+  PanelTransactionsInGraphic in 'Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas' {frmTransactionsInGraphic: TFrame},
+  PanelBilans in 'Modules\Module transactions analyzer\Frames\PanelBilans.pas' {frmBilans: TFrame};
 
 {$R *.res}
 

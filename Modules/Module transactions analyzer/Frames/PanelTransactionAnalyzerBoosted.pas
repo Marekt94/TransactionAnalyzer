@@ -8,15 +8,18 @@ uses
   Vcl.ExtCtrls, System.Generics.Collections, Transaction, Vcl.ExtDlgs,
   Category, InterfaceTransactionsController, InterfaceModuleRules,
   InterfaceModuleTransactionAnalyzer, PanelTransactionsList, WindowSkeleton,
-  PanelMain;
+  PanelMain, PanelTransactionsInGraphic;
 
 type
   TFrmTransactionAnalyzerBoosted = class(TFrame)
     ofdTransactions: TOpenTextFileDialog;
     frmTrnsactionsList: TfrmTransasctionsList;
     grpFilter: TGroupBox;
+    pnlCateogries: TPanel;
+    btnGraphically: TButton;
     procedure strTransactionClick(Sender: TObject);
     procedure CheckBoxClick(Sender: TObject);
+    procedure btnGraphicallyClick(Sender: TObject);
   private
     FSummary                 : TList <TSummary>;
     FTransactionListFiltered : TList <TTransaction>;
@@ -86,6 +89,7 @@ begin
         FController.AnalyzeTransactions (FController.TransactionsList, pomRuleController, pomCategories, pomRules, FTransWithoutCat);
         FController.UpdateSummary (FController.TransactionsList, FSummary, pomCategories);
         UpdateView;
+        frmTrnsactionsList.UpdateBilans;
       finally
         pomRules.Free;
       end;
@@ -105,7 +109,6 @@ begin
   frmTrnsactionsList.Init(FTransactionListFiltered, FSummary);
   frmTrnsactionsList.FillList;
   frmTrnsactionsList.UpdateDescription;
-  frmTrnsactionsList.UpdateBilans;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.AfterConstruction;
@@ -147,6 +150,21 @@ begin
   FreeAndNil (FTransactionListFiltered);
   FreeAndNil (FChoosenCategories);
   FreeAndNil (FTransWithoutCat);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted.btnGraphicallyClick(Sender: TObject);
+var
+  pomWnd : TWndSkeleton;
+begin
+  pomWnd := TWndSkeleton.Create(nil);
+  try
+    var pomFrm := TfrmTransactionsInGraphic.Create (pomWnd);
+    pomFrm.Init (FChoosenCategories, FSummary);
+    pomWnd.Init (pomFrm, 'Wydatki/Wp³ywy', false, true);
+    pomWnd.ShowModal;
+  finally
+    pomWnd.Free;
+  end;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted.FillChoosenCategories;
