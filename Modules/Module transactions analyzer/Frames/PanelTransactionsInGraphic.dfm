@@ -15,6 +15,8 @@ object frmTransactionsInGraphic: TfrmTransactionsInGraphic
     Top = 0
     Width = 783
     Height = 448
+    Title.Text.Strings = (
+      'TChart')
     View3DOptions.Elevation = 315
     View3DOptions.Orthogonal = False
     View3DOptions.Perspective = 0

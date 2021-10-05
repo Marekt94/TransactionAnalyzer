@@ -26,10 +26,10 @@ type
     FController              : ITransactionsController;
     FCategoriesAndChbDict    : TDictionary <TCategory, TCheckBox>;
     FTransWithoutCat         : TList<TTransaction>;
+    function LoadAndAnalyzeTransactions : boolean;
     procedure InitCategories;
     procedure FillChoosenCategories;
     procedure UpdateView;
-    procedure LoadAndAnalyzeTransactions;
     procedure UpdateChart;
   public
     procedure AfterConstruction; override;
@@ -68,12 +68,13 @@ begin
   end;
 end;
 
-procedure TFrmTransactionAnalyzerBoosted.LoadAndAnalyzeTransactions;
+function TFrmTransactionAnalyzerBoosted.LoadAndAnalyzeTransactions : boolean;
 var
   pomCategories : IModuleCategories;
   pomRules      : TObjectList<TRule>;
 begin
-  if ofdTransactions.Execute then
+  Result := ofdTransactions.Execute;
+  if Result then
   begin
     FController := Kernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
     if Assigned (FController) then
@@ -136,20 +137,21 @@ begin
   frmTrnsactionsList.InitStringList;
   InitCategories;
 
-  LoadAndAnalyzeTransactions;
-
-  pomWnd := TWndSkeleton.Create(nil);
-  try
-    pomFrm := TfrmTransasctionsList.Create (pomWnd);
-    pomWnd.Init(pomFrm, 'Transakcje bez kategorii', false);
-    pomFrm.frmBilans.Visible := False;
-    pomFrm.Init (FTransWithoutCat, nil);
-    pomFrm.InitStringList;
-    pomFrm.FillList;
-    pomFrm.UpdateDescription;
-    pomWnd.ShowModal;
-  finally
-    pomWnd.Free;
+  if LoadAndAnalyzeTransactions then
+  begin
+    pomWnd := TWndSkeleton.Create(nil);
+    try
+      pomFrm := TfrmTransasctionsList.Create (pomWnd);
+      pomWnd.Init(pomFrm, 'Transakcje bez kategorii', false);
+      pomFrm.frmBilans.Visible := False;
+      pomFrm.Init (FTransWithoutCat, nil);
+      pomFrm.InitStringList;
+      pomFrm.FillList;
+      pomFrm.UpdateDescription;
+      pomWnd.ShowModal;
+    finally
+      pomWnd.Free;
+    end;
   end;
 end;
 

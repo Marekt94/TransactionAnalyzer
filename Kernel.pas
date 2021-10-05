@@ -29,7 +29,7 @@ implementation
 uses
   System.SysUtils, Winapi.Windows,
   PanelMain, ModuleCategories,
-  ModuleRules;
+  ModuleRules, ModuleDatabase;
 
 { TKernel }
 
@@ -47,6 +47,7 @@ begin
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
   FObjectList.Add (TModuleRules.Create);
+  FObjectList.Add (TModuleDatabase.Create);
 end;
 
 destructor TKernel.Destroy;

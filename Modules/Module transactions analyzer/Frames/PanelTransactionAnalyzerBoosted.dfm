@@ -17,8 +17,8 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     Height = 240
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = 185
-    ExplicitWidth = 639
+    ExplicitLeft = 137
+    ExplicitWidth = 687
     ExplicitHeight = 240
     inherited pnlDescription: TPanel
       Left = 415
@@ -28,9 +28,6 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
       inherited grpDescription: TGroupBox
         Height = 238
         ExplicitHeight = 238
-        inherited lblDescription: TLabel
-          Height = 221
-        end
       end
       inherited frmBilans: TfrmBilans
         Top = -1
@@ -40,7 +37,7 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
     inherited pnlGrid: TPanel
       Width = 415
       Height = 240
-      ExplicitWidth = 367
+      ExplicitWidth = 415
       ExplicitHeight = 240
       inherited grpFoot: TGroupBox
         Top = 198
@@ -66,7 +63,7 @@ object FrmTransactionAnalyzerBoosted: TFrmTransactionAnalyzerBoosted
       inherited pgcTransactions: TPageControl
         Width = 413
         Height = 197
-        ExplicitWidth = 365
+        ExplicitWidth = 413
         ExplicitHeight = 197
         inherited tabGrid: TTabSheet
           ExplicitWidth = 357

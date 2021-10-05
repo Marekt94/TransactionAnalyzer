@@ -45,8 +45,14 @@ begin
   begin
     if p_ChoosenCategories.Contains (pomSummary.CategoryIndex) then
     begin
-      pomExpensePerc := Round (Abs (pomSummary.Expense) / pomExpensesSum * 100);
-      pomImpactPerc  := Round (Abs (pomSummary.Impact)  / pomImpactSum   * 100);
+      if pomExpensesSum <> 0 then
+        pomExpensePerc := Round (Abs (pomSummary.Expense) / pomExpensesSum * 100)
+      else
+        pomExpensePerc := 0;
+      if pomImpactSum <> 0 then
+        pomImpactPerc  := Round (Abs (pomSummary.Impact)  / pomImpactSum   * 100)
+      else
+        pomImpactPerc := 0;
       ssExpenses.Add (pomSummary.Expense, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName + ' - ' + IntToStr (pomExpensePerc) + '%');
       ssImpact.Add (pomSummary.Impact, pomCategoryModule.FindCategoryByIndex (pomSummary.CategoryIndex).CategoryName + ' - ' + IntToStr (pomImpactPerc) + '%');
     end;

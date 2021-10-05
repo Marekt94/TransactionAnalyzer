@@ -47,7 +47,12 @@ uses
   ConstXMLSettingsLoaderSaver in 'Modules\Module settings\ConstXMLSettingsLoaderSaver.pas',
   PanelSettings in 'Modules\Module settings\Frames\PanelSettings.pas' {frmSettings: TFrame},
   PanelTransactionsInGraphic in 'Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas' {frmTransactionsInGraphic: TFrame},
-  PanelBilans in 'Modules\Module transactions analyzer\Frames\PanelBilans.pas' {frmBilans: TFrame};
+  PanelBilans in 'Modules\Module transactions analyzer\Frames\PanelBilans.pas' {frmBilans: TFrame},
+  InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
+  ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
+  DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
+  DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas',
+  DataModuleCategories in 'Modules\Module categories\DataModuleCategories.pas' {dtmCategories: TDataModule};
 
 {$R *.res}
 

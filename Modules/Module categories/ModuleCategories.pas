@@ -33,7 +33,8 @@ type
 implementation
 
 uses
-  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids;
+  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
+  DBCategoriesLoaderSaver;
 
 { TModuleCategories }
 
@@ -136,7 +137,8 @@ end;
 procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
-  RegisterClass(TXMLCategoriesLoaderSaver);
+  //RegisterClass(TXMLCategoriesLoaderSaver);
+  RegisterClass(TDBCategoriesLoaderSaver);
 end;
 
 function TModuleCategories.SaveCategories : boolean;
