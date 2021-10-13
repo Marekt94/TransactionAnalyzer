@@ -51,8 +51,7 @@ uses
   InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
   ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
   DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
-  DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas',
-  DataModuleCategories in 'Modules\Module categories\DataModuleCategories.pas' {dtmCategories: TDataModule};
+  DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas';
 
 {$R *.res}
 

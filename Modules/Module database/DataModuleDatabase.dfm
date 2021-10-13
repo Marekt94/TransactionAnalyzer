@@ -3,6 +3,7 @@ object dtmModuleDatabase: TdtmModuleDatabase
   Height = 150
   Width = 215
   object FConnection: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=SQLNCLI11.1;Integrated Security=SSPI;Persist Security I' +
       'nfo=False;User ID="";Initial Catalog=Transactions;Data Source=DE' +
@@ -10,5 +11,13 @@ object dtmModuleDatabase: TdtmModuleDatabase
     Provider = 'SQLNCLI11.1'
     Left = 144
     Top = 72
+  end
+  object FCategories: TADOTable
+    Active = True
+    Connection = FConnection
+    CursorType = ctStatic
+    TableName = 'CATEGORY'
+    Left = 88
+    Top = 56
   end
 end

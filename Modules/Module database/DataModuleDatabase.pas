@@ -8,6 +8,7 @@ uses
 type
   TdtmModuleDatabase = class(TDataModule)
     FConnection: TADOConnection;
+    FCategories: TADOTable;
   private
     { Private declarations }
   public

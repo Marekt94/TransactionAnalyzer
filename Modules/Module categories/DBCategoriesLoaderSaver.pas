@@ -4,17 +4,19 @@ interface
 
 uses
   InterfaceCategoriesLoaderSaver, System.Generics.Collections,
-  Category, DataModuleCategories, Data.Win.ADODB;
+  Category, Data.Win.ADODB;
+
+const
+  cTableName = 'CATEGORY';
 
 type
   TDBCategoriesLoaderSaver = class (TInterfacedObject, ICategoriesLoaderSaver)
   strict private
-    FTable : TdtmCategories;
+    FTable : TADOTable;
     procedure PackToObject (p_Table : TADOTable;
                             p_Obj   : TCategory);
   public
     procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
     function Load (p_List : TObjectList <TCategory>) : boolean;
     function Save (p_List : TObjectList <TCategory>) : boolean;
   end;
@@ -22,31 +24,25 @@ type
 implementation
 
 uses
-  System.SysUtils, System.Variants;
+  System.SysUtils, System.Variants, Kernel, InterfaceModuleDatabase;
 
 { TDBCategoriesLoaderSaver }
 
 procedure TDBCategoriesLoaderSaver.AfterConstruction;
 begin
   inherited;
-  FTable := TdtmCategories.Create (nil);
-end;
-
-procedure TDBCategoriesLoaderSaver.BeforeDestruction;
-begin
-  FreeAndNil (FTable);
-  inherited;
+  FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
 end;
 
 function TDBCategoriesLoaderSaver.Load(p_List: TObjectList<TCategory>): boolean;
 begin
-  with FTable.FTable do
+  with FTable do
   begin
     while not Eof do
     begin
       var pomCat : TCategory;
       pomCat := TCategory.Create;
-      PackToObject(Ftable.FTable, pomCat);
+      PackToObject(Ftable, pomCat);
       p_List.Add(pomCat);
       Next;
     end;
@@ -69,7 +65,8 @@ begin
   pomComparer := TCategoryComparer.Create;
   try
     p_List.Sort (pomComparer);
-    with FTable.FTable do
+    FTable.First;
+    with FTable do
     begin
       Edit;
       while not Eof do
@@ -77,9 +74,9 @@ begin
         var pomCat : TCategory;
         pomCat := TCategory.Create;
         try
-          PackToObject(FTable.FTable, pomCat);
+          PackToObject(FTable, pomCat);
           if not p_List.BinarySearch (pomCat, pomIndex, pomComparer) then
-            FTable.FTable.Delete
+            FTable.Delete
           else
             Next;
         finally
@@ -90,13 +87,13 @@ begin
 
     for var pomObj in p_List do
     begin
-      if FTable.FTable.Locate('ID',pomObj.CategoryIndex,[]) then
-        FTable.FTable.Edit
+      if FTable.Locate('ID',pomObj.CategoryIndex,[]) then
+        FTable.Edit
       else
-        FTable.FTable.Insert;
-      FTable.FTable ['ID']   := pomObj.CategoryIndex;
-      FTable.FTable ['NAME'] := pomObj.CategoryName;
-      FTable.FTable.Post;
+        FTable.Insert;
+      FTable ['ID']   := pomObj.CategoryIndex;
+      FTable ['NAME'] := pomObj.CategoryName;
+      FTable.Post;
     end;
     Result := true;
   finally

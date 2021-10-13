@@ -3,12 +3,15 @@ unit ModuleDatabase;
 interface
 
 uses
-  Module, InterfaceModuleDatabase, DataModuleDatabase;
+  Module, InterfaceModuleDatabase, DataModuleDatabase, Data.Win.ADODB,
+  System.Classes;
 
 type
   TModuleDatabase = class (TBaseModule, IModuleDatabase)
     strict private
       FdtmModuleDatabase : TdtmModuleDatabase;
+      function FindTable (p_TableName  : string;
+                          p_DataModule : TDataModule) : TADOTable; overload;
     public
       constructor Create; override;
       destructor Destroy; override;
@@ -16,6 +19,7 @@ type
       procedure BeforeDestruction; override;
       function GetConnectionString : string;
       function GetSelfInterface : TGUID; override;
+      function FindTable (p_TableName : string) : TADOTable; overload;
   end;
 
 implementation
@@ -47,6 +51,26 @@ destructor TModuleDatabase.Destroy;
 begin
   FreeAndNil (FdtmModuleDatabase);
   inherited;
+end;
+
+function TModuleDatabase.FindTable(p_TableName: string;
+  p_DataModule: TDataModule): TADOTable;
+begin
+  Result := nil;
+  for var i := 0 to p_DataModule.ComponentCount - 1 do
+  begin
+    var pomComponent := p_DataModule.Components [i];
+    if pomComponent is TADOTable then
+    begin
+      if TADOTable (pomComponent).TableName = p_TableName then
+        Result := TADOTable (pomComponent);
+    end;
+  end;
+end;
+
+function TModuleDatabase.FindTable (p_TableName: string): TADOTable;
+begin
+  Result := FindTable (p_TableName, FdtmModuleDatabase);
 end;
 
 function TModuleDatabase.GetConnectionString: string;
