@@ -26,7 +26,7 @@ implementation
 uses
   InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
   Category, PanelRule, Vcl.Grids, WindowSkeleton, InterfaceRulesController,
-  Vcl.Controls, RulesController;
+  Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver;
 
 
 { TModuleRules }
@@ -79,6 +79,7 @@ begin
       WndObjTitle  := 'Regu³a';
       NavigationKeys := true;
       FullScreen := false;
+      XMLLoaderSaver := (Kernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then

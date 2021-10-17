@@ -4,18 +4,20 @@ interface
 
 uses
   InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category,
-  InterfaceModuleSettings, Kernel;
+  InterfaceModuleSettings, Kernel, InterfaceXMLCategoriesLoaderSaver;
 
 const
   rs_FileName = 'categories.xml';
 
 type
-  TXMLCategoriesLoaderSaver = class (TInterfacedObject, ICategoriesLoaderSaver)
+  TXMLCategoriesLoaderSaver = class (TInterfacedObject, IXMLCategoriesLoaderSaver, ICategoriesLoaderSaver)
   public
-    function Load (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
-    function Save (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
-    function Load (p_List : TObjectList <TCategory>) : boolean; overload;
-    function Save (p_List : TObjectList <TCategory>) : boolean; overload;
+    function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
+    function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
+    function LoadCategories (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
+    function SaveCategories (p_List : TObjectList <TCategory>; p_Path : string) : boolean; overload;
+    function LoadCategories (p_List : TObjectList <TCategory>) : boolean; overload;
+    function SaveCategories (p_List : TObjectList <TCategory>) : boolean; overload;
   end;
 
 implementation
@@ -25,7 +27,7 @@ uses
 
 { TXMLCategoriesLoaderSaver }
 
-function TXMLCategoriesLoaderSaver.Load(p_List: TObjectList<TCategory>;
+function TXMLCategoriesLoaderSaver.LoadCategories(p_List: TObjectList<TCategory>;
   p_Path: string): boolean;
 var
   pomCategory     : TCategory;
@@ -38,7 +40,6 @@ begin
 
   pomListNode := nil;
   pomDocument := TXMLDocument.Create(nil);
-  p_Path := p_Path + rs_FileName;
   if FileExists (p_Path) then
   begin
     pomDocument.LoadFromFile (p_Path);
@@ -63,7 +64,7 @@ begin
   Result := true;
 end;
 
-function TXMLCategoriesLoaderSaver.Save(p_List: TObjectList<TCategory>;
+function TXMLCategoriesLoaderSaver.SaveCategories(p_List: TObjectList<TCategory>;
   p_Path: string): boolean;
 var
   pomDocument      : IXMLDocument;
@@ -85,12 +86,12 @@ begin
     pomCategoryNodes.NodeValue := p_List [i].CategoryName;
   end;
 
-  pomDocument.SaveToFile(p_Path + rs_FileName);
+  pomDocument.SaveToFile(p_Path);
 
   Result := true
 end;
 
-function TXMLCategoriesLoaderSaver.Load(
+function TXMLCategoriesLoaderSaver.LoadCategories(
   p_List: TObjectList<TCategory>): boolean;
 var
   pomSettings : IModuleSettings;
@@ -102,10 +103,22 @@ begin
   else
     pomFolderPath := '';
 
-  Result := Load(p_List, pomFolderPath);
+  Result := LoadCategories(p_List, pomFolderPath + rs_FileName);
 end;
 
-function TXMLCategoriesLoaderSaver.Save(
+function TXMLCategoriesLoaderSaver.Load(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  LoadCategories (TObjectList <TCategory> (p_List), p_Path);
+end;
+
+function TXMLCategoriesLoaderSaver.Save(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  SaveCategories (TObjectList <TCategory> (p_List), p_Path);
+end;
+
+function TXMLCategoriesLoaderSaver.SaveCategories(
   p_List: TObjectList<TCategory>): boolean;
 var
   pomSettings : IModuleSettings;
@@ -117,7 +130,7 @@ begin
   else
     pomFolderPath := '';
 
-  Result := Save (p_List, pomFolderPath);
+  Result := SaveCategories (p_List, pomFolderPath + rs_FileName);
 end;
 
 end.

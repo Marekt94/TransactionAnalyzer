@@ -17,7 +17,7 @@ object dtmModuleDatabase: TdtmModuleDatabase
     Connection = FConnection
     CursorType = ctStatic
     TableName = 'CATEGORY'
-    Left = 88
-    Top = 56
+    Left = 144
+    Top = 16
   end
 end

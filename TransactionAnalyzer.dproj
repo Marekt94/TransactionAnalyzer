@@ -194,6 +194,9 @@
         </DCCReference>
         <DCCReference Include="Modules\Module categories\DBCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBLoaderSaver.pas"/>
+        <DCCReference Include="Base classes\InterfaceXMLSaverLoader.pas"/>
+        <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

@@ -19,8 +19,8 @@ type
     function ReturnFieldToLocate (p_Obj : TCategory) : Integer;
   public
     procedure AfterConstruction; override;
-    function Load (p_List : TObjectList <TCategory>) : boolean;
-    function Save (p_List : TObjectList <TCategory>) : boolean;
+    function LoadCategories (p_List : TObjectList <TCategory>) : boolean;
+    function SaveCategories (p_List : TObjectList <TCategory>) : boolean;
   end;
 
 implementation
@@ -36,7 +36,7 @@ begin
   FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
 end;
 
-function TDBCategoriesLoaderSaver.Load(p_List: TObjectList<TCategory>): boolean;
+function TDBCategoriesLoaderSaver.LoadCategories(p_List: TObjectList<TCategory>): boolean;
 begin
   Result := inherited Load <TCategory> (FTable, p_List, PackToObject);
 end;
@@ -60,7 +60,7 @@ begin
   Result := p_Obj.CategoryIndex;
 end;
 
-function TDBCategoriesLoaderSaver.Save(p_List: TObjectList<TCategory>): boolean;
+function TDBCategoriesLoaderSaver.SaveCategories(p_List: TObjectList<TCategory>): boolean;
 begin
   var pomComparer := TCategoryComparer.Create;
   try

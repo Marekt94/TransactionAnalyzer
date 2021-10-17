@@ -89,6 +89,7 @@ begin
     pomFrame.Init (p_SteeringObj.ObjectClass,
                    p_SteeringObj.ObjectFrame,
                    p_SteeringObj.UpdateView,
+                   p_SteeringObj.XMLLoaderSaver,
                    p_SteeringObj.WndObjTitle);
     pomFrame.UnpackFrame (p_SteeringObj.ObjectList);
     pomWindow.Init (pomFrame, p_SteeringObj.WndListTitle, p_SteeringObj.NavigationKeys, p_SteeringObj.FullScreen);

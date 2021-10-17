@@ -3,12 +3,14 @@ unit XMLRuleSaverLoader;
 interface
 
 uses
-  InterfaceRuleSaver, System.Generics.Collections, Rule, System.SysUtils,
-  InterfaceModuleSettings, Kernel;
+  System.Generics.Collections, Rule, System.SysUtils,
+  InterfaceModuleSettings, Kernel, InterfaceRuleSaver, InterfaceXMLRuleLoaderSaver;
 
 type
-  TXMLRuleSaverLoader = class (TInterfacedObject, IRuleSaver)
+  TXMLRuleSaverLoader = class (TInterfacedObject, IXMLRuleLoaderSaver, IRuleSaver)
   public
+    function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean;
+    function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean;
     procedure SaveRules (const p_RuleList : TObjectList <TRule>; p_Path : string); overload;
     procedure LoadRules (var   p_RuleList : TObjectList <TRule>; p_Path : string); overload;
     procedure SaveRules (const p_RuleList : TObjectList <TRule>); overload;
@@ -35,7 +37,6 @@ begin
 
   pomRuleListNode := nil;
   pomDocument := TXMLDocument.Create(nil);
-  p_Path := p_Path + '\' + rs_FileName;
   if FileExists (p_Path) then
   begin
     pomDocument.LoadFromFile (p_Path);
@@ -123,7 +124,12 @@ begin
     pomRuleNodes.NodeValue := p_RuleList [i].PriceHigh;
   end;
 
-  pomDocument.SaveToFile(p_Path + '\' + rs_FileName);
+  pomDocument.SaveToFile(p_Path);
+end;
+
+function TXMLRuleSaverLoader.Load(p_List: TObjectList<TObject>; p_Path : string): boolean;
+begin
+  LoadRules (TObjectList<TRule> (p_List), p_Path)
 end;
 
 procedure TXMLRuleSaverLoader.LoadRules(var p_RuleList: TObjectList<TRule>);
@@ -137,7 +143,12 @@ begin
   else
     pomFolderPath := '';
 
-  LoadRules (p_RuleList, pomFolderPath);
+  LoadRules (p_RuleList, pomFolderPath + '\' + rs_FileName);
+end;
+
+function TXMLRuleSaverLoader.Save(p_List: TObjectList<TObject>; p_Path : string): boolean;
+begin
+  SaveRules (TObjectList<TRule> (p_List), p_Path);
 end;
 
 procedure TXMLRuleSaverLoader.SaveRules(const p_RuleList: TObjectList<TRule>);
@@ -151,7 +162,7 @@ begin
   else
     pomFolderPath := '';
 
-  SaveRules (p_RuleList, pomFolderPath);
+  SaveRules (p_RuleList, pomFolderPath + '\' + rs_FileName);
 end;
 
 end.

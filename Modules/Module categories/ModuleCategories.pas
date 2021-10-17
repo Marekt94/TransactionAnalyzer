@@ -34,7 +34,7 @@ implementation
 
 uses
   System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
-  DBCategoriesLoaderSaver;
+  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver;
 
 { TModuleCategories }
 
@@ -83,7 +83,7 @@ end;
 
 function TModuleCategories.LoadCategories : boolean;
 begin
-  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Load(FCategoryList);
+  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(FCategoryList);
   if FCategoryList.Count < 1 then
   begin
     var pomCategory := TCategory.Create;
@@ -120,6 +120,7 @@ begin
       WndObjTitle  := 'Kategoria';
       NavigationKeys := true;
       FullScreen := false;
+      XMLLoaderSaver := Kernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver) as IXMLCategoriesLoaderSaver;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     SetIndexes;
@@ -137,13 +138,13 @@ end;
 procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
-  //RegisterClass(TXMLCategoriesLoaderSaver);
+  RegisterClass(TXMLCategoriesLoaderSaver);
   RegisterClass(TDBCategoriesLoaderSaver);
 end;
 
 function TModuleCategories.SaveCategories : boolean;
 begin
-  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).Save(FCategoryList);
+  Result := (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(FCategoryList);
 end;
 
 procedure TModuleCategories.SetIndexes;

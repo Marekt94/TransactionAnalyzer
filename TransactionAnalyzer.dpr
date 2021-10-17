@@ -52,7 +52,10 @@ uses
   ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
   DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
   DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas',
-  DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas';
+  DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
+  InterfaceXMLSaverLoader in 'Base classes\InterfaceXMLSaverLoader.pas',
+  InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
+  InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas';
 
 {$R *.res}
 

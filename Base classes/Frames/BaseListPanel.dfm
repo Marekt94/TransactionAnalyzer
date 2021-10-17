@@ -17,7 +17,7 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Top = 8
       Width = 105
       Height = 25
-      Caption = 'Dodaj'
+      Caption = '&Dodaj'
       TabOrder = 0
       OnClick = btnAddClick
     end
@@ -26,7 +26,7 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Top = 39
       Width = 105
       Height = 25
-      Caption = 'Edytuj'
+      Caption = '&Edytuj'
       TabOrder = 1
       OnClick = btnEditClick
     end
@@ -35,9 +35,27 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Top = 70
       Width = 105
       Height = 25
-      Caption = 'Usu'#324
+      Caption = '&Usu'#324
       TabOrder = 2
       OnClick = btnDeleteClick
+    end
+    object btnXMLLoader: TButton
+      Left = 16
+      Top = 101
+      Width = 105
+      Height = 25
+      Caption = '&Importuj'
+      TabOrder = 3
+      OnClick = btnXMLLoaderClick
+    end
+    object btnXMLSaver: TButton
+      Left = 16
+      Top = 132
+      Width = 105
+      Height = 25
+      Caption = 'E&ksportuj'
+      TabOrder = 4
+      OnClick = btnXMLSaverClick
     end
   end
   object Panel2: TPanel
@@ -58,5 +76,11 @@ object FrmBaseListPanel: TFrmBaseListPanel
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
       TabOrder = 0
     end
+  end
+  object ofdXML: TOpenTextFileDialog
+    DefaultExt = '.xml'
+    Filter = 'XML|*.xml'
+    Left = 344
+    Top = 208
   end
 end

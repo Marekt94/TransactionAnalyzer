@@ -3,7 +3,7 @@ unit WindowObjectControllerSteeringClass;
 interface
 
 uses
-  System.SysUtils, Vcl.Grids, Vcl.Forms, BasePanel;
+  System.SysUtils, Vcl.Grids, Vcl.Forms, BasePanel, InterfaceXMLSaverLoader;
 
 type
   TWndObjControllerSteeringClass = class
@@ -11,6 +11,7 @@ type
     FObjectClass    : TClass;
     FObjectFrame    : TFrmBasePanel;
     FUpdateView     : TProc<TStringGrid, TObject>;
+    FXMLLoaderSaver : IXMLSaverLoader;
     FObjectList     : TObject;
     FWndListTitle   : string;
     FWndObjTitle    : string;
@@ -26,6 +27,7 @@ type
     property FullScreen: boolean read FFullScreen write FFullScreen;
     property NavigationKeys: boolean read FNavigationKeys write FNavigationKeys;
     property WndObjTitle: string read FWndObjTitle write FWndObjTitle;
+    property XMLLoaderSaver: IXMLSaverLoader read FXMLLoaderSaver write FXMLLoaderSaver;
   end;
 
 implementation
