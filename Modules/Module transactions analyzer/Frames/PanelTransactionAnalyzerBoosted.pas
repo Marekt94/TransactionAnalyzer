@@ -24,7 +24,7 @@ type
     FTransactionListFiltered : TList <TTransaction>;
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
-    FCategoriesAndChbDict    : TDictionary <TCategory, TCheckBox>;
+    FCategoriesAndChbDict    : TDictionary <Integer, TCheckBox>;
     FTransWithoutCat         : TList<TTransaction>;
     function LoadAndAnalyzeTransactions : boolean;
     procedure InitCategories;
@@ -46,6 +46,7 @@ uses
 
 procedure TFrmTransactionAnalyzerBoosted.InitCategories;
 begin
+  FCategoriesAndChbDict.Clear;
   var pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
   for var i := 0 to pomCategories.CategoriesList.Count - 1 do
   begin
@@ -64,7 +65,7 @@ begin
       Checked    := true;
       OnClick    := CheckBoxClick;
     end;
-    FCategoriesAndChbDict.Add (pomCategory, pomChb);
+    FCategoriesAndChbDict.Add (pomCategory.CategoryIndex, pomChb);
   end;
 end;
 
@@ -128,7 +129,7 @@ var
   pomFrm : TfrmTransasctionsList;
 begin
   inherited;
-  FCategoriesAndChbDict := TDictionary <TCategory, TCheckBox>.Create;
+  FCategoriesAndChbDict := TDictionary <Integer, TCheckBox>.Create;
   FSummary := TList <TSummary>.Create;
   FTransactionListFiltered := TList <TTransaction>.Create;
   FChoosenCategories := TList<Integer>.Create;
@@ -172,7 +173,7 @@ begin
   FChoosenCategories.Clear;
   pomCategories := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
   for var pomCat in pomCategories do
-    if FCategoriesAndChbDict.Items [pomCat].Checked then
+    if FCategoriesAndChbDict.Items [pomCat.CategoryIndex].Checked then
       FChoosenCategories.Add (pomCat.CategoryIndex);
 end;
 

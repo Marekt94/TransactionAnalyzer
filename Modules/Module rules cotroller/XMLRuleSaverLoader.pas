@@ -7,7 +7,9 @@ uses
   InterfaceModuleSettings, Kernel, InterfaceRuleSaver, InterfaceXMLRuleLoaderSaver;
 
 type
-  TXMLRuleSaverLoader = class (TInterfacedObject, IXMLRuleLoaderSaver, IRuleSaver)
+  TXMLRuleSaverLoader = class (TInterfacedObject, IXMLRuleLoaderSaver)
+  strict private
+    function FindHighestIndex (p_List : TObjectList <TRule>) : Integer;
   public
     function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean;
     function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean;
@@ -75,6 +77,10 @@ begin
           end;
         end;
 
+        var pomID := pomRuleNode.ChildNodes.FindNode (rs_NN_ID);
+        if Assigned (pomID) then
+          pomRule.ID := pomId.NodeValue;
+
         p_RuleList.Add (pomRule);
       end;
     end;
@@ -87,14 +93,25 @@ var
   pomDocument  : IXMLDocument;
   pomRule      : IXMLNode;
   pomRuleNodes : IXMLNode;
+  pomHighestIndex : Integer;
 begin
   pomDocument := TXMLDocument.Create(nil);
   pomDocument.Active := True;
 
+  pomHighestIndex := FindHighestIndex (p_RuleList);
   pomDocument.DocumentElement := pomDocument.CreateNode (rs_NN_Rules, ntElement, '');
   for var i := 0 to p_RuleList.Count - 1 do
   begin
     pomRule := pomDocument.DocumentElement.AddChild(rs_NN_Rule);
+
+    pomRuleNodes := pomRule.AddChild (rs_NN_ID);
+    if p_RuleList [i].ID = -1 then
+    begin
+      Inc (pomHighestIndex);
+      pomRuleNodes.NodeValue := pomHighestIndex;
+    end
+    else
+      pomRuleNodes.NodeValue := p_RuleList [i].ID;
 
     pomRuleNodes := pomRule.AddChild(rs_NN_TitleContains);
     pomRuleNodes.NodeValue := p_RuleList [i].TitleContains;
@@ -129,6 +146,7 @@ end;
 
 function TXMLRuleSaverLoader.Load(p_List: TObjectList<TObject>; p_Path : string): boolean;
 begin
+  Result := true;
   LoadRules (TObjectList<TRule> (p_List), p_Path)
 end;
 
@@ -148,6 +166,7 @@ end;
 
 function TXMLRuleSaverLoader.Save(p_List: TObjectList<TObject>; p_Path : string): boolean;
 begin
+  Result := true;
   SaveRules (TObjectList<TRule> (p_List), p_Path);
 end;
 
@@ -163,6 +182,14 @@ begin
     pomFolderPath := '';
 
   SaveRules (p_RuleList, pomFolderPath + '\' + rs_FileName);
+end;
+
+function TXMLRuleSaverLoader.FindHighestIndex(p_List: TObjectList<TRule>) : Integer;
+begin
+  Result := -1;
+  for var pomRule in p_List do
+    if pomRule.ID > result then
+      Result := pomRule.ID;
 end;
 
 end.

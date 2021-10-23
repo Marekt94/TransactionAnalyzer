@@ -4,7 +4,7 @@ interface
 
 uses
   BasePanel, Vcl.StdCtrls, Vcl.ComCtrls, System.Generics.Collections, Category,
-  System.Classes, Vcl.Controls, System.SysUtils;
+  System.Classes, Vcl.Controls, System.SysUtils, InterfaceModuleCategory;
 
 type
   TfrmRule = class(TFrmBasePanel)
@@ -33,6 +33,7 @@ type
     procedure edtPriceMaxChange(Sender: TObject);
   strict private
     FCategoryList : TObjectList <TCategory>;
+    FCategories : IModuleCategories;
     procedure RefreshRulesVisualizer (p_Mmo : TMemo);
   public
     constructor Create(AOwner: TComponent); override;
@@ -43,7 +44,7 @@ type
 implementation
 
 uses
-  InterfaceModuleCategory, Kernel, Rule, InterfaceModuleRules,
+  Kernel, Rule, InterfaceModuleRules,
   InterfaceRulesController;
 
 {$R *.dfm}
@@ -71,15 +72,14 @@ begin
 end;
 
 constructor TfrmRule.Create(AOwner: TComponent);
-var
-  pomCategories : IModuleCategories;
 begin
   inherited Create (AOwner);
-  pomCategories := GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-  FCategoryList := pomCategories.CategoriesList;
+  FCategories := GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  FCategoryList := FCategories.CategoriesList;
   cmbCategories.AddItem('',nil);
-  for var i := 0 to pomCategories.CategoriesList.Count - 1 do
-    cmbCategories.AddItem (FCategoryList.Items [i].CategoryName, FCategoryList.Items [i]);
+  for var i := 0 to FCategoryList.Count - 1 do
+    cmbCategories.AddItem (FCategoryList.Items [i].CategoryName, TObject (FCategoryList.Items [i].CategoryIndex));
+  cmbCategories.ItemIndex := 0;
 end;
 
 procedure TfrmRule.dtpFromDateChange(Sender: TObject);
@@ -140,7 +140,7 @@ begin
     begin
       pomCategory := pomRuleController.FindCategoryByIndex(pomRule.CategoryIndex);
       if Assigned (pomCategory) then
-        cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (pomCategory);
+        cmbCategories.ItemIndex  := cmbCategories.Items.IndexOfObject (TObject (pomCategory.CategoryIndex));
     end;
     chbTitleContains.Checked := pomRule.TitleContains;
     chbDateBetween.Checked   := pomRule.DateBetween;
@@ -180,7 +180,7 @@ begin
       PriceHigh := StrToFloat (edtPriceMax.Text);
     end;
 
-    pomCategory := TCategory (cmbCategories.Items.Objects [cmbCategories.ItemIndex]);
+    pomCategory := FCategories.FindCategoryByIndex (Integer (cmbCategories.Items.Objects [cmbCategories.ItemIndex]));
     if not Assigned (pomCategory) then
       CategoryIndex := -1
     else

@@ -36,6 +36,8 @@ function TDBLoaderSaver.Load<TObjClass>(
 begin
   with p_Table do
   begin
+    Active := True;
+    First;
     while not Eof do
     begin
       var pomCat : TObjClass;
@@ -44,6 +46,7 @@ begin
       p_List.Add(pomCat);
       Next;
     end;
+    Active := False;
   end;
   Result := true;
 end;
@@ -61,6 +64,7 @@ begin
   p_List.Sort (p_Comparer);
   with p_Table do
   begin
+    Active := true;
     First;
     Edit;
     while not Eof do
@@ -87,8 +91,9 @@ begin
       p_PackToTable (pomObj, p_Table);
       Post;
     end;
-    Result := true;
+    Active := False;
   end;
+  Result := true;
 end;
 
 end.

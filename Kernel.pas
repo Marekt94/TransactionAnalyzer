@@ -20,7 +20,7 @@ type
       property ObjectList: TList<IModule> read FObjectList;
   end;
 
-  function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
+  function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
 var
   MainKernel : IInterface;
 
@@ -82,7 +82,7 @@ begin
   CloseModules;
 end;
 //------------------------------------------------------------------------------
-function GiveObjectByInterface(p_GUID: TGUID): IInterface;
+function GiveObjectByInterface(p_GUID: TGUID; p_Silent : boolean): IInterface;
 resourcestring
   rs_no_interface = 'Brak interfejsu';
 var
@@ -105,7 +105,9 @@ begin
     end
   end;
 
-  raise Exception.Create(rs_no_interface);
+  Result := nil;
+  if not p_Silent then
+    raise Exception.Create(rs_no_interface);
 end;
 
 end.

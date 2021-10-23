@@ -9,6 +9,7 @@ type
   TdtmModuleDatabase = class(TDataModule)
     FConnection: TADOConnection;
     FCategories: TADOTable;
+    FRule: TADOTable;
   private
     { Private declarations }
   public

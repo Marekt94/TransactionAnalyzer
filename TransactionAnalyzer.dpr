@@ -55,7 +55,8 @@ uses
   DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
   InterfaceXMLSaverLoader in 'Base classes\InterfaceXMLSaverLoader.pas',
   InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
-  InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas';
+  InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
+  DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas';
 
 {$R *.res}
 

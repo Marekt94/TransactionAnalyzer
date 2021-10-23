@@ -20,4 +20,12 @@ object dtmModuleDatabase: TdtmModuleDatabase
     Left = 144
     Top = 16
   end
+  object FRule: TADOTable
+    Active = True
+    Connection = FConnection
+    CursorType = ctStatic
+    TableName = '[RULE]'
+    Left = 56
+    Top = 80
+  end
 end

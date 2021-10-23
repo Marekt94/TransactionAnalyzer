@@ -26,7 +26,8 @@ implementation
 uses
   InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
   Category, PanelRule, Vcl.Grids, WindowSkeleton, InterfaceRulesController,
-  Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver;
+  Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver,
+  DBRulesLoaderSaver;
 
 
 { TModuleRules }
@@ -96,6 +97,7 @@ begin
   inherited;
   RegisterClass (TXMLRuleSaverLoader);
   RegisterClass (TRulesController);
+  RegisterClass (TDBRulesLoaderSaver);
 end;
 
 end.

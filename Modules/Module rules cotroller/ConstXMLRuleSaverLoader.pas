@@ -3,6 +3,7 @@ unit ConstXMLRuleSaverLoader;
 interface
 
 const
+  rs_NN_ID             = 'id';
   rs_FileName          = 'rules.xml';
   rs_NN_Rules          = 'rules';
   rs_NN_Rule           = 'rule';

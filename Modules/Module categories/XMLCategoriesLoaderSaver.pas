@@ -10,7 +10,7 @@ const
   rs_FileName = 'categories.xml';
 
 type
-  TXMLCategoriesLoaderSaver = class (TInterfacedObject, IXMLCategoriesLoaderSaver, ICategoriesLoaderSaver)
+  TXMLCategoriesLoaderSaver = class (TInterfacedObject, IXMLCategoriesLoaderSaver)
   public
     function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
     function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
@@ -109,13 +109,13 @@ end;
 function TXMLCategoriesLoaderSaver.Load(p_List: TObjectList<TObject>;
   p_Path: string): boolean;
 begin
-  LoadCategories (TObjectList <TCategory> (p_List), p_Path);
+  Result := LoadCategories (TObjectList <TCategory> (p_List), p_Path);
 end;
 
 function TXMLCategoriesLoaderSaver.Save(p_List: TObjectList<TObject>;
   p_Path: string): boolean;
 begin
-  SaveCategories (TObjectList <TCategory> (p_List), p_Path);
+  Result := SaveCategories (TObjectList <TCategory> (p_List), p_Path);
 end;
 
 function TXMLCategoriesLoaderSaver.SaveCategories(
