@@ -63,12 +63,8 @@ object frmTransasctionsList: TfrmTransasctionsList
       ExplicitWidth = 270
       inherited grpBilans: TGroupBox
         Width = 270
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitHeight = 240
         inherited grdBilans: TGridPanel
           Width = 266
-          ExplicitHeight = 223
         end
       end
     end
@@ -149,7 +145,7 @@ object frmTransasctionsList: TfrmTransasctionsList
       Top = 1
       Width = 465
       Height = 303
-      ActivePage = tabChart
+      ActivePage = tabGrid
       Align = alClient
       TabOrder = 1
       object tabGrid: TTabSheet
@@ -175,8 +171,6 @@ object frmTransasctionsList: TfrmTransasctionsList
       object tabChart: TTabSheet
         Caption = 'tabChart'
         ImageIndex = 1
-        ExplicitWidth = 281
-        ExplicitHeight = 165
         inline frmTransactionInGraphic: TfrmTransactionsInGraphic
           Left = 0
           Top = 0
@@ -190,17 +184,15 @@ object frmTransasctionsList: TfrmTransasctionsList
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          ExplicitWidth = 281
-          ExplicitHeight = 165
+          ExplicitWidth = 457
+          ExplicitHeight = 275
           inherited Chart1: TChart
             Width = 457
             Height = 275
-            Title.Text.Strings = (
-              'TChart')
             ExplicitLeft = 0
             ExplicitTop = 0
-            ExplicitWidth = 281
-            ExplicitHeight = 165
+            ExplicitWidth = 457
+            ExplicitHeight = 275
           end
         end
       end

@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans,
-  PanelTransactionsInGraphic, Vcl.ComCtrls;
+  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton;
 
 const
   cLP              = 'L. p.';
@@ -67,7 +67,8 @@ implementation
 
 {$R *.dfm}
 
-uses GUIMethods, Kernel, InterfaceModuleCategory, Category, System.Math;
+uses GUIMethods, Kernel, InterfaceModuleCategory, Category, System.Math,
+  PanelCategories;
 
 procedure TfrmTransasctionsList.AddTransaction (p_Transaction : TTransaction;
                                                 p_Row         : Integer);

@@ -51,20 +51,24 @@ end;
 
 procedure TfrmBilans.UpdateBilans (p_Summary : TList <TSummary>);
   procedure InitGrdBilans;
+  var
+    pomHeight, pomWidth : Integer;
   begin
     grdBilans.ColumnCollection.Clear;
     grdBilans.RowCollection.Clear;
+    pomHeight := grdBilans.Height;
+    pomWidth  := grdBilans.Width;
     for var i := 1 to 3 do
     begin
       var pomCol := grdBilans.ColumnCollection.Add;
-      pomCol.SizeStyle := ssPercent;
-      pomCol.Value := 30;
+      pomCol.SizeStyle := ssAbsolute;
+      pomCol.Value := Floor (pomWidth / 3);
     end;
     for var i := 1 to p_Summary.Count + 1 do
     begin
       var pomRow := grdBilans.RowCollection.Add;
-      pomRow.SizeStyle := ssPercent;
-      pomRow.Value := Floor (100 / (p_Summary.Count + 1));
+      pomRow.SizeStyle := ssAbsolute;
+      pomRow.Value := Floor (pomHeight / (p_Summary.Count + 1));
     end;
 
   end;

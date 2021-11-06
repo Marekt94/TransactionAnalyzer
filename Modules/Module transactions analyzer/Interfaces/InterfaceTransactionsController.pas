@@ -16,9 +16,9 @@ type
                                   p_Rules           : TObjectList <TRule>;
                                   p_TransWithoutCat : TList <TTransaction>) : boolean;
     property TransactionsList : TObjectList <TTransaction> read GetTransactionsList;
-    function UpdateSummary (    p_Transactions :  TObjectList <TTransaction>;
-                            out p_Summary: TList <TSummary>;
-                                p_Categories: IModuleCategories) : boolean;
+    function UpdateSummary (const p_Transactions :  TObjectList <TTransaction>;
+                            var   p_Summary: TList <TSummary>;
+                            const p_Categories: IModuleCategories) : boolean;
     function GetTransactionsListFiltered (
           p_TransactionList : TObjectList <TTransaction>;
       out p_TransactionListFiltered : TList <TTransaction>;

@@ -18,10 +18,6 @@ object frmBilans: TfrmBilans
     Align = alClient
     Caption = 'Bilans'
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = 79
-    ExplicitWidth = 270
-    ExplicitHeight = 161
     object grdBilans: TGridPanel
       Left = 2
       Top = 15
@@ -48,8 +44,6 @@ object frmBilans: TfrmBilans
           Value = 50.000000000000000000
         end>
       TabOrder = 0
-      ExplicitWidth = 266
-      ExplicitHeight = 144
     end
   end
 end

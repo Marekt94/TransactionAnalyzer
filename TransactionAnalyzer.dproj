@@ -198,6 +198,11 @@
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\DBRulesLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelCategories.pas">
+            <Form>frmCategories</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

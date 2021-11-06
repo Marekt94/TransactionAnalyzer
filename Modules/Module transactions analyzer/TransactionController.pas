@@ -20,9 +20,9 @@ type
                                   p_Categories      : IModuleCategories;
                                   p_Rules           : TObjectList <TRule>;
                                   p_TransWithoutCat : TList <TTransaction>) : boolean;
-    function UpdateSummary (    p_Transactions :  TObjectList <TTransaction>;
-                            out p_Summary: TList <TSummary>;
-                                p_Categories: IModuleCategories) : boolean; overload;
+    function UpdateSummary (const p_Transactions :  TObjectList <TTransaction>;
+                            var p_Summary: TList <TSummary>;
+                            const p_Categories: IModuleCategories) : boolean; overload;
     function GetTransactionsListFiltered (
           p_TransactionList         : TObjectList <TTransaction>;
       out p_TransactionListFiltered : TList <TTransaction>;
@@ -146,19 +146,10 @@ begin
   Result := True;
 end;
 
-function TTransactionController.UpdateSummary(    p_Transactions :  TObjectList <TTransaction>;
-                                              out p_Summary: TList <TSummary>;
-                                                  p_Categories: IModuleCategories): boolean;
+function TTransactionController.UpdateSummary(const p_Transactions :  TObjectList <TTransaction>;
+                                              var   p_Summary: TList <TSummary>;
+                                              const p_Categories: IModuleCategories): boolean;
 begin
-  if not Assigned (p_Transactions) then
-    raise Exception.Create('No transactions list');
-
-  if not Assigned (p_Summary) then
-    raise Exception.Create('No summary list');
-
-  if not Assigned (p_Categories) then
-    raise Exception.Create('No categories');
-
   p_Summary.Clear;
   for var pomCategory in p_Categories.CategoriesList do
   begin
