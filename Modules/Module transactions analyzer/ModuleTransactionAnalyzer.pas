@@ -35,7 +35,7 @@ var
 begin
   pomWndSkeleton := TWndSkeleton.Create(nil);
   try
-    pomWndSkeleton.Init(TFrmTransactionAnalyzerBoosted.Create (pomWndSkeleton), 'Analiza', false, true);
+    pomWndSkeleton.Init(TFrmTransactionAnalyzerBoosted2.Create (pomWndSkeleton), 'Analiza', false, true);
     Result := pomWndSkeleton.ShowModal;
   finally
     pomWndSkeleton.Free;

@@ -9,12 +9,7 @@ uses
 
 type
   TTransactionController = class (TInterfacedObject, ITransactionsController)
-  strict private
-    FTransactionList : TObjectList<TTransaction>;
   public
-    procedure AfterConstruction; override;
-    procedure BeforeDestruction; override;
-    function GetTransactionsList : TObjectList <TTransaction>;
     function AnalyzeTransactions (p_Transactions    : TObjectList <TTransaction>;
                                   p_RuleController  : IModuleRules;
                                   p_Categories      : IModuleCategories;
@@ -23,10 +18,21 @@ type
     function UpdateSummary (const p_Transactions :  TObjectList <TTransaction>;
                             var p_Summary: TList <TSummary>;
                             const p_Categories: IModuleCategories) : boolean; overload;
-    function GetTransactionsListFiltered (
-          p_TransactionList         : TObjectList <TTransaction>;
-      out p_TransactionListFiltered : TList <TTransaction>;
-          p_ChoosenCategories       : TList<Integer>): boolean; overload;
+    function FilterByChoosenCategories (
+      p_TransactionList         : TList <TTransaction>;
+      p_TransactionListFiltered : TList <TTransaction>;
+      p_ChoosenCategories       : TList <Integer>): boolean; overload;
+    function FilterByImpactExpense (
+            p_TransactionList : TList <TTransaction>;
+            p_TransactionListFiltered : TList <TTransaction>;
+      const p_Expense : boolean = true;
+      const p_Impact  : boolean = true): boolean;
+    function Filter (
+            p_TransactionList : TList <TTransaction>;
+            p_TransactionListFiltered : TList <TTransaction>;
+            p_ChoosenCategories : TList<Integer>;
+      const p_Expense : boolean = true;
+      const p_Impact  : boolean = true): boolean;
     function EvaluateExpenseSum (p_Summary : TList <TSummary>;
                                  p_ChoosenCat : TList<Integer>) : Double;
     function EvaluateImpactSum (p_Summary : TList <TSummary>;
@@ -36,12 +42,6 @@ type
 implementation
 
 { TTransactionController }
-
-procedure TTransactionController.AfterConstruction;
-begin
-  inherited;
-  FTransactionList := TObjectList<TTransaction>.Create;
-end;
 
 function TTransactionController.AnalyzeTransactions(
   p_Transactions    : TObjectList <TTransaction>;
@@ -79,12 +79,6 @@ begin
   Result := True;
 end;
 
-procedure TTransactionController.BeforeDestruction;
-begin
-  inherited;
-  FreeAndNil (FTransactionList);
-end;
-
 function TTransactionController.EvaluateExpenseSum (
   p_Summary : TList <TSummary>; p_ChoosenCat : TList<Integer>) : Double;
 begin
@@ -115,15 +109,31 @@ begin
   Result := Abs (Result);
 end;
 
-function TTransactionController.GetTransactionsList: TObjectList<TTransaction>;
+function TTransactionController.Filter(p_TransactionList,
+  p_TransactionListFiltered: TList<TTransaction>;
+  p_ChoosenCategories: TList<Integer>; const p_Expense,
+                                             p_Impact: boolean): boolean;
+var
+  pomTransactionListTemp : TList <TTransaction>;
 begin
-  Result := FTransactionList;
+  pomTransactionListTemp := TList <TTransaction>.Create;
+  try
+    FilterByChoosenCategories (p_TransactionList,
+                               pomTransactionListTemp,
+                               p_ChoosenCategories);
+    FilterByImpactExpense(pomTransactionListTemp,
+                          p_TransactionListFiltered,
+                          p_Expense, p_Impact);
+  finally
+    pomTransactionListTemp.Free;
+  end;
+  Result := True;
 end;
 
-function TTransactionController.GetTransactionsListFiltered (
-      p_TransactionList         : TObjectList <TTransaction>;
-  out p_TransactionListFiltered : TList <TTransaction>;
-      p_ChoosenCategories       : TList<Integer>): boolean;
+function TTransactionController.FilterByChoosenCategories (
+  p_TransactionList         : TList <TTransaction>;
+  p_TransactionListFiltered : TList <TTransaction>;
+  p_ChoosenCategories       : TList<Integer>): boolean;
 begin
   if    not Assigned (p_TransactionList)
      or not Assigned (p_TransactionListFiltered)
@@ -144,6 +154,24 @@ begin
     end;
   end;
   Result := True;
+end;
+
+function TTransactionController.FilterByImpactExpense(
+            p_TransactionList : TList <TTransaction>;
+            p_TransactionListFiltered : TList <TTransaction>;
+      const p_Expense : boolean = true;
+      const p_Impact  : boolean = true): boolean;
+begin
+  p_TransactionListFiltered.Clear;
+  for var pomTransaction in p_TransactionList do
+  begin
+    if p_Impact and (pomTransaction.TransactionType = cImpact) then
+      p_TransactionListFiltered.Add (pomTransaction);
+
+    if p_Expense and (pomTransaction.TransactionType = cExpense) then
+      p_TransactionListFiltered.Add (pomTransaction);
+  end;
+  Result := true;
 end;
 
 function TTransactionController.UpdateSummary(const p_Transactions :  TObjectList <TTransaction>;

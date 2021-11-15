@@ -63,8 +63,10 @@ object frmTransasctionsList: TfrmTransasctionsList
       ExplicitWidth = 270
       inherited grpBilans: TGroupBox
         Width = 270
+        ExplicitWidth = 270
         inherited grdBilans: TGridPanel
           Width = 266
+          ExplicitWidth = 266
         end
       end
     end

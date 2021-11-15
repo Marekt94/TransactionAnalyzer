@@ -145,11 +145,6 @@
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
         <DCCReference Include="Base classes\UsefullMethods.pas"/>
-        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas">
-            <Form>FrmTransactionAnalyzerBoosted</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="PanelMain.pas">
             <Form>frmTransactionList</Form>
             <FormType>dfm</FormType>
@@ -200,6 +195,11 @@
         <DCCReference Include="Modules\Module rules cotroller\DBRulesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelCategories.pas">
             <Form>frmCategories</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas">
+            <Form>FrmTransactionAnalyzerBoosted2</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>

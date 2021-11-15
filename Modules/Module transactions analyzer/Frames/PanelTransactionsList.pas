@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans,
-  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton;
+  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton, InterfaceTransactionsController;
 
 const
   cLP              = 'L. p.';
@@ -40,27 +40,30 @@ type
     procedure strTransactionClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
     procedure chbGraphicallyClick(Sender: TObject);
-  private
-    FTransactionList : TList<TTransaction>;
-    FTransactionListFiltered : TList<TTransaction>;
+  protected
+    FTransactionList : TObjectList<TTransaction>;
+    FTransactionListView : TList<TTransaction>;
     FSummary : TList <TSummary>;
+    FController : ITransactionsController;
+    function GetSelectedTransaction : TTransaction;
     procedure AddTransaction (p_Transaction : TTransaction;
                               p_Row         : Integer);
     function FindColIndex(p_Title: string): integer;
     function CategoriesToLine (p_Transaction : TTransaction) : string;
-    procedure FillList (p_TransactionList : TList<TTransaction>;
-                        p_Clear           : boolean = true); overload;
-    procedure UpdateDescription (p_TransactionList : TList<TTransaction>); overload;
   public
     procedure InitStringList;
-    procedure FillList (p_Clear : boolean = true); overload;
-    procedure UpdateDescription; overload;
-    procedure UpdateBilans;
     procedure Init (p_TransactionList : TList <TTransaction>;
                     p_Summary         : TList <TSummary>);
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    procedure UpdateChart;
+    procedure UpdateList;
+    procedure UpdateChart; virtual;
+    procedure UpdateGrid (p_Clear : boolean = true);
+    procedure UpdateDescription;
+    procedure UpdateBilans;
+    property TransactionListView: TList <TTransaction> read FTransactionListView
+                                                       write FTransactionListView;
+    property TransactionList: TObjectList <TTransaction> read FTransactionList;
   end;
 
 implementation
@@ -89,20 +92,6 @@ begin
   end;
 end;
 
-procedure TfrmTransasctionsList.FillList(p_Clear: boolean);
-begin
-  FTransactionListFiltered.Clear;
-  for var pomTransaction in FTransactionList do
-  begin
-    if chbImpact.Checked and (pomTransaction.TransactionType = cImpact) then
-      FTransactionListFiltered.Add (pomTransaction);
-
-    if chbExpense.Checked and (pomTransaction.TransactionType = cExpense) then
-      FTransactionListFiltered.Add (pomTransaction);
-  end;
-  FillList(FTransactionListFiltered, p_Clear);
-end;
-
 function TfrmTransasctionsList.FindColIndex(p_Title: string): integer;
 resourcestring
   rs_NoSuchColumn_s = 'Kolumna o takiej nazwie nie istnieje : %s';
@@ -115,18 +104,23 @@ begin
   raise Exception.Create(Format (rs_NoSuchColumn_s, [p_Title]));
 end;
 
-procedure TfrmTransasctionsList.FillList (p_TransactionList : TList<TTransaction>;
-                                          p_Clear           : boolean = true);
+procedure TfrmTransasctionsList.UpdateGrid (p_Clear : boolean = true);
 begin
   if p_Clear then strTransaction.RowCount := cDefaultRowCount;
 
-  strTransaction.RowCount := p_TransactionList.Count + 1;
-  for var i := 0 to p_TransactionList.Count - 1 do
-    AddTransaction(p_TransactionList [i], i + 1);
+  strTransaction.RowCount := FTransactionListView.Count + 1;
+  for var i := 0 to FTransactionListView.Count - 1 do
+    AddTransaction(FTransactionListView [i], i + 1);
   if strTransaction.RowCount > 1 then
     strTransaction.FixedRows := 1
   else
     strTransaction.RowCount := 0;
+end;
+
+procedure TfrmTransasctionsList.UpdateList;
+begin
+  FController.FilterByImpactExpense(FTransactionList, FTransactionListView,
+    chbExpense.Checked, chbImpact.Checked)
 end;
 
 procedure TfrmTransasctionsList.FrameResize(Sender: TObject);
@@ -134,7 +128,15 @@ begin
   GUIMethods.FitGridAlClient (strTransaction);
 end;
 
-procedure TfrmTransasctionsList.UpdateDescription (p_TransactionList : TList<TTransaction>);
+function TfrmTransasctionsList.GetSelectedTransaction: TTransaction;
+begin
+  if strTransaction.RowCount > 1 then
+    Result := FTransactionListView [strTransaction.Row - 1]
+  else
+    Result := nil;
+end;
+
+procedure TfrmTransasctionsList.UpdateDescription;
 var
   pomExecDate, pomOrderDate : string;
   pomDocTransactionType : string;
@@ -145,10 +147,9 @@ var
 
   pomTransaction : TTransaction;
 begin
-  if (strTransaction.Row > 0) and (p_TransactionList.Count > 0) then
+  pomTransaction := GetSelectedTransaction;
+  if Assigned (pomTransaction) then
   begin
-    pomTransaction := p_TransactionList [strTransaction.Row - 1];
-
     with pomTransaction do
     begin
       pomExecDate  := Format ('%s:' + sLineBreak + '%s', [cExecutionDate, DateToStr (DocExecutionDate)]);
@@ -177,7 +178,6 @@ end;
 procedure TfrmTransasctionsList.Init(p_TransactionList: TList<TTransaction>;
   p_Summary: TList<TSummary>);
 begin
-  FTransactionList := p_TransactionList;
   FSummary := p_Summary;
 end;
 
@@ -204,7 +204,9 @@ end;
 procedure TfrmTransasctionsList.AfterConstruction;
 begin
   inherited;
-  FTransactionListFiltered := TList <TTransaction>.Create;
+  FController := Kernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
+  FTransactionListView := TList <TTransaction>.Create;
+  FTransactionList := TObjectList <TTransaction>.Create;
   for var i := 0 to pgcTransactions.PageCount - 1 do
     pgcTransactions.Pages [i].TabVisible := false;
   chbGraphicallyClick (nil);
@@ -212,7 +214,8 @@ end;
 
 procedure TfrmTransasctionsList.BeforeDestruction;
 begin
-  FreeAndNil (FTransactionListFiltered);
+  FreeAndNil (FTransactionListView);
+  FreeAndNil (FTransactionList);
   inherited;
 end;
 
@@ -234,7 +237,8 @@ end;
 
 procedure TfrmTransasctionsList.chbExpenseClick(Sender: TObject);
 begin
-  FillList(true);
+  UpdateList;
+  UpdateGrid(true);
   UpdateDescription;
   UpdateChart;
 end;
@@ -256,11 +260,6 @@ procedure TfrmTransasctionsList.UpdateChart;
 begin
   frmTransactionInGraphic.ssImpact.Visible   := chbImpact.Checked;
   frmTransactionInGraphic.ssExpenses.Visible := chbExpense.Checked;
-end;
-
-procedure TfrmTransasctionsList.UpdateDescription;
-begin
-  UpdateDescription (FTransactionListFiltered)
 end;
 
 end.

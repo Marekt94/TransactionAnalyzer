@@ -32,7 +32,6 @@ uses
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
   GUIMethods in 'Base classes\GUIMethods.pas',
   UsefullMethods in 'Base classes\UsefullMethods.pas',
-  PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted: TFrame},
   PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame},
   InterfaceTransactionsController in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas',
   TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas',
@@ -57,7 +56,8 @@ uses
   InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
   InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
   DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas',
-  PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame};
+  PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
+  PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame};
 
 {$R *.res}
 
