@@ -138,7 +138,6 @@ object frmTransasctionsList: TfrmTransasctionsList
         Anchors = [akTop, akRight]
         Caption = 'Graficznie'
         TabOrder = 2
-        Visible = False
         OnClick = chbGraphicallyClick
       end
     end

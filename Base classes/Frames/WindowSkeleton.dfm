@@ -37,7 +37,6 @@ object WndSkeleton: TWndSkeleton
     Height = 341
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 609
   end
   object pnlNavigationKeys: TPanel
     Left = 0
@@ -55,7 +54,7 @@ object WndSkeleton: TWndSkeleton
       Width = 75
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = 'Anuluj'
+      Caption = '&Anuluj'
       TabOrder = 0
       OnClick = btnCancelClick
     end
@@ -65,7 +64,7 @@ object WndSkeleton: TWndSkeleton
       Width = 75
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = 'Ok'
+      Caption = '&Ok'
       TabOrder = 1
       OnClick = btnOkClick
     end

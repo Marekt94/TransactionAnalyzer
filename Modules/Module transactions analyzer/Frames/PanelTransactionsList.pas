@@ -105,7 +105,10 @@ begin
 end;
 
 procedure TfrmTransasctionsList.UpdateGrid (p_Clear : boolean = true);
+var
+  pomSelectedRow : Integer;
 begin
+  pomSelectedRow := strTransaction.Row;
   if p_Clear then strTransaction.RowCount := cDefaultRowCount;
 
   strTransaction.RowCount := FTransactionListView.Count + 1;
@@ -115,6 +118,14 @@ begin
     strTransaction.FixedRows := 1
   else
     strTransaction.RowCount := 0;
+
+  if strTransaction.RowCount > cDefaultRowCount then
+    if pomSelectedRow >= strTransaction.RowCount then
+      strTransaction.Row := strTransaction.RowCount - 1
+    else if (pomSelectedRow >= cDefaultRowCount) then
+      strTransaction.Row := pomSelectedRow
+    else
+      strTransaction.Row := 1;
 end;
 
 procedure TfrmTransasctionsList.UpdateList;
@@ -130,7 +141,7 @@ end;
 
 function TfrmTransasctionsList.GetSelectedTransaction: TTransaction;
 begin
-  if strTransaction.RowCount > 1 then
+  if strTransaction.Row > 0 then
     Result := FTransactionListView [strTransaction.Row - 1]
   else
     Result := nil;

@@ -16,6 +16,8 @@ type
     ofdTransactions: TOpenTextFileDialog;
     procedure strTransactionDblClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
+    procedure strTransactionKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
@@ -133,13 +135,18 @@ begin
   end;
 end;
 
+procedure TFrmTransactionAnalyzerBoosted2.strTransactionKeyUp(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  inherited;
+  if Key = 13 then
+    strTransactionDblClick (nil);
+end;
+
 procedure TFrmTransactionAnalyzerBoosted2.UpdateChart;
 begin
-  if chbGraphically.Checked then
-  begin
-    frmTransactionInGraphic.UpdateData(FChoosenCategories, FSummary);
-    inherited UpdateChart;
-  end;
+  frmTransactionInGraphic.UpdateData(FChoosenCategories, FSummary);
+  inherited UpdateChart;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.UpdateView;

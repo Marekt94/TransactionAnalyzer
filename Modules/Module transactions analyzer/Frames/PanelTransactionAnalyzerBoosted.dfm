@@ -8,28 +8,30 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
       Width = 328
       ExplicitWidth = 328
       inherited chbGraphically: TCheckBox
-        Left = 247
-        ExplicitLeft = 247
+        Left = 245
+        ExplicitLeft = 245
       end
     end
     inherited pgcTransactions: TPageControl
       Width = 328
       ExplicitWidth = 328
       inherited tabGrid: TTabSheet
+        ExplicitWidth = 320
         inherited strTransaction: TStringGrid
           Width = 320
           OnDblClick = strTransactionDblClick
+          OnKeyUp = strTransactionKeyUp
           ExplicitWidth = 320
         end
       end
       inherited tabChart: TTabSheet
-        ExplicitWidth = 137
+        ExplicitWidth = 320
         inherited frmTransactionInGraphic: TfrmTransactionsInGraphic
           Width = 320
-          ExplicitWidth = 137
+          ExplicitWidth = 320
           inherited Chart1: TChart
             Width = 320
-            ExplicitWidth = 137
+            ExplicitWidth = 320
           end
         end
       end
