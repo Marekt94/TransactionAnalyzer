@@ -39,6 +39,7 @@ begin
   p_Transaction.DocTransactionType :=             p_Node.ChildNodes.FindNode (c_NN_Type).Text;
   p_Transaction.DocDescription     :=             p_Node.ChildNodes.FindNode (c_NN_Description).Text;
   p_Transaction.DocAmount          := StrToFloat (p_Node.ChildNodes.FindNode (c_NN_AmountCurr).Text, p_FormatSettings);
+  p_Transaction.AccountState       := StrToFloat (p_Node.ChildNodes.FindNode (c_NN_EndingBalanceCurr).Text, p_FormatSettings);
 end;
 
 function TXMLTransactionLoader.FindNode(p_NodeName: string; p_NodeList : IXMLNodeList): IXMLNode;
@@ -75,6 +76,7 @@ begin
   begin
     pomTransaction := TTransaction.Create;
     FillTransaction (pomTransaction, pomTransactions.ChildNodes.Get(i), pomFormatSettings);
+    pomTransaction.UpdateHash;
     p_TransactionList.Add (pomTransaction);
   end;
 

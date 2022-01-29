@@ -1,3 +1,4 @@
-{TODO 1 : Dodaæ opcjê wczytywania i zapisywania do XML w oknie edycji list obiektów}
-{TODO 3 : Oprogramowaæ wczytywanie zasad z DB}
-{TODO 2 : Indeksy z XMLLoadera powinny byæ takie same jak w bazie danych}
+{TODO :Przy wczytywaniu zasad, funkcja wczytauj¹ca uruchamia siê wielokrotnie}
+{DONE 1 : Dodaæ opcjê wczytywania i zapisywania do XML w oknie edycji list obiektów}
+{DONE 3 : Oprogramowaæ wczytywanie zasad z DB}
+{DONE 2 : Indeksy z XMLLoadera powinny byæ takie same jak w bazie danych}

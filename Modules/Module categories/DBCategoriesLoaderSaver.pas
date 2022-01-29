@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  System.SysUtils, System.Variants, Kernel, InterfaceModuleDatabase;
+  System.SysUtils, System.Variants, Kernel, InterfaceModuleDatabase, ConstXMLCategoriesLoaderSaver;
 
 { TDBCategoriesLoaderSaver }
 
@@ -44,15 +44,15 @@ end;
 procedure TDBCategoriesLoaderSaver.PackToObject (p_Table: TADOTable;
                                                  p_Obj: TCategory);
 begin
-  p_Obj.CategoryIndex := p_Table ['ID'];
-  p_Obj.CategoryName  := p_Table ['NAME'];
+  p_Obj.CategoryIndex := p_Table [UpperCase (rs_NN_Index)];
+  p_Obj.CategoryName  := p_Table [UpperCase (rs_NN_Name)];
 end;
 
 procedure TDBCategoriesLoaderSaver.PackToTable (p_Obj: TCategory;
                                                 p_Table: TADOTable);
 begin
-  p_Table ['ID']   := p_Obj.CategoryIndex;
-  p_Table ['NAME'] := p_Obj.CategoryName;
+  p_Table [UpperCase (rs_NN_Index)] := p_Obj.CategoryIndex;
+  p_Table [UpperCase (rs_NN_Name)]  := p_Obj.CategoryName;
 end;
 
 function TDBCategoriesLoaderSaver.ReturnFieldToLocate(p_Obj: TCategory): Integer;
