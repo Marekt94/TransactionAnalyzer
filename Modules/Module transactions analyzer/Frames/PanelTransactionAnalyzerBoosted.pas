@@ -8,7 +8,7 @@ uses
   PanelCategories, PanelTransactionsInGraphic, Vcl.Grids, Vcl.ComCtrls,
   Vcl.StdCtrls, PanelBilans, Vcl.ExtCtrls, Vcl.ExtDlgs,
   InterfaceModuleCategory, System.Generics.Collections, InterfaceTransactionsController, Transaction,
-  Category;
+  Category, System.Actions, Vcl.ActnList, Vcl.Menus, Vcl.ToolWin;
 
 type
   TFrmTransactionAnalyzerBoosted2 = class(TfrmTransasctionsList)
@@ -18,6 +18,7 @@ type
     procedure chbExpenseClick(Sender: TObject);
     procedure strTransactionKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure aWczytajExecute(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
@@ -47,7 +48,11 @@ begin
 
   InitStringList;
   frmCategories.InitCategories (CheckBoxClick);
+end;
 
+procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);
+begin
+  inherited;
   LoadAndAnalyzeTransactions
 end;
 
@@ -92,14 +97,15 @@ begin
     begin
       pomRules := TObjectList<TRule>.Create;
       try
-        (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(TransactionList, ofdTransactions.FileName);
+        FTransactionList.Clear;
+        (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(FTransactionList, ofdTransactions.FileName);
         (Kernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
         var pomRuleController : IModuleRules;
         pomRuleController := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
         pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-        FController.AnalyzeTransactions (TransactionList, pomRuleController,
+        FController.AnalyzeTransactions (FTransactionList, pomRuleController,
                                          pomCategories, pomRules, nil);
-        FController.UpdateSummary (TransactionList, FSummary, pomCategories);
+        FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
         UpdateView;
         UpdateBilans;
       finally
@@ -125,7 +131,7 @@ begin
     begin
       var pomList := GetSelectedTransaction.ArrayCategoryIndex as TObject;
       pomCategories.Pack (pomList);
-      FController.UpdateSummary(TransactionList, FSummary,
+      FController.UpdateSummary(FTransactionList, FSummary,
                                 (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories));
       frmBilans.UpdateBilans (FSummary);
       UpdateView;
@@ -152,8 +158,8 @@ end;
 procedure TFrmTransactionAnalyzerBoosted2.UpdateView;
 begin
   FillChoosenCategories;
-  FController.Filter (TransactionList,
-                      TransactionListView,
+  FController.Filter (FTransactionList,
+                      FTransactionListView,
                       FChoosenCategories,
                       chbExpense.Checked,
                       chbImpact.Checked);

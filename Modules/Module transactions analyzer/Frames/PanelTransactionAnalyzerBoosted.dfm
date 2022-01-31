@@ -25,7 +25,10 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
         end
       end
       inherited tabChart: TTabSheet
+        ExplicitLeft = 0
+        ExplicitTop = 0
         ExplicitWidth = 320
+        ExplicitHeight = 0
         inherited frmTransactionInGraphic: TfrmTransactionsInGraphic
           Width = 320
           ExplicitWidth = 320
@@ -37,20 +40,31 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
       end
     end
   end
-  inline frmCategories: TfrmCategories
+  inline frmCategories: TfrmCategories [2]
     Left = 0
-    Top = 0
+    Top = 29
     Width = 137
-    Height = 346
+    Height = 317
     Align = alLeft
     TabOrder = 2
+    ExplicitTop = 29
     ExplicitWidth = 137
-    ExplicitHeight = 346
+    ExplicitHeight = 317
     inherited grpFilter: TGroupBox
       Width = 137
-      Height = 346
+      Height = 317
       ExplicitWidth = 137
-      ExplicitHeight = 346
+      ExplicitHeight = 317
+    end
+  end
+  inherited ToolBar1: TToolBar [3]
+    TabOrder = 3
+  end
+  inherited MainMenu1: TMainMenu [4]
+  end
+  inherited aActions: TActionList
+    inherited aWczytaj: TAction
+      OnExecute = aWczytajExecute
     end
   end
   object ofdTransactions: TOpenTextFileDialog

@@ -62,6 +62,8 @@ begin
       Parent     := grpFilter;
       Checked    := p_DefState;
       OnClick    := p_OnClick;
+      Anchors    := [akRight, akLeft, akTop];
+      Width      := grpFilter.Width-10;
     end;
     FCategoriesAndChbDict.Add (pomCategory.CategoryIndex, pomChb);
   end;

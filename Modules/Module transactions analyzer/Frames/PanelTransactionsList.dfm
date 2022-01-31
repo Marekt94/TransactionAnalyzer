@@ -7,9 +7,9 @@ object frmTransasctionsList: TfrmTransasctionsList
   OnResize = FrameResize
   object pnlDescription: TPanel
     Left = 467
-    Top = 0
+    Top = 29
     Width = 272
-    Height = 346
+    Height = 317
     Align = alRight
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -22,7 +22,7 @@ object frmTransasctionsList: TfrmTransasctionsList
       Left = 1
       Top = 1
       Width = 270
-      Height = 104
+      Height = 75
       Align = alClient
       Caption = 'Szczeg'#243#322'y transakcji'
       TabOrder = 0
@@ -30,7 +30,7 @@ object frmTransasctionsList: TfrmTransasctionsList
         Left = 2
         Top = 15
         Width = 266
-        Height = 87
+        Height = 58
         Align = alClient
         Alignment = taCenter
         Caption = 'lblDescription'
@@ -47,7 +47,7 @@ object frmTransasctionsList: TfrmTransasctionsList
     end
     inline frmBilans: TfrmBilans
       Left = 1
-      Top = 105
+      Top = 76
       Width = 270
       Height = 240
       Align = alBottom
@@ -59,7 +59,7 @@ object frmTransasctionsList: TfrmTransasctionsList
       ParentFont = False
       TabOrder = 1
       ExplicitLeft = 1
-      ExplicitTop = 105
+      ExplicitTop = 76
       ExplicitWidth = 270
       inherited grpBilans: TGroupBox
         Width = 270
@@ -73,9 +73,9 @@ object frmTransasctionsList: TfrmTransasctionsList
   end
   object pnlGrid: TPanel
     Left = 0
-    Top = 0
+    Top = 29
     Width = 467
-    Height = 346
+    Height = 317
     Align = alClient
     Caption = 'pnlGrid'
     Font.Charset = DEFAULT_CHARSET
@@ -87,7 +87,7 @@ object frmTransasctionsList: TfrmTransasctionsList
     TabOrder = 1
     object grpFoot: TGroupBox
       Left = 1
-      Top = 304
+      Top = 275
       Width = 465
       Height = 41
       Align = alBottom
@@ -145,7 +145,7 @@ object frmTransasctionsList: TfrmTransasctionsList
       Left = 1
       Top = 1
       Width = 465
-      Height = 303
+      Height = 274
       ActivePage = tabGrid
       Align = alClient
       TabOrder = 1
@@ -155,7 +155,7 @@ object frmTransasctionsList: TfrmTransasctionsList
           Left = 0
           Top = 0
           Width = 457
-          Height = 275
+          Height = 246
           Align = alClient
           FixedCols = 0
           Font.Charset = DEFAULT_CHARSET
@@ -176,7 +176,7 @@ object frmTransasctionsList: TfrmTransasctionsList
           Left = 0
           Top = 0
           Width = 457
-          Height = 275
+          Height = 246
           Align = alClient
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
@@ -186,17 +186,47 @@ object frmTransasctionsList: TfrmTransasctionsList
           ParentFont = False
           TabOrder = 0
           ExplicitWidth = 457
-          ExplicitHeight = 275
+          ExplicitHeight = 246
           inherited Chart1: TChart
             Width = 457
-            Height = 275
+            Height = 246
             ExplicitLeft = 0
             ExplicitTop = 0
             ExplicitWidth = 457
-            ExplicitHeight = 275
+            ExplicitHeight = 246
           end
         end
       end
+    end
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 0
+    Width = 739
+    Height = 29
+    ButtonHeight = 21
+    ButtonWidth = 59
+    Caption = 'ToolBar1'
+    Menu = MainMenu1
+    ShowCaptions = True
+    TabOrder = 2
+  end
+  object MainMenu1: TMainMenu
+    Left = 352
+    Top = 160
+    object mmTransactions: TMenuItem
+      Caption = '&Transakcje'
+      object mmLoad: TMenuItem
+        Action = aWczytaj
+        Caption = '&Wczytaj z pliku'
+      end
+    end
+  end
+  object aActions: TActionList
+    Left = 352
+    Top = 208
+    object aWczytaj: TAction
+      Caption = 'aWczytaj'
     end
   end
 end

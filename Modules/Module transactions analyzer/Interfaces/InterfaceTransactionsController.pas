@@ -28,7 +28,7 @@ type
       const p_Impact  : boolean = true): boolean;
     function Filter (
             p_TransactionList : TList <TTransaction>;
-            p_TransactionListFiltered : TList <TTransaction>;
+        out p_TransactionListFiltered : TList <TTransaction>;
             p_ChoosenCategories : TList<Integer>;
       const p_Expense : boolean = true;
       const p_Impact  : boolean = true): boolean;

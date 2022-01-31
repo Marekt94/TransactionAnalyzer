@@ -4,19 +4,7 @@ interface
 
 uses
   Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections,
-  Transaction, GUIMethods;
-
-const
-  cExecutionDate   = 'Execution date';
-  cOrderDate       = 'Order date';
-  cTransactionType = 'Transaction type';
-  cDescription     = 'Description';
-  cAmount          = 'Amount';
-  cCategories      = 'Categories';
-
-  cDefaultRowCount = 1;
-  cDefaultColCount = 6;
+  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections;
 
 type
   TfrmTransactionList = class(TFrame)

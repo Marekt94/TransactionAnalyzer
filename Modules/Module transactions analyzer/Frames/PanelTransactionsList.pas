@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans,
-  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton, InterfaceTransactionsController;
+  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton, InterfaceTransactionsController,
+  Vcl.Menus, Vcl.ToolWin, System.Actions, Vcl.ActnList;
 
 const
   cLP              = 'L. p.';
@@ -36,6 +37,12 @@ type
     tabGrid: TTabSheet;
     tabChart: TTabSheet;
     chbGraphically: TCheckBox;
+    ToolBar1: TToolBar;
+    MainMenu1: TMainMenu;
+    mmTransactions: TMenuItem;
+    mmLoad: TMenuItem;
+    aActions: TActionList;
+    aWczytaj: TAction;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);

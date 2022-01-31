@@ -49,8 +49,6 @@ object frmTransactionList: TfrmTransactionList
         Value = 24.999928474358060000
       end>
     TabOrder = 0
-    ExplicitWidth = 354
-    ExplicitHeight = 73
     DesignSize = (
       321
       138)
@@ -63,7 +61,6 @@ object frmTransactionList: TfrmTransactionList
       Caption = 'Kategorie'
       TabOrder = 0
       OnClick = butShowCategoriesClick
-      ExplicitLeft = 109
     end
     object btnRules: TButton
       Left = 105
@@ -74,7 +71,6 @@ object frmTransactionList: TfrmTransactionList
       Caption = 'Zasady'
       TabOrder = 1
       OnClick = btnRulesClick
-      ExplicitLeft = 109
     end
     object btnAnalyze: TButton
       Left = 105
@@ -85,7 +81,6 @@ object frmTransactionList: TfrmTransactionList
       Caption = 'Transakcje'
       TabOrder = 2
       OnClick = btnAnalyzeClick
-      ExplicitLeft = 109
     end
     object btnSettings: TButton
       Left = 105
@@ -96,7 +91,6 @@ object frmTransactionList: TfrmTransactionList
       Caption = 'Ustawienia'
       TabOrder = 3
       OnClick = btnSettingsClick
-      ExplicitLeft = 109
     end
   end
   object ofdOpenTransactionFile: TOpenTextFileDialog
