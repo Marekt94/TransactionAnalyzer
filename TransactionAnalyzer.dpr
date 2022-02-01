@@ -57,7 +57,8 @@ uses
   InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
   DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas',
   PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
-  PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame};
+  PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame},
+  DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas';
 
 {$R *.res}
 

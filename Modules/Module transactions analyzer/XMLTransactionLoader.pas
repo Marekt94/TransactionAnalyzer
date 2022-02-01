@@ -28,12 +28,7 @@ uses
 procedure TXMLTransactionLoader.FillTransaction(out p_Transaction    : TTransaction;
                                                     p_Node           : IXMLNode;
                                                     p_FormatSettings : TFormatSettings);
-resourcestring
-  rs_Empty_Transaction = 'Transakcja jest pusta';
 begin
-  if not Assigned (p_Transaction) then
-    raise Exception.Create(rs_Empty_Transaction);
-
   p_Transaction.DocExecutionDate   := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_ExecDate).Text,  p_FormatSettings);
   p_Transaction.DocOrderDate       := StrToDate  (p_Node.ChildNodes.FindNode (c_NN_OrderDate).Text, p_FormatSettings);
   p_Transaction.DocTransactionType :=             p_Node.ChildNodes.FindNode (c_NN_Type).Text;

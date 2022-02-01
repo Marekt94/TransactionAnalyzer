@@ -10,6 +10,7 @@ type
     FConnection: TADOConnection;
     FCategories: TADOTable;
     FRule: TADOTable;
+    FTransaction: TADOTable;
   private
     { Private declarations }
   public

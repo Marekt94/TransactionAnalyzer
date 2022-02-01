@@ -1,3 +1,9 @@
+{TODO -cDBTransaction : Oprogramowaæ reakcjê na duplikaty}
+{TODO -cDBTransaction : Zarejestrowaæ klase}
+{TODO -cDBTransaction :Oprogramowaæ GUI o zapis do DB}
+{TODO -cDBTransaction : Oprogramowaæ funkcjê zapisu}
+{TODO -cDBTransaction : Oprogramowaæ funkcje pakowania, rozpakowywania}
+{TODO -cDBTransaction : Zmianiæ XMLLoadera jak w pozosta³ych}
 {TODO :Przy wczytywaniu zasad, funkcja wczytauj¹ca uruchamia siê wielokrotnie}
 {DONE 1 : Dodaæ opcjê wczytywania i zapisywania do XML w oknie edycji list obiektów}
 {DONE 3 : Oprogramowaæ wczytywanie zasad z DB}
