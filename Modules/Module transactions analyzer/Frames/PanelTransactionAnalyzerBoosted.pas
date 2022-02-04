@@ -35,7 +35,7 @@ type
 implementation
 
 uses
-  WindowSkeleton, Kernel, Rule, InterfaceTransactionLoader, InterfaceRuleSaver,
+  WindowSkeleton, Kernel, Rule, InterfaceXMLTransactionLoaderSaver, InterfaceRuleSaver,
   InterfaceModuleRules;
 
 {$R *.dfm}
@@ -98,7 +98,7 @@ begin
       pomRules := TObjectList<TRule>.Create;
       try
         FTransactionList.Clear;
-        (Kernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader).Load(FTransactionList, ofdTransactions.FileName);
+        (Kernel.GiveObjectByInterface(IXMLTransactionLoaderSaver) as IXMLTransactionLoaderSaver).Load (FTransactionList, ofdTransactions.FileName);
         (Kernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
         var pomRuleController : IModuleRules;
         pomRuleController := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;

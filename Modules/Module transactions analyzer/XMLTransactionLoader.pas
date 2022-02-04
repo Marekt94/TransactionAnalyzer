@@ -3,19 +3,21 @@ unit XMLTransactionLoader;
 interface
 
 uses
-  System.Generics.Collections, InterfaceTransactionLoader, Transaction, Dialogs,
+  System.Generics.Collections, InterfaceXMLTransactionLoaderSaver, Transaction, Dialogs,
   Xml.XMLIntf, System.SysUtils;
 
 type
-  TXMLTransactionLoader = class (TInterfacedObject, ITransactionLoader)
+  TXMLTransactionLoader = class (TInterfacedObject, IXMLTransactionLoaderSaver)
     strict private
       function FindNode (p_NodeName : string; p_NodeList : IXMLNodeList) : IXMLNode;
       procedure FillTransaction (out p_Transaction    : TTransaction;
                                      p_Node           : IXMLNode;
                                      p_FormatSettings : TFormatSettings);
     public
-      function Load (p_TransactionList : TObjectList <TTransaction>;
-                     p_Path            : string) : boolean;
+      function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
+      function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
+      function Save (p_List : TObjectList <TTransaction>; p_Path : string) : boolean; overload;
+      function Load (p_List : TObjectList <TTransaction>; p_Path : string) : boolean; overload;
   end;
 
 implementation
@@ -45,8 +47,8 @@ begin
       Result := FindNode (p_NodeName, p_NodeList.Nodes [i].ChildNodes);
 end;
 
-function TXMLTransactionLoader.Load (p_TransactionList : TObjectList<TTransaction>;
-                          p_Path            : string) : boolean;
+function TXMLTransactionLoader.Load(p_List: TObjectList<TTransaction>;
+  p_Path: string): boolean;
 var
   pomXMLDoc         : IXMLDocument;
   pomTransactions   : IXMLNode;
@@ -72,10 +74,28 @@ begin
     pomTransaction := TTransaction.Create;
     FillTransaction (pomTransaction, pomTransactions.ChildNodes.Get(i), pomFormatSettings);
     pomTransaction.UpdateHash;
-    p_TransactionList.Add (pomTransaction);
+    p_List.Add (pomTransaction);
   end;
 
   Result := True;
+end;
+
+function TXMLTransactionLoader.Load(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  Result := Load (TObjectList <TTransaction> (p_List), p_Path);
+end;
+
+function TXMLTransactionLoader.Save(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  Result := Save (TObjectList <TTransaction> (p_List), p_Path);
+end;
+
+function TXMLTransactionLoader.Save(p_List: TObjectList<TTransaction>;
+  p_Path: string): boolean;
+begin
+  Result := false;
 end;
 
 end.

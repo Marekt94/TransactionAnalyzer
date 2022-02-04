@@ -204,6 +204,7 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

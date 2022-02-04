@@ -58,7 +58,8 @@ uses
   DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas',
   PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame},
-  DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas';
+  DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas',
+  InterfaceXMLTransactionLoaderSaver in 'Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas';
 
 {$R *.res}
 
