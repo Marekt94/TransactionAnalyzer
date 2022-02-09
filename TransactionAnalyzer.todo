@@ -1,3 +1,4 @@
+{TODO -cDBTransaction : Dodaæ funkcje setindexes do transakcji (moze byæ generyk na podst. kategorii)}
 {TODO 5 -cDBTransaction : Przerobic rejestracje klasy tak, zeby jako parametr przyjmowala interfejs. Wtedy przy wyszukiwaniu po interfejsie bedzie sie sprawdzalo, czy dana klasa zostala zarejestrowana w parze z danym interfejsem}
 {TODO -cDBTransaction : Oprogramowaæ reakcjê na duplikaty}
 {TODO 4 -cDBTransaction : Zarejestrowaæ klase}

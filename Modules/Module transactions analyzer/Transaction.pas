@@ -13,6 +13,7 @@ type
   //doc prefix - from document
   TTransaction = class
   strict private
+    FID : Integer;
     FDocExecutionDate : TDate;
     FDocOrderDate : TDate;
     FDocType : string;
@@ -26,6 +27,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure UpdateHash;
+    property ID                 : Integer        read FID;
     property DocExecutionDate   : TDate          read FDocExecutionDate   write FDocExecutionDate;
     property DocOrderDate       : TDate          read FDocOrderDate       write FDocOrderDate;
     property DocTransactionType : string         read FDocType            write FDocType;

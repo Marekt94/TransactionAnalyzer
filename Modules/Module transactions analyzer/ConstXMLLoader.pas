@@ -10,6 +10,9 @@ const
   c_NN_Description = 'description';
   c_NN_AmountCurr = 'amount';
   c_NN_EndingBalanceCurr = 'ending-balance';
+
+  c_NN_Hash = 'hash';
+  c_NN_ID = 'id';
 implementation
 
 end.
