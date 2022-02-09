@@ -43,6 +43,8 @@ type
     mmLoad: TMenuItem;
     aActions: TActionList;
     aWczytaj: TAction;
+    aSaveToDB: TAction;
+    SaveToDB: TMenuItem;
     procedure FrameResize(Sender: TObject);
     procedure strTransactionClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);

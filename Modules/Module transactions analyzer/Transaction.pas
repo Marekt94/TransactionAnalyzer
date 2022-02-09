@@ -3,7 +3,8 @@ unit Transaction;
 interface
 
 uses
-  InterfaceTransaction, System.SysUtils, System.Generics.Collections;
+  InterfaceTransaction, System.SysUtils, System.Generics.Collections,
+  System.Generics.Defaults;
 
 const
   cExpense = 0;
@@ -27,7 +28,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure UpdateHash;
-    property ID                 : Integer        read FID;
+    property ID                 : Integer        read FID                 write FID;
     property DocExecutionDate   : TDate          read FDocExecutionDate   write FDocExecutionDate;
     property DocOrderDate       : TDate          read FDocOrderDate       write FDocOrderDate;
     property DocTransactionType : string         read FDocType            write FDocType;
@@ -35,7 +36,7 @@ type
     property DocAmount          : Double         read FDocAmount          write FDocAmount;
     property ArrayCategoryIndex : TList<Integer> read FArrayCategoryIndex write FArrayCategoryIndex;
     property TransactionType    : Byte           read FType               write FType;
-    property Hash               : string         read FHash;
+    property Hash               : string         read FHash               write FHash;
     property AccountState       : Double         read FAccountState       write FAccountState;
   end;
 
@@ -43,6 +44,10 @@ type
     CategoryIndex : Integer;
     Impact        : Double;
     Expense       : Double;
+  end;
+
+  TTransactionComparer = class (TComparer <TTransaction>)
+    function Compare (const p_Left, p_Right : TTransaction) : Integer; override;
   end;
 
 implementation
@@ -56,6 +61,7 @@ constructor TTransaction.Create;
 begin
   inherited;
   FArrayCategoryIndex := TList<Integer>.Create;
+  FID := -1;
 end;
 
 destructor TTransaction.Destroy;
@@ -79,6 +85,14 @@ begin
     Free;
   end;
 
+end;
+
+{ TTransactionComparer }
+
+function TTransactionComparer.Compare(const p_Left,
+  p_Right: TTransaction): Integer;
+begin
+  Result := p_Left.ID - p_Right.ID;
 end;
 
 end.

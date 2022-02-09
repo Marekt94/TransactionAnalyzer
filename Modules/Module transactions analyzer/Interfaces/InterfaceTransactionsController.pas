@@ -36,6 +36,7 @@ type
                                  p_ChoosenCat : TList<Integer>) : Double;
     function EvaluateImpactSum (p_Summary : TList <TSummary>;
                                 p_ChoosenCat : TList<Integer>) : Double;
+    function SaveToDB (p_List : TObjectList <TTransaction>): boolean;
   end;
 
 implementation

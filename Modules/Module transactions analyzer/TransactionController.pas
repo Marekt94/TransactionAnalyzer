@@ -37,9 +37,13 @@ type
                                  p_ChoosenCat : TList<Integer>) : Double;
     function EvaluateImpactSum (p_Summary : TList <TSummary>;
                                 p_ChoosenCat : TList<Integer>) : Double;
+    function SaveToDB (p_List : TObjectList <TTransaction>): boolean;
   end;
 
 implementation
+
+uses
+  InterfaceTransactionLoader, UsefullMethods;
 
 { TTransactionController }
 
@@ -173,6 +177,20 @@ begin
       p_TransactionListFiltered.Add (pomTransaction);
   end;
   Result := true;
+end;
+
+function TTransactionController.SaveToDB(p_List: TObjectList<TTransaction>): boolean;
+begin
+  SetIndexes (TObjectList<TObject> (p_List),
+              function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer
+              begin
+                Result := (p_List [p_ID] as TTransaction).ID;
+              end,
+              procedure (p_ID : Integer; p_List : TObjectList <TObject>; p_IDValue : Integer)
+              begin
+                (p_List [p_ID] as TTransaction).ID := p_IDValue;
+              end);
+  Result := (Kernel.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader).Save (p_List, '');
 end;
 
 function TTransactionController.UpdateSummary(const p_Transactions :  TObjectList <TTransaction>;

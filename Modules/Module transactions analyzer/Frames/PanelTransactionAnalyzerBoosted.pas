@@ -19,6 +19,7 @@ type
     procedure strTransactionKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure aWczytajExecute(Sender: TObject);
+    procedure aSaveToDBExecute(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
@@ -48,6 +49,12 @@ begin
 
   InitStringList;
   frmCategories.InitCategories (CheckBoxClick);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBExecute(Sender: TObject);
+begin
+  inherited;
+  FController.SaveToDB (FTransactionList);
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);

@@ -172,6 +172,10 @@ object frmTransasctionsList: TfrmTransasctionsList
       object tabChart: TTabSheet
         Caption = 'tabChart'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         inline frmTransactionInGraphic: TfrmTransactionsInGraphic
           Left = 0
           Top = 0
@@ -220,6 +224,10 @@ object frmTransasctionsList: TfrmTransasctionsList
         Action = aWczytaj
         Caption = '&Wczytaj z pliku'
       end
+      object SaveToDB: TMenuItem
+        Action = aSaveToDB
+        Caption = '&Zapisz do bazy danych'
+      end
     end
   end
   object aActions: TActionList
@@ -227,6 +235,9 @@ object frmTransasctionsList: TfrmTransasctionsList
     Top = 208
     object aWczytaj: TAction
       Caption = 'aWczytaj'
+    end
+    object aSaveToDB: TAction
+      Caption = 'aSaveToDB'
     end
   end
 end

@@ -6,6 +6,9 @@ uses
   System.Generics.Collections, System.SysUtils;
 
 function ListToLine (p_List : TList <Integer>) : string;
+procedure SetIndexes (const p_List : TObjectList <TObject>;
+                      const p_GetIndex : TFunc <Integer, TObjectList <TObject>, Integer>;
+                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>);
 
 implementation
 
@@ -18,6 +21,27 @@ begin
   for var i := 0 to p_List.Count - 2 do
     Result := Result + IntToStr (p_List [i]) + ',';
   Result := Result + IntToStr (p_List.Last);
+end;
+
+procedure SetIndexes (const p_List : TObjectList <TObject>;
+                      const p_GetIndex : TFunc <Integer, TObjectList <TObject>, Integer>;
+                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>);
+var
+  pomHighestIndex : Integer;
+begin
+  pomHighestIndex := 0;
+  for var i := 0 to p_List.Count - 1 do
+    if pomHighestIndex < p_GetIndex (i, p_List) then
+      pomHighestIndex := p_GetIndex (i, p_List);
+
+  for var i := 0 to p_List.Count - 1 do
+  begin
+    if p_GetIndex (i, p_List) < 0 then
+    begin
+      Inc (pomHighestIndex);
+      p_SetIndex (i, p_List, pomHighestIndex);
+    end;
+  end;
 end;
 
 end.

@@ -20,7 +20,7 @@ implementation
 uses
   WindowSkeleton, InterfaceModuleRules, Kernel, PanelTransactionAnalyzerBoosted,
   InterfaceModuleCategory, InterfaceTransactionsController,
-  TransactionController;
+  TransactionController, DBTransactionLoaderSaver;
 
 { TModuleTransactionAnalyzer }
 
@@ -47,6 +47,7 @@ begin
   inherited;
   RegisterClass (TXMLTransactionLoader);
   RegisterClass (TTransactionController);
+  RegisterClass (TDBTransactionLoaderSaver);
 end;
 
 end.
