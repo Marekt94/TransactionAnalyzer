@@ -23,7 +23,6 @@ type
     function GetSelfInterface: TGUID; override;
     function GetCateogryList : TObjectList <TCategory>;
     function GetPeriodicityList : TObjectList <TCategory>;
-    procedure SetIndexes (const p_List : TObjectList <TCategory>);
     property CategoryList : TObjectList <TCategory> read GetCateogryList;
     property PeriodicityList : TObjectList <TCategory> read GetPeriodicityList;
   end;
@@ -32,7 +31,7 @@ implementation
 
 uses
   System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
-  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes;
+  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods;
 
 { TModuleCategories }
 
@@ -128,7 +127,15 @@ begin
       XMLLoaderSaver := Kernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver, true) as IXMLCategoriesLoaderSaver;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
-    SetIndexes (pomCategories);
+    SetIndexes (TObjectList<TObject> (pomCategories),
+                function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer
+                begin
+                  Result := (p_List [p_ID] as TCategory).CategoryIndex;
+                end,
+                procedure (p_ID : Integer; p_List : TObjectList <TObject>; p_IDValue : Integer)
+                begin
+                  (p_List [p_ID] as TCategory).CategoryIndex := p_IDValue;
+                end);
     if Result = mrOk then
       (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(pomCategories);
   finally
@@ -148,27 +155,6 @@ begin
   inherited;
   RegisterClass(TXMLCategoriesLoaderSaver);
   RegisterClass(TDBCategoriesLoaderSaver);
-end;
-
-procedure TModuleCategories.SetIndexes (const p_List : TObjectList <TCategory>);
-var
-  pomHighestIndex : Integer;
-  pomCategory     : TCategory;
-begin
-  pomHighestIndex := 0;
-  for var i := 0 to p_List.Count - 1 do
-    if pomHighestIndex < p_List [i].CategoryIndex then
-      pomHighestIndex := p_List [i].CategoryIndex;
-
-  for var i := 0 to p_List.Count - 1 do
-  begin
-    if p_List [i].CategoryIndex < 0 then
-    begin
-      Inc (pomHighestIndex);
-      pomCategory := p_List [i];
-      pomCategory.CategoryIndex := pomHighestIndex;
-    end;
-  end;
 end;
 
 end.
