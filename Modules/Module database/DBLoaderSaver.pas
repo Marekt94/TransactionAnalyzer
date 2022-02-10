@@ -7,6 +7,10 @@ uses
   System.Generics.Defaults;
 
 type
+  TOnDuplicates = reference to function  (    p_Table    : TADOTable;
+                                              p_Obj      : TObject;
+                                          var p_DupCount : Integer) : boolean;
+
   TDBLoaderSaver = class (TInterfacedObject)
     protected
       FTable : TADOTable;
@@ -21,7 +25,8 @@ type
         const p_Comparer : TComparer <TObjClass>;
         const p_PackToObj : TProc <TADOTable, TObjClass>;
         const p_PackToTable : TProc <TObjClass, TADOTable>;
-        const p_ReturnFieldToLocate : TFunc <TObjClass, Integer>) : boolean;
+        const p_ReturnFieldToLocate : TFunc <TObjClass, Integer>;
+              p_OnDupliacates : TOnDuplicates = nil) : boolean;
 
   end;
 
@@ -57,7 +62,8 @@ function TDBLoaderSaver.Save<TObjClass>(
   const p_Comparer: TComparer <TObjClass>;
   const p_PackToObj: TProc<TADOTable, TObjClass>;
   const p_PackToTable: TProc<TObjClass, TADOTable>;
-  const p_ReturnFieldToLocate : TFunc <TObjClass, Integer>) : boolean;
+  const p_ReturnFieldToLocate : TFunc <TObjClass, Integer>;
+        p_OnDupliacates : TOnDuplicates = nil) : boolean;
 var
   pomIndex : Integer;
 begin
@@ -82,8 +88,15 @@ begin
       end;
     end;
 
+    var pomDup := 0;
     for var pomObj in p_List do
     begin
+      var pomContinueOnDuplicates := true;
+      if Assigned (p_OnDupliacates) then
+        pomContinueOnDuplicates := p_OnDupliacates (p_Table, pomObj, pomDup);
+      if not pomContinueOnDuplicates then
+        continue;
+
       if Locate('ID',p_ReturnFieldToLocate (pomObj),[]) then
         Edit
       else

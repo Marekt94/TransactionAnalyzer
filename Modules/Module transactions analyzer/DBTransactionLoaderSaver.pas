@@ -12,12 +12,14 @@ const
 type
   TDBTransactionLoaderSaver = class (TDBLoaderSaver, ITransactionLoader)
   strict private
-  strict private
     procedure PackToObject (p_Table : TADOTable;
                             p_Obj   : TTransaction);
     procedure PackToTable (p_Obj   : TTransaction;
                            p_Table : TADOTable);
     function ReturnFieldToLocate (p_Obj : TTransaction) : Integer;
+    function OnDuplicates (    p_Table : TADOTable;
+                               p_Obj : TObject;
+                           var p_DupCount : Integer) : boolean;
   public
     procedure AfterConstruction; override;
     function Load (p_TransactionList : TObjectList <TTransaction>;
@@ -43,6 +45,15 @@ function TDBTransactionLoaderSaver.Load(
   p_TransactionList: TObjectList<TTransaction>; p_Path: string): boolean;
 begin
   Result := inherited Load <TTransaction> (FTable, p_TransactionList, PackToObject);
+end;
+
+function TDBTransactionLoaderSaver.OnDuplicates(p_Table: TADOTable;
+  p_Obj: TObject; var p_DupCount : Integer): boolean;
+begin
+  Result := not p_Table.Locate (UpperCase (c_NN_Hash),
+                                TTransaction (p_Obj).Hash, []);
+  if not Result then
+    Inc (p_DupCount);
 end;
 
 procedure TDBTransactionLoaderSaver.PackToObject(p_Table: TADOTable;
@@ -83,7 +94,7 @@ begin
   try
     Result := inherited Save <TTransaction> (FTable, p_TransactionList, pomComparer,
                                              PackToObject, PackToTable,
-                                             ReturnFieldToLocate)
+                                             ReturnFieldToLocate, OnDuplicates)
   finally
     pomComparer.Free;
   end;
