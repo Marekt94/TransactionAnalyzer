@@ -153,8 +153,8 @@ end;
 procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
-  RegisterClass(TXMLCategoriesLoaderSaver);
-  RegisterClass(TDBCategoriesLoaderSaver);
+  RegisterClass(IXMLCategoriesLoaderSaver, TXMLCategoriesLoaderSaver);
+  RegisterClass(ICategoriesLoaderSaver,    TDBCategoriesLoaderSaver);
 end;
 
 end.

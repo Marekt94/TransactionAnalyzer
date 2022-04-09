@@ -95,9 +95,9 @@ end;
 procedure TModuleRules.RegisterClasses;
 begin
   inherited;
-  RegisterClass (TXMLRuleSaverLoader);
-  RegisterClass (TRulesController);
-  RegisterClass (TDBRulesLoaderSaver);
+  RegisterClass (IXMLRuleLoaderSaver, TXMLRuleSaverLoader);
+  RegisterClass (IRulesController,    TRulesController);
+  RegisterClass (IRuleSaver,          TDBRulesLoaderSaver);
 end;
 
 end.

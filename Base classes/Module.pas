@@ -8,18 +8,18 @@ uses
 type
   TBaseModule = class(TInterfacedObject, IModule)
   strict private
-    FObjectList : TList<TInterfacedClass>;
+    FObjectList :  TDictionary<TGUID, TInterfacedClass>;
   public
     constructor Create; virtual;
     destructor Destroy; override;
     function OpenMainWindow : Integer; virtual;
     function OpenModule : boolean; virtual;
     function CloseModule : boolean; virtual;
-    function GetObjectList : TList<TInterfacedClass>;
+    function GetObjectList : TDictionary<TGUID, TInterfacedClass>;
     function GiveObjectByInterface (p_GUID : TGUID) : IInterface;
     function GetSelfInterface : TGUID; virtual;
     function InterfaceExists (p_GUID : TGUID) : boolean;
-    procedure RegisterClass (p_Class : TInterfacedClass);
+    procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
     procedure RegisterClasses; virtual;
   end;
 
@@ -37,7 +37,7 @@ end;
 
 constructor TBaseModule.Create;
 begin
-  FObjectList := TList<TInterfacedClass>.Create;
+  FObjectList := TDictionary<TGUID, TInterfacedClass>.Create;
 
   RegisterClasses;
 end;
@@ -48,7 +48,7 @@ begin
   inherited;
 end;
 
-function TBaseModule.GetObjectList: TList<TInterfacedClass>;
+function TBaseModule.GetObjectList: TDictionary<TGUID, TInterfacedClass>;
 begin
   Result := FObjectList;
 end;
@@ -59,20 +59,18 @@ begin
 end;
 
 function TBaseModule.GiveObjectByInterface(p_GUID: TGUID): IInterface;
+var
+  pomClass : TInterfacedClass;
 begin
-  for var i := 0 to FObjectList.Count - 1 do
-    if Assigned (FObjectList.Items [i].GetInterfaceEntry(p_GUID)) then
-      Exit (FObjectList.Items [i].Create);
+  if not FObjectList.TryGetValue (p_GUID, pomClass)
+   then Exit (nil);
 
-  Result := nil;
+  Result := pomClass.Create;
 end;
 
 function TBaseModule.InterfaceExists(p_GUID: TGUID): boolean;
 begin
-  Result := False;
-  for var i := 0 to FObjectList.Count - 1 do
-    if Assigned (FObjectList.Items [i].GetInterfaceEntry(p_GUID)) then
-      Exit (True);
+  Result := FObjectList.ContainsKey(p_GUID);
 end;
 
 function TBaseModule.OpenMainWindow: Integer;
@@ -85,9 +83,11 @@ begin
   Result := true;
 end;
 
-procedure TBaseModule.RegisterClass(p_Class : TInterfacedClass);
+procedure TBaseModule.RegisterClass(p_GUID : TGUID; p_Class : TInterfacedClass);
 begin
-  FObjectList.Add (p_Class)
+  if FObjectList.ContainsKey (p_GUID) then
+    raise Exception.Create(Format ('W j¹drze jest ju¿ zarejestrowany interfejs %s', [p_GUID.ToString]));
+  FObjectList.Add (p_GUID, p_Class);
 end;
 
 procedure TBaseModule.RegisterClasses;

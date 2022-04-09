@@ -78,7 +78,7 @@ end;
 procedure TModuleSettings.RegisterClasses;
 begin
   inherited;
-  RegisterClass (TXMLSettingsLoaderSaver);
+  RegisterClass (ISettingsSaverLoader, TXMLSettingsLoaderSaver);
 end;
 
 end.

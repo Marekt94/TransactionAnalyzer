@@ -3,8 +3,7 @@ unit Kernel;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, InterfaceTransactionLoader,
-  Transaction, WindowSkeleton, ModuleTransactionAnalyzer, ModuleSettings,
+  InterfaceModule, System.Generics.Collections, Transaction, WindowSkeleton,
   Settings;
 
 type
@@ -27,8 +26,8 @@ var
 implementation
 
 uses
-  System.SysUtils, Winapi.Windows,
-  PanelMain, ModuleCategories,
+  System.SysUtils, Winapi.Windows, ModuleTransactionAnalyzer, ModuleSettings,
+  InterfaceTransactionLoader, PanelMain, ModuleCategories,
   ModuleRules, ModuleDatabase;
 
 { TKernel }
