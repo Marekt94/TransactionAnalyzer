@@ -19,6 +19,8 @@ type
     function ReturnFieldToLocate (p_Obj : TCategory) : Integer;
   public
     procedure AfterConstruction; override;
+    function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
+    function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
     function LoadCategories (p_List : TObjectList <TCategory>) : boolean;
     function SaveCategories (p_List : TObjectList <TCategory>) : boolean;
   end;
@@ -34,6 +36,12 @@ procedure TDBCategoriesLoaderSaver.AfterConstruction;
 begin
   inherited;
   FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
+end;
+
+function TDBCategoriesLoaderSaver.Load(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  Result := LoadCategories (TObjectList <TCategory> (p_List));
 end;
 
 function TDBCategoriesLoaderSaver.LoadCategories(p_List: TObjectList<TCategory>): boolean;
@@ -58,6 +66,12 @@ end;
 function TDBCategoriesLoaderSaver.ReturnFieldToLocate(p_Obj: TCategory): Integer;
 begin
   Result := p_Obj.CategoryIndex;
+end;
+
+function TDBCategoriesLoaderSaver.Save(p_List: TObjectList<TObject>;
+  p_Path: string): boolean;
+begin
+  Result := SaveCategories (TObjectList <TCategory> (p_List));
 end;
 
 function TDBCategoriesLoaderSaver.SaveCategories(p_List: TObjectList<TCategory>): boolean;

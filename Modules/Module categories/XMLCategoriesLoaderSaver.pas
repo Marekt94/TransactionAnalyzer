@@ -10,7 +10,7 @@ const
   rs_FileName = 'categories.xml';
 
 type
-  TXMLCategoriesLoaderSaver = class (TInterfacedObject, IXMLCategoriesLoaderSaver)
+  TXMLCategoriesLoaderSaver = class (TInterfacedObject, ICategoriesLoaderSaver, IXMLCategoriesLoaderSaver)
   public
     function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
     function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;

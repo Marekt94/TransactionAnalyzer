@@ -59,7 +59,8 @@ uses
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame},
   DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas',
   InterfaceXMLTransactionLoaderSaver in 'Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas',
-  InterfaceXMLSaverLoader in 'Base classes\Interfaces\InterfaceXMLSaverLoader.pas';
+  InterfaceXMLSaverLoader in 'Base classes\Interfaces\InterfaceXMLSaverLoader.pas',
+  InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas';
 
 {$R *.res}
 

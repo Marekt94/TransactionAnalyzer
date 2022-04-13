@@ -7,7 +7,7 @@ uses
   InterfaceModuleSettings, Kernel, InterfaceRuleSaver, InterfaceXMLRuleLoaderSaver;
 
 type
-  TXMLRuleSaverLoader = class (TInterfacedObject, IXMLRuleLoaderSaver)
+  TXMLRuleSaverLoader = class (TInterfacedObject, IRuleSaver, IXMLRuleLoaderSaver)
   strict private
     function FindHighestIndex (p_List : TObjectList <TRule>) : Integer;
   public

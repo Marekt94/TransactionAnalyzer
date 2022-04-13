@@ -205,6 +205,7 @@
         <DCCReference Include="Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas"/>
         <DCCReference Include="Base classes\Interfaces\InterfaceXMLSaverLoader.pas"/>
+        <DCCReference Include="Base classes\Interfaces\InterfaceLoaderSaver.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

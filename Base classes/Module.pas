@@ -85,8 +85,10 @@ end;
 
 procedure TBaseModule.RegisterClass(p_GUID : TGUID; p_Class : TInterfacedClass);
 begin
+  if not Supports(p_Class, p_GUID) then
+    raise Exception.Create(Format ('Klasa %s nie implemetuje interfejsu %s', [p_Class.ClassName, GUIDToString (p_GUID)]));
   if FObjectList.ContainsKey (p_GUID) then
-    raise Exception.Create(Format ('W j¹drze jest ju¿ zarejestrowany interfejs %s', [p_GUID.ToString]));
+    raise Exception.Create(Format ('W j¹drze jest ju¿ zarejestrowany interfejs %s', [GUIDToString (p_GUID)]));
   FObjectList.Add (p_GUID, p_Class);
 end;
 
