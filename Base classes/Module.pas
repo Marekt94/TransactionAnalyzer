@@ -20,6 +20,7 @@ type
     function GetSelfInterface : TGUID; virtual;
     function InterfaceExists (p_GUID : TGUID) : boolean;
     procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
+    procedure UnregisterClass (p_GUID : TGUID);
     procedure RegisterClasses; virtual;
   end;
 
@@ -95,6 +96,11 @@ end;
 procedure TBaseModule.RegisterClasses;
 begin
   //to be covered in descendant
+end;
+
+procedure TBaseModule.UnregisterClass (p_GUID: TGUID);
+begin
+  FObjectList.Remove (p_GUID);
 end;
 
 end.

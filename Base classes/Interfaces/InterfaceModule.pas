@@ -16,6 +16,7 @@ type
     function CloseModule : boolean;
     function OpenMainWindow : Integer;
     procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
+    procedure UnregisterClass (p_GUID : TGUID);
     procedure RegisterClasses;
     property ObjectList: TDictionary<TGUID, TInterfacedClass> read GetObjectList;
     property SelfInterface : TGUID read GetSelfInterface;
