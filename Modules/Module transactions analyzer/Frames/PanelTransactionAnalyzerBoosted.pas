@@ -37,7 +37,7 @@ implementation
 
 uses
   WindowSkeleton, Kernel, Rule, InterfaceXMLTransactionLoaderSaver, InterfaceRuleSaver,
-  InterfaceModuleRules;
+  InterfaceModuleRules, InterfaceModuleTransactionAnalyzer;
 
 {$R *.dfm}
 
@@ -60,7 +60,8 @@ end;
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);
 begin
   inherited;
-  LoadAndAnalyzeTransactions
+  if (GiveObjectByInterface(IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer).RegisterLoaderSaverClass then
+    LoadAndAnalyzeTransactions
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.BeforeDestruction;

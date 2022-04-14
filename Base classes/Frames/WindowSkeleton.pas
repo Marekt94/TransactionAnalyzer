@@ -56,6 +56,8 @@ end;
 
 //function creating basic window
 function TWndSkeleton.Init (p_ChildPanel: TFrame; p_Title : string; p_WithNavigationKeys : boolean; p_FullScreen : Boolean) : TForm;
+var
+  pomWidth : Integer;
 begin
   FChildPanel := p_ChildPanel;
   FChildPanel.Parent := pnlMain;
@@ -65,9 +67,13 @@ begin
     WindowState := wsMaximized
   else
   begin
-    pnlMain.Width  := FChildPanel.Width;
+    var pomLblTextWidth := lblTitle.Canvas.TextWidth (p_Title) + 100;
+    if FChildPanel.Width > pomLblTextWidth then
+      pomWidth := FChildPanel.Width
+    else
+      pomWidth := pomLblTextWidth;
     pnlMain.Height := FChildPanel.Height;
-    ClientWidth    := FChildPanel.Width;
+    ClientWidth    := pomWidth;
     ClientHeight   := lblTitle.Height + FChildPanel.Height + pnlNavigationKeys.Height;
   end;
   if not p_WithNavigationKeys then

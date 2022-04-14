@@ -60,7 +60,8 @@ uses
   DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas',
   InterfaceXMLTransactionLoaderSaver in 'Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas',
   InterfaceXMLSaverLoader in 'Base classes\Interfaces\InterfaceXMLSaverLoader.pas',
-  InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas';
+  InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas',
+  PanelProductChooser in 'Modules\Module transactions analyzer\Frames\PanelProductChooser.pas' {frmProductChooser: TFrame};
 
 {$R *.res}
 

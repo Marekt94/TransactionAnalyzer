@@ -206,6 +206,11 @@
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas"/>
         <DCCReference Include="Base classes\Interfaces\InterfaceXMLSaverLoader.pas"/>
         <DCCReference Include="Base classes\Interfaces\InterfaceLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelProductChooser.pas">
+            <Form>frmProductChooser</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -228,8 +233,8 @@
                     <Source Name="MainSource">TransactionAnalyzer.dpr</Source>
                 </Source>
                 <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp260.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp270.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
