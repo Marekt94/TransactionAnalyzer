@@ -61,7 +61,9 @@ uses
   InterfaceXMLTransactionLoaderSaver in 'Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas',
   InterfaceXMLSaverLoader in 'Base classes\Interfaces\InterfaceXMLSaverLoader.pas',
   InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas',
-  PanelProductChooser in 'Modules\Module transactions analyzer\Frames\PanelProductChooser.pas' {frmProductChooser: TFrame};
+  PanelProductChooser in 'Modules\Module transactions analyzer\Frames\PanelProductChooser.pas' {frmProductChooser: TFrame},
+  XMLCreditCardTransactionLoader in 'Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas',
+  XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas';
 
 {$R *.res}
 

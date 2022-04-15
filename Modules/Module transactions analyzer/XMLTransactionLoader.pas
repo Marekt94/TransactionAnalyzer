@@ -11,13 +11,12 @@ resourcestring
   
 type
   TXMLTransactionLoader = class (TInterfacedObject, IXMLTransactionLoaderSaver)
-    strict private
+    protected
       function FindNodeInTree (p_NodeName : string; p_NodeList : IXMLNodeList) : IXMLNode;
       function FindNode (p_NodeName : string; p_NodeList : IXMLNode) : IXMLNode;
-    protected
       procedure FillTransaction (out p_Transaction    : TTransaction;
                                      p_Node           : IXMLNode;
-                                     p_FormatSettings : TFormatSettings); virtual;
+                                     p_FormatSettings : TFormatSettings); virtual; abstract;
     public
       function Save (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
       function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
@@ -31,18 +30,6 @@ uses
   Xml.XMLDoc, ConstXMLLoader;
 
 { TXMLTransactionLoader }
-
-procedure TXMLTransactionLoader.FillTransaction(out p_Transaction    : TTransaction;
-                                                    p_Node           : IXMLNode;
-                                                    p_FormatSettings : TFormatSettings);
-begin
-  p_Transaction.DocExecutionDate   := StrToDate  (FindNode (c_NN_ExecDate,          p_Node).Text, p_FormatSettings);
-  p_Transaction.DocOrderDate       := StrToDate  (FindNode (c_NN_OrderDate,         p_Node).Text, p_FormatSettings);
-  p_Transaction.DocTransactionType :=             FindNode (c_NN_Type,              p_Node).Text;
-  p_Transaction.DocDescription     :=             FindNode (c_NN_Description,       p_Node).Text;
-  p_Transaction.DocAmount          := StrToFloat (FindNode (c_NN_AmountCurr,        p_Node).Text, p_FormatSettings);
-  p_Transaction.AccountState       := StrToFloat (FindNode (c_NN_EndingBalanceCurr, p_Node).Text, p_FormatSettings);
-end;
 
 function TXMLTransactionLoader.FindNode(p_NodeName: string;
   p_NodeList: IXMLNode): IXMLNode;

@@ -4,7 +4,7 @@ interface
 
 uses
   Module, InterfaceModuleTransactionAnalyzer, System.Generics.Collections, Transaction,
-  System.SysUtils, XMLTransactionLoader,
+  System.SysUtils, XMLDebitAccountTransactionLoader,
   InterfaceTransactionLoader;
 
 type
@@ -22,7 +22,8 @@ uses
   WindowSkeleton, InterfaceModuleRules, Kernel, PanelTransactionAnalyzerBoosted,
   InterfaceModuleCategory, InterfaceTransactionsController,
   TransactionController, DBTransactionLoaderSaver,
-  InterfaceXMLTransactionLoaderSaver, PanelProductChooser, Vcl.Controls;
+  InterfaceXMLTransactionLoaderSaver, PanelProductChooser, Vcl.Controls,
+  XMLCreditCardTransactionLoader;
 
 { TModuleTransactionAnalyzer }
 
@@ -47,7 +48,6 @@ end;
 procedure TModuleTransactionAnalyzer.RegisterClasses;
 begin
   inherited;
-  RegisterClass (IXMLTransactionLoaderSaver, TXMLTransactionLoader);
   RegisterClass (ITransactionsController,    TTransactionController);
   RegisterClass (ITransactionLoader,         TDBTransactionLoaderSaver);
 end;
@@ -61,11 +61,12 @@ begin
     pomWndSkeleton.Init(pomFrame, 'Wybierz product, z którego wyci¹g bêdzie wczytywany');
     if pomWndSkeleton.ShowModal = mrCancel then
       Exit (false);
+    UnregisterClass (IXMLTransactionLoaderSaver);
     case pomFrame.rgProductChooser.ItemIndex of
-    0:
-    ;
-    1:
-    ;
+      0: RegisterClass (IXMLTransactionLoaderSaver, TXMLDebitAccountTransactionLoader);
+      1: RegisterClass (IXMLTransactionLoaderSaver, TXMLCreditCardTransactionLoader);
+    else
+      raise Exception.Create('Nie oprogramowano metody wczytywania dla tego produktu');
     end;
   finally
     pomWndSkeleton.Free;
