@@ -11,6 +11,7 @@ type
     function GetConnectionString : string;
     function FindTable (p_TableName : string) : TADOTable;
     property ConnectionString: string read GetConnectionString;
+    function GetHighestIndex (p_TableName : string; p_IndeksName : string) : Integer;
   end;
 
 implementation

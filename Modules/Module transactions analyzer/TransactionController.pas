@@ -180,8 +180,13 @@ begin
 end;
 
 function TTransactionController.SaveToDB(p_List: TObjectList<TTransaction>): boolean;
+var
+  pomTransactionSaverLoader : ITransactionLoader;
+  pomHighestIndex : Integer;
 begin
-  SetIndexes (TObjectList<TObject> (p_List),
+  pomTransactionSaverLoader := (Kernel.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader);
+  pomHighestIndex := pomTransactionSaverLoader.GetHighestIndex;
+  SetIndexes (pomHighestIndex, TObjectList<TObject> (p_List),
               function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer
               begin
                 Result := (p_List [p_ID] as TTransaction).ID;
@@ -190,7 +195,7 @@ begin
               begin
                 (p_List [p_ID] as TTransaction).ID := p_IDValue;
               end);
-  Result := (Kernel.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader).Save (p_List, '');
+  Result := pomTransactionSaverLoader.Save (p_List, '');
 end;
 
 function TTransactionController.UpdateSummary(const p_Transactions :  TObjectList <TTransaction>;

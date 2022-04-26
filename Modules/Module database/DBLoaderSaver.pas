@@ -32,6 +32,9 @@ type
 
 implementation
 
+uses
+  Kernel, InterfaceModuleDatabase;
+
 { TDBLoaderSaver }
 
 function TDBLoaderSaver.Load<TObjClass>(

@@ -1,5 +1,5 @@
-{TODO : Na przykladzie b³êdów przy wczytywaniu wyci¹gu z kredytowej, oprogramowaæ je tak, ¿eby by³o widaæ z jakiego powodu i gdzie wyst¹pi³y}
-{TODO : Oprogramowaæ wczytywanie wyci¹gu z kredytowej}
+{DONE : Na przykladzie b³êdów przy wczytywaniu wyci¹gu z kredytowej, oprogramowaæ je tak, ¿eby by³o widaæ z jakiego powodu i gdzie wyst¹pi³y}
+{DONE : Oprogramowaæ wczytywanie wyci¹gu z kredytowej}
 {DONE -cDBTransaction : Dodaæ funkcje setindexes do transakcji (moze byæ generyk na podst. kategorii)}
 {DONE 5 -cDBTransaction : Przerobic rejestracje klasy tak, zeby jako parametr przyjmowala interfejs. Wtedy przy wyszukiwaniu po interfejsie bedzie sie sprawdzalo, czy dana klasa zostala zarejestrowana w parze z danym interfejsem}
 {TODO -cDBTransaction : Oprogramowaæ reakcjê na duplikaty}

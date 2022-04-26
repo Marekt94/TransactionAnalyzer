@@ -48,8 +48,8 @@ end;
 procedure TModuleTransactionAnalyzer.RegisterClasses;
 begin
   inherited;
-  RegisterClass (ITransactionsController,    TTransactionController);
-  RegisterClass (ITransactionLoader,         TDBTransactionLoaderSaver);
+  RegisterClass (ITransactionsController, TTransactionController);
+  RegisterClass (ITransactionLoader,      TDBTransactionLoaderSaver);
 end;
 
 function TModuleTransactionAnalyzer.RegisterLoaderSaverClass : boolean;
@@ -58,7 +58,7 @@ begin
   var pomWndSkeleton := TWndSkeleton.Create(nil);
   try
     var pomFrame := TfrmProductChooser.Create (pomWndSkeleton);
-    pomWndSkeleton.Init(pomFrame, 'Wybierz product, z którego wyci¹g bêdzie wczytywany');
+    pomWndSkeleton.Init(pomFrame, 'Wybór produktu');
     if pomWndSkeleton.ShowModal = mrCancel then
       Exit (false);
     UnregisterClass (IXMLTransactionLoaderSaver);

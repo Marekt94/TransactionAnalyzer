@@ -11,6 +11,7 @@ type
     FCategories: TADOTable;
     FRule: TADOTable;
     FTransaction: TADOTable;
+    FQuery: TADOQuery;
   private
     { Private declarations }
   public

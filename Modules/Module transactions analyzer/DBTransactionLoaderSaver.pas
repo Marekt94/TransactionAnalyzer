@@ -4,7 +4,7 @@ interface
 
 uses
   System.Generics.Collections, Transaction, DBLoaderSaver, InterfaceTransactionLoader,
-  Data.Win.ADODB;
+  Data.Win.ADODB, InterfaceModuleDatabase;
 
 const
   cTableName = '[TRANSACTION]';
@@ -12,6 +12,7 @@ const
 type
   TDBTransactionLoaderSaver = class (TDBLoaderSaver, ITransactionLoader)
   strict private
+    FModuleDatabase : IModuleDatabase;
     procedure PackToObject (p_Table : TADOTable;
                             p_Obj   : TTransaction);
     procedure PackToTable (p_Obj   : TTransaction;
@@ -26,19 +27,26 @@ type
                    p_Path            : string) : boolean;
     function Save (p_TransactionList : TObjectList <TTransaction>;
                    p_Path            : string) : boolean;
+    function GetHighestIndex : Integer;
   end;
 
 implementation
 
 uses
-  ConstXMLLoader, Kernel, InterfaceModuleDatabase, SysUtils;
+  ConstXMLLoader, Kernel, SysUtils;
 
 { TDBTransactionLoaderSaver }
 
 procedure TDBTransactionLoaderSaver.AfterConstruction;
 begin
   inherited;
-  FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
+  FModuleDatabase := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase);
+  FTable := FModuleDatabase.FindTable(cTableName);
+end;
+
+function TDBTransactionLoaderSaver.GetHighestIndex: Integer;
+begin
+  Result := FModuleDatabase.GetHighestIndex (cTableName, 'ID');
 end;
 
 function TDBTransactionLoaderSaver.Load(

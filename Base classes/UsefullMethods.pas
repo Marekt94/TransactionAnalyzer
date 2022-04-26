@@ -8,7 +8,11 @@ uses
 function ListToLine (p_List : TList <Integer>) : string;
 procedure SetIndexes (const p_List : TObjectList <TObject>;
                       const p_GetIndex : TFunc <Integer, TObjectList <TObject>, Integer>;
-                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>);
+                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>); overload;
+procedure SetIndexes (const p_LastUsedIndex : integer;
+                      const p_List : TObjectList <TObject>;
+                      const p_GetIndex : TFunc <Integer, TObjectList <TObject>, Integer>;
+                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>); overload;
 
 implementation
 
@@ -34,12 +38,21 @@ begin
     if pomHighestIndex < p_GetIndex (i, p_List) then
       pomHighestIndex := p_GetIndex (i, p_List);
 
+  SetIndexes (pomHighestIndex, p_List, p_GetIndex, p_SetIndex);
+end;
+
+procedure SetIndexes (const p_LastUsedIndex : integer;
+                      const p_List : TObjectList <TObject>;
+                      const p_GetIndex : TFunc <Integer, TObjectList <TObject>, Integer>;
+                      const p_SetIndex : TProc <Integer, TObjectList <TObject>, Integer>);
+begin
+  var pomIndex := p_LastUsedIndex;
   for var i := 0 to p_List.Count - 1 do
   begin
     if p_GetIndex (i, p_List) < 0 then
     begin
-      Inc (pomHighestIndex);
-      p_SetIndex (i, p_List, pomHighestIndex);
+      Inc (pomIndex);
+      p_SetIndex (i, p_List, pomIndex);
     end;
   end;
 end;

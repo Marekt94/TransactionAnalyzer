@@ -34,4 +34,10 @@ object dtmModuleDatabase: TdtmModuleDatabase
     Left = 32
     Top = 8
   end
+  object FQuery: TADOQuery
+    Connection = FConnection
+    Parameters = <>
+    Left = 88
+    Top = 56
+  end
 end

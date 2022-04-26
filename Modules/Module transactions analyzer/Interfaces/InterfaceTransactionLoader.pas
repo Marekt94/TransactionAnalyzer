@@ -12,6 +12,7 @@ type
                    p_Path            : string) : boolean;
     function Save (p_TransactionList : TObjectList <TTransaction>;
                    p_Path            : string) : boolean;
+    function GetHighestIndex : Integer;
   end;
 
 implementation

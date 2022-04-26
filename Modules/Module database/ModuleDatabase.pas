@@ -20,6 +20,7 @@ type
       function GetConnectionString : string;
       function GetSelfInterface : TGUID; override;
       function FindTable (p_TableName : string) : TADOTable; overload;
+      function GetHighestIndex (p_TableName : string; p_IndeksName : string): Integer;
   end;
 
 implementation
@@ -76,6 +77,21 @@ end;
 function TModuleDatabase.GetConnectionString: string;
 begin
   Result := FdtmModuleDatabase.FConnection.ConnectionString;
+end;
+
+function TModuleDatabase.GetHighestIndex (p_TableName : string; p_IndeksName : string): Integer;
+const
+ cMaxIndex = 'MAXINDEX';
+begin
+  with FdtmModuleDatabase.FQuery do
+  begin
+    SQL.Clear;
+    SQL.Add (Format ('SELECT MAX(%s) as MAXINDEX FROM %s', [p_IndeksName, p_TableName]));
+    Prepared := True;
+    Open;
+    Result := FieldByName (cMaxIndex).AsInteger;
+    Close;
+  end;
 end;
 
 function TModuleDatabase.GetSelfInterface: TGUID;
