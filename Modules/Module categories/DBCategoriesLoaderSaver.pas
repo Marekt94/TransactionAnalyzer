@@ -35,7 +35,7 @@ uses
 procedure TDBCategoriesLoaderSaver.AfterConstruction;
 begin
   inherited;
-  FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
+  FTable := (MainKernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
 end;
 
 function TDBCategoriesLoaderSaver.Load(p_List: TObjectList<TObject>;

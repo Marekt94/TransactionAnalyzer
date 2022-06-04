@@ -33,7 +33,7 @@ uses
 procedure TDBRulesLoaderSaver.AfterConstruction;
 begin
   inherited;
-  FTable := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
+  FTable := (MainKernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase).FindTable(cTableName);
 end;
 
 procedure TDBRulesLoaderSaver.LoadRules(

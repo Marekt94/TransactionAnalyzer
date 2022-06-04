@@ -48,7 +48,7 @@ begin
   pomSteeringObj := TWndObjControllerSteeringClass.Create;
   try
     pomRulesList := TObjectList <TRule>.Create;
-    pomRuleSaver := (Kernel.GiveObjectByInterface (IRuleSaver) as IRuleSaver);
+    pomRuleSaver := (MainKernel.GiveObjectByInterface (IRuleSaver) as IRuleSaver);
     pomRuleSaver.LoadRules (pomRulesList);
     with pomSteeringObj do
     begin
@@ -64,7 +64,7 @@ begin
                       p_Grid.Cells [0,0] := 'L.p.';
                       p_Grid.Cells [1,0] := 'Opis';
                       p_Grid.RowCount := TList<TRule>(p_Obj).Count + 1;
-                      pomRuleController := Kernel.GiveObjectByInterface (IRulesController) as IRulesController;
+                      pomRuleController := MainKernel.GiveObjectByInterface (IRulesController) as IRulesController;
                       if TList<TRule>(p_Obj).Count > 0 then
                       begin
                         for var i := 0 to TList<TRule>(p_Obj).Count - 1 do
@@ -80,7 +80,7 @@ begin
       WndObjTitle  := 'Regu³a';
       NavigationKeys := true;
       FullScreen := false;
-      XMLLoaderSaver := (Kernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
+      XMLLoaderSaver := (MainKernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then

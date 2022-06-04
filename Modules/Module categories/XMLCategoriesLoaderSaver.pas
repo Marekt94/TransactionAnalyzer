@@ -97,7 +97,7 @@ var
   pomSettings : IModuleSettings;
   pomFolderPath : string;
 begin
-  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  pomSettings := MainKernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
   if Assigned (pomSettings) then
     pomFolderPath := pomSettings.Settings.MainFolderPath
   else
@@ -124,7 +124,7 @@ var
   pomSettings : IModuleSettings;
   pomFolderPath : string;
 begin
-  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  pomSettings := MainKernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
   if Assigned (pomSettings) then
     pomFolderPath := pomSettings.Settings.MainFolderPath
   else

@@ -21,7 +21,6 @@ uses
   InterfaceModuleTransactionAnalyzer in 'Modules\Module transactions analyzer\Interfaces\InterfaceModuleTransactionAnalyzer.pas',
   InterfaceTransaction in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransaction.pas',
   InterfaceTransactionLoader in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas',
-  Kernel in 'Kernel.pas',
   PanelCategory in 'Modules\Module categories\Frames\PanelCategory.pas' {FrmCategory: TFrame},
   XMLCategoriesLoaderSaver in 'Modules\Module categories\XMLCategoriesLoaderSaver.pas',
   InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas',
@@ -63,7 +62,10 @@ uses
   InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas',
   PanelProductChooser in 'Modules\Module transactions analyzer\Frames\PanelProductChooser.pas' {frmProductChooser: TFrame},
   XMLCreditCardTransactionLoader in 'Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas',
-  XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas';
+  XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas',
+  InterfaceKernel in 'Base classes\Kernel\InterfaceKernel.pas',
+  TransactionAnalyzerKernel in 'TransactionAnalyzerKernel.pas',
+  Kernel in 'Base classes\Kernel\Kernel.pas';
 
 {$R *.res}
 
@@ -71,6 +73,6 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TKernel.Create;
-  (MainKernel as TKernel).Run;
+  MainKernel := TTransactionAnalyzerKernel.Create;
+  MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.

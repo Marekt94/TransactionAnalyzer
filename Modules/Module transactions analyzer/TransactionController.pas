@@ -184,7 +184,7 @@ var
   pomTransactionSaverLoader : ITransactionLoader;
   pomHighestIndex : Integer;
 begin
-  pomTransactionSaverLoader := (Kernel.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader);
+  pomTransactionSaverLoader := (MainKernel.GiveObjectByInterface (ITransactionLoader) as ITransactionLoader);
   pomHighestIndex := pomTransactionSaverLoader.GetHighestIndex;
   SetIndexes (pomHighestIndex, TObjectList<TObject> (p_List),
               function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer

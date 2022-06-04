@@ -89,7 +89,7 @@ begin
     for var pomSummary in p_Summary do
     begin
       Inc (pomRowIndex);
-      var pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
+      var pomCategory := (MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex (pomSummary.CategoryIndex);
 
       AddLabel (pomCategory.CategoryName,        pomRowIndex, 0);
       AddLabel (FloatToStr (pomSummary.Impact),  pomRowIndex, 1);

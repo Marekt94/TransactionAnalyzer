@@ -38,7 +38,7 @@ procedure TfrmTransactionList.btnRulesClick(Sender: TObject);
 var
   pomRulesModul : IModuleRules;
 begin
-  pomRulesModul := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
+  pomRulesModul := MainKernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
   pomRulesModul.OpenMainWindow;
 end;
 
@@ -46,7 +46,7 @@ procedure TfrmTransactionList.btnSettingsClick(Sender: TObject);
 var
   pomSettings : IModuleSettings;
 begin
-  pomSettings := Kernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
+  pomSettings := MainKernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
   pomSettings.OpenMainWindow;
 end;
 
@@ -54,7 +54,7 @@ procedure TfrmTransactionList.btnAnalyzeClick(Sender: TObject);
 var
   pomTransactionAnalyzer : IModuleTransactionAnalyzer;
 begin
-  pomTransactionAnalyzer := (GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer);
+  pomTransactionAnalyzer := (MainKernel.GiveObjectByInterface (IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer);
   pomTransactionAnalyzer.OpenMainWindow;
 end;
 
@@ -62,7 +62,7 @@ procedure TfrmTransactionList.butShowCategoriesClick(Sender: TObject);
 var
   pomCategoriesModul : IModuleCategories;
 begin
-  pomCategoriesModul := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  pomCategoriesModul := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
   pomCategoriesModul.OpenMainWindow;
 end;
 

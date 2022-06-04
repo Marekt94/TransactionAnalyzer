@@ -29,8 +29,8 @@ object frmTransasctionsList: TfrmTransasctionsList
       object lblDescription: TLabel
         Left = 2
         Top = 15
-        Width = 266
-        Height = 58
+        Width = 63
+        Height = 13
         Align = alClient
         Alignment = taCenter
         Caption = 'lblDescription'
@@ -41,8 +41,6 @@ object frmTransasctionsList: TfrmTransasctionsList
         Font.Style = []
         ParentFont = False
         WordWrap = True
-        ExplicitWidth = 63
-        ExplicitHeight = 13
       end
     end
     inline frmBilans: TfrmBilans
@@ -172,10 +170,6 @@ object frmTransasctionsList: TfrmTransasctionsList
       object tabChart: TTabSheet
         Caption = 'tabChart'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         inline frmTransactionInGraphic: TfrmTransactionsInGraphic
           Left = 0
           Top = 0
@@ -208,8 +202,8 @@ object frmTransasctionsList: TfrmTransasctionsList
     Top = 0
     Width = 739
     Height = 29
-    ButtonHeight = 21
-    ButtonWidth = 59
+    ButtonHeight = 0
+    ButtonWidth = 0
     Caption = 'ToolBar1'
     Menu = MainMenu1
     ShowCaptions = True

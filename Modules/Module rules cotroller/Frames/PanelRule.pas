@@ -74,7 +74,7 @@ end;
 constructor TfrmRule.Create(AOwner: TComponent);
 begin
   inherited Create (AOwner);
-  FCategories := GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  FCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
   FCategoryList := FCategories.CategoriesList;
   cmbCategories.AddItem('',nil);
   for var i := 0 to FCategoryList.Count - 1 do
@@ -119,7 +119,7 @@ begin
     Pack (TObject (pomRule));
 
     mmoConditionsVisualizer.Text := '';
-    mmoConditionsVisualizer.Text := (Kernel.GiveObjectByInterface(IRulesController) as IRulesController).GetRuleDescription (pomRule);
+    mmoConditionsVisualizer.Text := (MainKernel.GiveObjectByInterface(IRulesController) as IRulesController).GetRuleDescription (pomRule);
   finally
     pomRule.Free;
   end;
@@ -135,7 +135,7 @@ begin
   pomRule := p_Object as TRule;
   if Assigned (pomRule) then
   begin
-    pomRuleController := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+    pomRuleController := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
     if Assigned (pomRuleController) then
     begin
       pomCategory := pomRuleController.FindCategoryByIndex(pomRule.CategoryIndex);

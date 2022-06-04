@@ -34,7 +34,7 @@ begin
   if not Assigned (p_Rule) then
     Exit ('');
 
-  pomCategory := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex(p_Rule.CategoryIndex);
+  pomCategory := (MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).FindCategoryByIndex(p_Rule.CategoryIndex);
   if not Assigned (pomCategory) then
     Exit ('');
 

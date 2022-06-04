@@ -40,7 +40,7 @@ uses
 procedure TDBTransactionLoaderSaver.AfterConstruction;
 begin
   inherited;
-  FModuleDatabase := (Kernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase);
+  FModuleDatabase := (MainKernel.GiveObjectByInterface (IModuleDatabase) as IModuleDatabase);
   FTable := FModuleDatabase.FindTable(cTableName);
 end;
 

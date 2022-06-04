@@ -37,8 +37,8 @@ var
 begin
   ssExpenses.Clear;
   ssImpact.Clear;
-  pomCategoryModule := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories);
-  pomController := (GiveObjectByInterface(ITransactionsController) as ITransactionsController);
+  pomCategoryModule := (MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories);
+  pomController := (MainKernel.GiveObjectByInterface(ITransactionsController) as ITransactionsController);
   pomExpensesSum := pomController.EvaluateExpenseSum (p_Summary, p_ChoosenCategories);
   pomImpactSum   := pomController.EvaluateImpactSum (p_Summary, p_ChoosenCategories);
   for var pomSummary in p_Summary do

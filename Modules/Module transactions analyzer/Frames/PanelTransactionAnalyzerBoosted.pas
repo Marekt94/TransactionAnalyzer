@@ -60,7 +60,7 @@ end;
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);
 begin
   inherited;
-  if (GiveObjectByInterface(IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer).RegisterLoaderSaverClass then
+  if (MainKernel.GiveObjectByInterface(IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer).RegisterLoaderSaverClass then
     LoadAndAnalyzeTransactions
 end;
 
@@ -86,7 +86,7 @@ var
   pomCategories : TObjectList<TCategory>;
 begin
   FChoosenCategories.Clear;
-  pomCategories := (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
+  pomCategories := (MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories).CategoriesList;
   for var pomCat in pomCategories do
     if frmCategories.CategoriesAndChbDict.Items [pomCat.CategoryIndex].Checked then
       FChoosenCategories.Add (pomCat.CategoryIndex);
@@ -100,17 +100,17 @@ begin
   Result := ofdTransactions.Execute;
   if Result then
   begin
-    FController := Kernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
+    FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
     if Assigned (FController) then
     begin
       pomRules := TObjectList<TRule>.Create;
       try
         FTransactionList.Clear;
-        (Kernel.GiveObjectByInterface(IXMLTransactionLoaderSaver) as IXMLTransactionLoaderSaver).Load (FTransactionList, ofdTransactions.FileName);
-        (Kernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
+        (MainKernel.GiveObjectByInterface(IXMLTransactionLoaderSaver) as IXMLTransactionLoaderSaver).Load (FTransactionList, ofdTransactions.FileName);
+        (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
         var pomRuleController : IModuleRules;
-        pomRuleController := Kernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
-        pomCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+        pomRuleController := MainKernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
+        pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
         FController.AnalyzeTransactions (FTransactionList, pomRuleController,
                                          pomCategories, pomRules, nil);
         FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
@@ -140,7 +140,7 @@ begin
       var pomList := GetSelectedTransaction.ArrayCategoryIndex as TObject;
       pomCategories.Pack (pomList);
       FController.UpdateSummary(FTransactionList, FSummary,
-                                (Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories));
+                                (MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories));
       frmBilans.UpdateBilans (FSummary);
       UpdateView;
     end;

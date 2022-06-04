@@ -224,7 +224,7 @@ end;
 procedure TfrmTransasctionsList.AfterConstruction;
 begin
   inherited;
-  FController := Kernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
+  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
   FTransactionListView := TList <TTransaction>.Create;
   FTransactionList := TObjectList <TTransaction>.Create;
   for var i := 0 to pgcTransactions.PageCount - 1 do
@@ -247,7 +247,7 @@ begin
     Exit ('');
   for var i := 0 to p_Transaction.ArrayCategoryIndex.Count - 1 do
   begin
-    pomCategoriesModul := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+    pomCategoriesModul := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
     Result := '';
     for var j := 0 to p_Transaction.ArrayCategoryIndex.Count - 2 do
       Result := Result + pomCategoriesModul.FindCategoryByIndex (p_Transaction.ArrayCategoryIndex [j]).CategoryName + ',';

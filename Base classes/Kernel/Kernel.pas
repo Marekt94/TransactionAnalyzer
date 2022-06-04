@@ -3,32 +3,30 @@ unit Kernel;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, Transaction, WindowSkeleton,
-  Settings;
+  InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel;
 
 type
-  TKernel = class (TInterfacedObject)
-    strict private
+  TKernel = class (TInterfacedObject, IKernel)
+    protected
       FObjectList : TList<IModule>;
     public
       constructor Create;
       destructor Destroy; override;
       procedure OpenModules;
       procedure CloseModules;
-      procedure Run;
+      procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
+      function GetObjectList : TList <IModule>;
+      function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       property ObjectList: TList<IModule> read FObjectList;
   end;
 
-  function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
 var
-  MainKernel : IInterface;
+  MainKernel : IKernel;
 
 implementation
 
 uses
-  System.SysUtils, Winapi.Windows, ModuleTransactionAnalyzer, ModuleSettings,
-  InterfaceTransactionLoader, PanelMain, ModuleCategories,
-  ModuleRules, ModuleDatabase;
+  System.SysUtils;
 
 { TKernel }
 
@@ -41,12 +39,6 @@ end;
 constructor TKernel.Create;
 begin
   FObjectList := TList<IModule>.Create;
-
-  FObjectList.Add (TModuleSettings.Create);
-  FObjectList.Add (TModuleCategories.Create);
-  FObjectList.Add (TModuleTransactionAnalyzer.Create);
-  FObjectList.Add (TModuleRules.Create);
-  FObjectList.Add (TModuleDatabase.Create);
 end;
 
 destructor TKernel.Destroy;
@@ -55,15 +47,18 @@ begin
   inherited;
 end;
 
+function TKernel.GetObjectList: TList<IModule>;
+begin
+  Result := FObjectList;
+end;
+
 procedure TKernel.OpenModules;
 begin
   for var i := 0 to FObjectList.Count - 1 do
     FObjectList [i].OpenModule;
 end;
 
-procedure TKernel.Run;
-resourcestring
-  rs_MainTitle = 'Analiza transakcji';
+procedure TKernel.Run (p_MainFrame : TFrameClass; p_FrameTitle : string);
 var
   pomWind : TWndSkeleton;
 begin
@@ -72,7 +67,7 @@ begin
   //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (TfrmTransactionList.Create(pomWind), rs_MainTitle, false, false);
+    pomWind.Init (p_MainFrame.Create(pomWind), p_FrameTitle, false, false);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);
@@ -81,7 +76,7 @@ begin
   CloseModules;
 end;
 //------------------------------------------------------------------------------
-function GiveObjectByInterface(p_GUID: TGUID; p_Silent : boolean): IInterface;
+function TKernel.GiveObjectByInterface(p_GUID: TGUID; p_Silent : boolean): IInterface;
 resourcestring
   rs_no_interface = 'Brak interfejsu';
 var

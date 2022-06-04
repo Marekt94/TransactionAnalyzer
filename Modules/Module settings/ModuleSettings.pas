@@ -32,7 +32,7 @@ var
   pomLoaderSaver : ISettingsSaverLoader;
 begin
   Result := inherited;
-  pomLoaderSaver := (Kernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
+  pomLoaderSaver := (MainKernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
   pomLoaderSaver.SaveSettings (FSettings);
   FreeAndNil (FSettings);
 end;
@@ -71,7 +71,7 @@ var
 begin
   Result := inherited;
   FSettings := TSettings.Create;
-  pomLoaderSaver := (Kernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
+  pomLoaderSaver := (MainKernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
   pomLoaderSaver.LoadSettings (FSettings);
 end;
 

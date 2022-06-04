@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{FE66ED3F-19E9-4952-BA5C-1A4272875AF3}</ProjectGuid>
-        <ProjectVersion>19.2</ProjectVersion>
+        <ProjectVersion>19.4</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <MainSource>TransactionAnalyzer.dpr</MainSource>
         <Base>True</Base>
@@ -122,7 +122,6 @@
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceModuleTransactionAnalyzer.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransaction.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas"/>
-        <DCCReference Include="Kernel.pas"/>
         <DCCReference Include="Modules\Module categories\Frames\PanelCategory.pas">
             <Form>FrmCategory</Form>
             <FormType>dfm</FormType>
@@ -213,6 +212,9 @@
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas"/>
+        <DCCReference Include="Base classes\Kernel\InterfaceKernel.pas"/>
+        <DCCReference Include="TransactionAnalyzerKernel.pas"/>
+        <DCCReference Include="Base classes\Kernel\Kernel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
@@ -262,6 +264,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidClassesDexFile">
@@ -1287,6 +1299,7 @@
                 <ProjectRoot Platform="iOSDevice64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>
+                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>

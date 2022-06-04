@@ -45,7 +45,7 @@ procedure TfrmCategories.InitCategories(p_OnClick  : TNotifyEvent;
                                         p_DefState : boolean);
 begin
   FCategoriesAndChbDict.Clear;
-  FCategories := Kernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+  FCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
   for var i := 0 to FCategories.CategoriesList.Count - 1 do
   begin
     var pomChb : TCheckbox;
