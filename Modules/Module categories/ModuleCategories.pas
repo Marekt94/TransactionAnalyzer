@@ -46,14 +46,14 @@ var
 begin
   pomCategories := TObjectList <TCategory>.Create;
   try
-    (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(pomCategories);
+    (MainKernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(pomCategories);
     if pomCategories.Count < 1 then
     begin
       var pomCategory := TCategory.Create;
       pomCategory.CategoryIndex := cDefaultCategoryIndex;
       pomCategory.CategoryName  := 'bez kategorii';
       pomCategories.Add (pomCategory);
-      (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(pomCategories)
+      (MainKernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(pomCategories)
     end;
   finally
     pomCategories.Free;
@@ -85,7 +85,7 @@ end;
 function TModuleCategories.GetCateogryList: TObjectList<TCategory>;
 begin
   FCategoryList.Clear;
-  (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(FCategoryList);
+  (MainKernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(FCategoryList);
   Result := FCategoryList
 end;
 
@@ -104,7 +104,7 @@ begin
   pomSteeringObj := TWndObjControllerSteeringClass.Create;
   pomCategories := TObjectList <TCategory>.Create;
   try
-    (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(pomCategories);
+    (MainKernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).LoadCategories(pomCategories);
     with pomSteeringObj do
     begin
       ObjectClass := TCategory;
@@ -124,7 +124,7 @@ begin
       WndObjTitle  := 'Kategoria';
       NavigationKeys := true;
       FullScreen := false;
-      XMLLoaderSaver := Kernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver, true) as IXMLCategoriesLoaderSaver;
+      XMLLoaderSaver := MainKernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver, true) as IXMLCategoriesLoaderSaver;
     end;
     Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
     SetIndexes (TObjectList<TObject> (pomCategories),
@@ -137,7 +137,7 @@ begin
                   (p_List [p_ID] as TCategory).CategoryIndex := p_IDValue;
                 end);
     if Result = mrOk then
-      (Kernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(pomCategories);
+      (MainKernel.GiveObjectByInterface (ICategoriesLoaderSaver) as ICategoriesLoaderSaver).SaveCategories(pomCategories);
   finally
     pomSteeringObj.Free;
     pomCategories.Free;
