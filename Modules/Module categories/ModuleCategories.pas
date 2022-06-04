@@ -31,7 +31,8 @@ implementation
 
 uses
   System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
-  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods;
+  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
+  ObjectWindowsCreator;
 
 { TModuleCategories }
 
@@ -126,7 +127,7 @@ begin
       FullScreen := false;
       XMLLoaderSaver := MainKernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver, true) as IXMLCategoriesLoaderSaver;
     end;
-    Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
+    Result := TObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
     SetIndexes (TObjectList<TObject> (pomCategories),
                 function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer
                 begin

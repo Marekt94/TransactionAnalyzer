@@ -3,8 +3,6 @@ program TransactionAnalyzer;
 uses
   Vcl.Forms,
   Module in 'Base classes\Module.pas',
-  WindowSkeleton in 'Base classes\Frames\WindowSkeleton.pas' {WndSkeleton},
-  InterfaceModule in 'Base classes\Interfaces\InterfaceModule.pas',
   Category in 'Modules\Module categories\Category.pas',
   ModuleCategories in 'Modules\Module categories\ModuleCategories.pas',
   InterfaceModuleCategory in 'Modules\Module categories\Interfaces\InterfaceModuleCategory.pas',
@@ -26,7 +24,6 @@ uses
   InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas',
   BaseListPanel in 'Base classes\Frames\BaseListPanel.pas' {FrmBaseListPanel: TFrame},
   BasePanel in 'Base classes\Frames\BasePanel.pas' {FrmBasePanel: TFrame},
-  WindowObjectControllerSteeringClass in 'Base classes\WindowObjectControllerSteeringClass.pas',
   ConstXMLCategoriesLoaderSaver in 'Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas',
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
   GUIMethods in 'Base classes\GUIMethods.pas',
@@ -65,7 +62,11 @@ uses
   XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas',
   InterfaceKernel in 'Base classes\Kernel\InterfaceKernel.pas',
   TransactionAnalyzerKernel in 'TransactionAnalyzerKernel.pas',
-  Kernel in 'Base classes\Kernel\Kernel.pas';
+  Kernel in 'Base classes\Kernel\Kernel.pas',
+  WindowSkeleton in 'Base classes\Kernel\WindowSkeleton.pas' {WndSkeleton},
+  ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
+  WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
+  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas';
 
 {$R *.res}
 

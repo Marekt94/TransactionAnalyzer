@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, WindowObjectControllerSteeringClass;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
 
 type
   TWndSkeleton = class(TForm)
@@ -25,12 +25,7 @@ type
                    p_FullScreen : Boolean = false) : TForm; virtual;
   end;
 
-function OpenObjControllerWindow (p_SteeringObj : TWndObjControllerSteeringClass) : Integer;
-
 implementation
-
-uses
-  BaseListPanel;
 
 {$R *.dfm}
 
@@ -81,28 +76,6 @@ begin
   lblTitle.Caption   := p_Title;
 
   Result := self;
-end;
-
-//function creating set of windows to control list of objects
-function OpenObjControllerWindow (p_SteeringObj: TWndObjControllerSteeringClass) : integer;
-var
-  pomWindow : TWndSkeleton;
-  pomFrame  : TFrmBaseListPanel;
-begin
-  pomWindow := TWndSkeleton.Create(nil);
-  try
-    pomFrame := TFrmBaseListPanel.Create(pomWindow);
-    pomFrame.Init (p_SteeringObj.ObjectClass,
-                   p_SteeringObj.ObjectFrame,
-                   p_SteeringObj.UpdateView,
-                   p_SteeringObj.XMLLoaderSaver,
-                   p_SteeringObj.WndObjTitle);
-    pomFrame.UnpackFrame (p_SteeringObj.ObjectList);
-    pomWindow.Init (pomFrame, p_SteeringObj.WndListTitle, p_SteeringObj.NavigationKeys, p_SteeringObj.FullScreen);
-    Result := pomWindow.ShowModal;
-  finally
-    FreeAndNil (pomWindow);
-  end
 end;
 
 end.

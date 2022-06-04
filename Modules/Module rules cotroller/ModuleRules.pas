@@ -27,7 +27,7 @@ uses
   InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
   Category, PanelRule, Vcl.Grids, WindowSkeleton, InterfaceRulesController,
   Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver,
-  DBRulesLoaderSaver;
+  DBRulesLoaderSaver, ObjectWindowsCreator;
 
 
 { TModuleRules }
@@ -82,7 +82,7 @@ begin
       FullScreen := false;
       XMLLoaderSaver := (MainKernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
     end;
-    Result := WindowSkeleton.OpenObjControllerWindow (pomSteeringObj);
+    Result := TObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then
       pomRuleSaver.SaveRules (pomRulesList);
   finally
