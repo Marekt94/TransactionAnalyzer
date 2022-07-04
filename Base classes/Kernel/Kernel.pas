@@ -67,7 +67,7 @@ begin
   //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
-    pomWind.Init (p_MainFrame.Create(pomWind), p_FrameTitle, false, false);
+    pomWind.Init (p_MainFrame.Create (pomWind), p_FrameTitle, false, false);
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);
@@ -79,21 +79,16 @@ end;
 function TKernel.GiveObjectByInterface(p_GUID: TGUID; p_Silent : boolean): IInterface;
 resourcestring
   rs_no_interface = 'Brak interfejsu';
-var
-  pomKernel : TKernel;
-  pomInterface : IInterface;
 begin
   Result := nil;
-  pomInterface := nil;
-  pomKernel := MainKernel as TKernel;
 
-  for var i := 0 to pomKernel.ObjectList.Count - 1 do
+  for var pomModule in FObjectList do
   begin
-    if pomKernel.ObjectList.Items [i].SelfInterface = p_GUID then
-      Exit (pomKernel.ObjectList.Items [i])
+    if pomModule.SelfInterface = p_GUID then
+      Exit (pomModule)
     else
     begin
-      Result := pomKernel.ObjectList.Items [i].GiveObjectByInterface (p_GUID);
+      Result := pomModule.GiveObjectByInterface (p_GUID);
       if Assigned (Result) then
         Exit;
     end

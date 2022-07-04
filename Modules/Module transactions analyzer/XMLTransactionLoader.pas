@@ -4,13 +4,13 @@ interface
 
 uses
   System.Generics.Collections, InterfaceXMLTransactionLoaderSaver, Transaction, Dialogs,
-  Xml.XMLIntf, System.SysUtils;
+  Xml.XMLIntf, System.SysUtils, InterfaceTransactionLoader;
 
 resourcestring
  rs_NieZnalezionoWezlas = 'Nie znaleziono wêz³a %s.';
-  
+
 type
-  TXMLTransactionLoader = class (TInterfacedObject, IXMLTransactionLoaderSaver)
+  TXMLTransactionLoader = class (TInterfacedObject, IXMLTransactionLoaderSaver, ITransactionLoader)
     protected
       function FindNodeInTree (p_NodeName : string; p_NodeList : IXMLNodeList) : IXMLNode;
       function FindNode (p_NodeName : string; p_NodeList : IXMLNode) : IXMLNode;
@@ -22,6 +22,7 @@ type
       function Load (p_List : TObjectList <TObject>; p_Path : string) : boolean; overload;
       function Save (p_List : TObjectList <TTransaction>; p_Path : string) : boolean; overload;
       function Load (p_List : TObjectList <TTransaction>; p_Path : string) : boolean; overload;
+      function GetHighestIndex : Integer;
   end;
 
 implementation
@@ -45,6 +46,11 @@ begin
   if not Assigned (Result) then
     for var i := 0 to p_NodeList.Count - 1 do
       Result := FindNodeInTree (p_NodeName, p_NodeList.Nodes [i].ChildNodes);
+end;
+
+function TXMLTransactionLoader.GetHighestIndex: Integer;
+begin
+  Result := -1;
 end;
 
 function TXMLTransactionLoader.Load(p_List: TObjectList<TTransaction>;

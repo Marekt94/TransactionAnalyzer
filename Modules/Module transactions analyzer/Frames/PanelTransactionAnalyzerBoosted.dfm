@@ -1,4 +1,12 @@
 inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
+  inherited pnlDescription: TPanel
+    inherited grpDescription: TGroupBox
+      inherited lblDescription: TLabel
+        Width = 266
+        Height = 58
+      end
+    end
+  end
   inherited pnlGrid: TPanel
     Left = 137
     Width = 330
@@ -55,9 +63,16 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
     end
   end
   inherited ToolBar1: TToolBar [3]
+    ButtonHeight = 21
+    ButtonWidth = 59
     TabOrder = 3
   end
   inherited MainMenu1: TMainMenu [4]
+    inherited mmTransactions: TMenuItem
+      object mmLoadFromDB: TMenuItem
+        Action = aLoadFromDB
+      end
+    end
   end
   inherited aActions: TActionList
     inherited aWczytaj: TAction
@@ -65,6 +80,10 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
     end
     inherited aSaveToDB: TAction
       OnExecute = aSaveToDBExecute
+    end
+    object aLoadFromDB: TAction
+      Caption = 'W&czytaj z bazy danych'
+      OnExecute = aLoadFromDBExecute
     end
   end
   object ofdTransactions: TOpenTextFileDialog

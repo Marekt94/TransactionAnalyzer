@@ -8,23 +8,27 @@ uses
   PanelCategories, PanelTransactionsInGraphic, Vcl.Grids, Vcl.ComCtrls,
   Vcl.StdCtrls, PanelBilans, Vcl.ExtCtrls, Vcl.ExtDlgs,
   InterfaceModuleCategory, System.Generics.Collections, InterfaceTransactionsController, Transaction,
-  Category, System.Actions, Vcl.ActnList, Vcl.Menus, Vcl.ToolWin;
+  Category, System.Actions, Vcl.ActnList, Vcl.Menus, Vcl.ToolWin,
+  InterfaceTransactionLoader;
 
 type
   TFrmTransactionAnalyzerBoosted2 = class(TfrmTransasctionsList)
     frmCategories: TfrmCategories;
     ofdTransactions: TOpenTextFileDialog;
+    mmLoadFromDB: TMenuItem;
+    aLoadFromDB: TAction;
     procedure strTransactionDblClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
     procedure strTransactionKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure aWczytajExecute(Sender: TObject);
     procedure aSaveToDBExecute(Sender: TObject);
+    procedure aLoadFromDBExecute(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
     procedure CheckBoxClick(Sender: TObject);
-    function LoadAndAnalyzeTransactions : boolean;
+    function LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string = '') : boolean;
     procedure FillChoosenCategories;
     procedure UpdateView;
   public
@@ -51,6 +55,12 @@ begin
   frmCategories.InitCategories (CheckBoxClick);
 end;
 
+procedure TFrmTransactionAnalyzerBoosted2.aLoadFromDBExecute(Sender: TObject);
+begin
+  inherited;
+  LoadAndAnalyzeTransactions ((MainKernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader))
+end;
+
 procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBExecute(Sender: TObject);
 begin
   inherited;
@@ -60,8 +70,10 @@ end;
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);
 begin
   inherited;
-  if (MainKernel.GiveObjectByInterface(IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer).RegisterLoaderSaverClass then
-    LoadAndAnalyzeTransactions
+  if (MainKernel.GiveObjectByInterface(IModuleTransactionAnalyzer) as IModuleTransactionAnalyzer).RegisterLoaderSaverClass
+     and ofdTransactions.Execute
+  then
+    LoadAndAnalyzeTransactions ((MainKernel.GiveObjectByInterface(IXMLTransactionLoaderSaver) as ITransactionLoader), ofdTransactions.FileName)
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.BeforeDestruction;
@@ -92,33 +104,31 @@ begin
       FChoosenCategories.Add (pomCat.CategoryIndex);
 end;
 
-function TFrmTransactionAnalyzerBoosted2.LoadAndAnalyzeTransactions: boolean;
+function TFrmTransactionAnalyzerBoosted2.LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string): boolean;
 var
   pomCategories : IModuleCategories;
   pomRules      : TObjectList<TRule>;
 begin
-  Result := ofdTransactions.Execute;
-  if Result then
+  Result := false;
+  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
+  if Assigned (FController) then
   begin
-    FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
-    if Assigned (FController) then
-    begin
-      pomRules := TObjectList<TRule>.Create;
-      try
-        FTransactionList.Clear;
-        (MainKernel.GiveObjectByInterface(IXMLTransactionLoaderSaver) as IXMLTransactionLoaderSaver).Load (FTransactionList, ofdTransactions.FileName);
-        (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
-        var pomRuleController : IModuleRules;
-        pomRuleController := MainKernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
-        pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-        FController.AnalyzeTransactions (FTransactionList, pomRuleController,
-                                         pomCategories, pomRules, nil);
-        FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
-        UpdateView;
-        UpdateBilans;
-      finally
-        pomRules.Free;
-      end;
+    pomRules := TObjectList<TRule>.Create;
+    try
+      FTransactionList.Clear;
+      p_TransactionLoader.Load (FTransactionList, p_Path);
+      (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
+      var pomRuleController : IModuleRules;
+      pomRuleController := MainKernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
+      pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+      FController.AnalyzeTransactions (FTransactionList, pomRuleController,
+                                       pomCategories, pomRules, nil);
+      FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
+      UpdateView;
+      UpdateBilans;
+      Result := true;
+    finally
+      pomRules.Free;
     end;
   end;
 end;
