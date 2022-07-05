@@ -17,6 +17,9 @@ type
     ofdTransactions: TOpenTextFileDialog;
     mmLoadFromDB: TMenuItem;
     aLoadFromDB: TAction;
+    pmTransactionRightClick: TPopupMenu;
+    pmAddRule: TMenuItem;
+    aAddRule: TAction;
     procedure strTransactionDblClick(Sender: TObject);
     procedure chbExpenseClick(Sender: TObject);
     procedure strTransactionKeyUp(Sender: TObject; var Key: Word;
@@ -24,12 +27,17 @@ type
     procedure aWczytajExecute(Sender: TObject);
     procedure aSaveToDBExecute(Sender: TObject);
     procedure aLoadFromDBExecute(Sender: TObject);
+    procedure strTransactionMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure aAddRuleExecute(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
     procedure CheckBoxClick(Sender: TObject);
     function LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string = '') : boolean;
     procedure FillChoosenCategories;
+    function AnalyzeTransactions : boolean;
+    procedure AddRule;
     procedure UpdateView;
   public
     procedure AfterConstruction; override;
@@ -45,6 +53,20 @@ uses
 
 {$R *.dfm}
 
+procedure TFrmTransactionAnalyzerBoosted2.aAddRuleExecute(Sender: TObject);
+begin
+  inherited;
+  AddRule;
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.AddRule;
+begin
+  (MainKernel.GiveObjectByInterface(IModuleRules) as IModuleRules).OpenMainWindow;
+  AnalyzeTransactions;
+  UpdateView;
+  UpdateBilans;
+end;
+
 procedure TFrmTransactionAnalyzerBoosted2.AfterConstruction;
 begin
   inherited;
@@ -59,6 +81,21 @@ procedure TFrmTransactionAnalyzerBoosted2.aLoadFromDBExecute(Sender: TObject);
 begin
   inherited;
   LoadAndAnalyzeTransactions ((MainKernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader))
+end;
+
+function TFrmTransactionAnalyzerBoosted2.AnalyzeTransactions: boolean;
+begin
+  var pomRules := TObjectList<TRule>.Create;
+  try
+    (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
+    var pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
+    FController.AnalyzeTransactions (FTransactionList,pomCategories,
+                                     pomRules, nil);
+    FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
+    Result := true;
+  finally
+    pomRules.Free;
+  end;
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBExecute(Sender: TObject);
@@ -105,29 +142,16 @@ begin
 end;
 
 function TFrmTransactionAnalyzerBoosted2.LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string): boolean;
-var
-  pomCategories : IModuleCategories;
-  pomRules      : TObjectList<TRule>;
 begin
   Result := false;
   FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
   if Assigned (FController) then
   begin
-    pomRules := TObjectList<TRule>.Create;
-    try
-      FTransactionList.Clear;
-      p_TransactionLoader.Load (FTransactionList, p_Path);
-      (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
-      pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-      FController.AnalyzeTransactions (FTransactionList,pomCategories,
-                                       pomRules, nil);
-      FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
-      UpdateView;
-      UpdateBilans;
-      Result := true;
-    finally
-      pomRules.Free;
-    end;
+    FTransactionList.Clear;
+    p_TransactionLoader.Load (FTransactionList, p_Path);
+    Result := AnalyzeTransactions;
+    UpdateView;
+    UpdateBilans;
   end;
 end;
 
@@ -163,6 +187,14 @@ begin
   inherited;
   if Key = 13 then
     strTransactionDblClick (nil);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.strTransactionMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if Button = mbRight then
+    pmTransactionRightClick.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.UpdateChart;
