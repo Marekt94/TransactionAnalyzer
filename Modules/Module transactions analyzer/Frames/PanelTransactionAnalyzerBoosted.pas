@@ -118,11 +118,9 @@ begin
       FTransactionList.Clear;
       p_TransactionLoader.Load (FTransactionList, p_Path);
       (MainKernel.GiveObjectByInterface(IRuleSaver) as IRuleSaver).LoadRules (pomRules);
-      var pomRuleController : IModuleRules;
-      pomRuleController := MainKernel.GiveObjectByInterface (IModuleRules) as IModuleRules;
       pomCategories := MainKernel.GiveObjectByInterface (IModuleCategories) as IModuleCategories;
-      FController.AnalyzeTransactions (FTransactionList, pomRuleController,
-                                       pomCategories, pomRules, nil);
+      FController.AnalyzeTransactions (FTransactionList,pomCategories,
+                                       pomRules, nil);
       FController.UpdateSummary (FTransactionList, FSummary, pomCategories);
       UpdateView;
       UpdateBilans;

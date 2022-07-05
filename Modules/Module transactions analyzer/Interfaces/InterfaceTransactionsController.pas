@@ -10,7 +10,6 @@ type
   ITransactionsController = interface (IInterface)
     ['{E07D96C7-CB68-43AF-BE54-E194BDAB4690}']
     function AnalyzeTransactions (p_Transactions    : TObjectList <TTransaction>;
-                                  p_RuleController  : IModuleRules;
                                   p_Categories      : IModuleCategories;
                                   p_Rules           : TObjectList <TRule>;
                                   p_TransWithoutCat : TList <TTransaction>) : boolean;

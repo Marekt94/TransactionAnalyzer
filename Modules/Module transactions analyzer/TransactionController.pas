@@ -11,7 +11,6 @@ type
   TTransactionController = class (TInterfacedObject, ITransactionsController)
   public
     function AnalyzeTransactions (p_Transactions    : TObjectList <TTransaction>;
-                                  p_RuleController  : IModuleRules;
                                   p_Categories      : IModuleCategories;
                                   p_Rules           : TObjectList <TRule>;
                                   p_TransWithoutCat : TList <TTransaction>) : boolean;
@@ -49,14 +48,10 @@ uses
 
 function TTransactionController.AnalyzeTransactions(
   p_Transactions    : TObjectList <TTransaction>;
-  p_RuleController  : IModuleRules;
   p_Categories      : IModuleCategories;
   p_Rules           : TObjectList <TRule>;
   p_TransWithoutCat : TList <TTransaction>) : boolean;
 begin
-  if not Assigned (p_RuleController) then
-    raise Exception.Create('No rule controller');
-
   if not Assigned (p_Transactions) then
     raise Exception.Create('No transactions list');
 
