@@ -17,6 +17,7 @@ type
     FWndObjTitle    : string;
     FFullScreen     : boolean;
     FNavigationKeys : boolean;
+    FAddMode        : boolean;
   public
     destructor Destroy; override;
     property ObjectClass: TClass read FObjectClass write FObjectClass;
@@ -28,6 +29,7 @@ type
     property NavigationKeys: boolean read FNavigationKeys write FNavigationKeys;
     property WndObjTitle: string read FWndObjTitle write FWndObjTitle;
     property XMLLoaderSaver: IXMLSaverLoader read FXMLLoaderSaver write FXMLLoaderSaver;
+    property AddMode: Boolean read FAddMode write FAddMode;
   end;
 
 implementation

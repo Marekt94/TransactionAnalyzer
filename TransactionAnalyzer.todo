@@ -1,3 +1,4 @@
+{TODO : Dodaæ OpenWindowInEditMode dla modu³u i oprogramowaæ to dla regu³ z poziomu transakcji. Dodaæ opcjê z parametrami}
 {DONE : Na przykladzie b³êdów przy wczytywaniu wyci¹gu z kredytowej, oprogramowaæ je tak, ¿eby by³o widaæ z jakiego powodu i gdzie wyst¹pi³y}
 {DONE : Oprogramowaæ wczytywanie wyci¹gu z kredytowej}
 {DONE -cDBTransaction : Dodaæ funkcje setindexes do transakcji (moze byæ generyk na podst. kategorii)}

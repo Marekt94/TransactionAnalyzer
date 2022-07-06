@@ -31,6 +31,11 @@ begin
                    p_SteeringObj.XMLLoaderSaver,
                    p_SteeringObj.WndObjTitle);
     pomFrame.UnpackFrame (p_SteeringObj.ObjectList);
+    if p_SteeringObj.AddMode then
+      pomWindow.AfterShow := procedure
+                             begin
+                               pomFrame.btnAddClick (nil);
+                             end;
     pomWindow.Init (pomFrame, p_SteeringObj.WndListTitle, p_SteeringObj.NavigationKeys, p_SteeringObj.FullScreen);
     Result := pomWindow.ShowModal;
   finally

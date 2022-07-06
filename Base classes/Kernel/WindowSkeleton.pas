@@ -6,6 +6,9 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
 
+const
+  WM_AFTERSHOW = WM_USER + 1;
+
 type
   TWndSkeleton = class(TForm)
     pnlMain: TPanel;
@@ -15,14 +18,18 @@ type
     btnOk: TButton;
     procedure btnOkClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure AfterShowReact (var Msg: TMessage); message WM_AFTERSHOW;
   strict private
     FChildPanel : TFrame;
+    FAfterShow : TProc;
   public
     destructor Destroy; override;
     function Init (p_ChildPanel : TFrame;
                    p_Title      : string;
                    p_WithNavigationKeys : boolean = true;
                    p_FullScreen : Boolean = false) : TForm; virtual;
+    property AfterShow: TProc read FAfterShow write FAfterShow;
   end;
 
 implementation
@@ -30,6 +37,12 @@ implementation
 {$R *.dfm}
 
 { TWndSkeleton }
+
+procedure TWndSkeleton.AfterShowReact(var Msg: TMessage);
+begin
+  if Assigned (FAfterShow) then
+    FAfterShow;
+end;
 
 procedure TWndSkeleton.btnCancelClick(Sender: TObject);
 begin
@@ -47,6 +60,11 @@ destructor TWndSkeleton.Destroy;
 begin
   FChildPanel.Parent := nil;
   inherited;
+end;
+
+procedure TWndSkeleton.FormShow(Sender: TObject);
+begin
+  PostMessage(Handle, WM_AFTERSHOW, 0, 0);
 end;
 
 //function creating basic window

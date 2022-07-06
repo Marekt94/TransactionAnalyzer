@@ -12,6 +12,7 @@ object WndSkeleton: TWndSkeleton
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblTitle: TLabel
