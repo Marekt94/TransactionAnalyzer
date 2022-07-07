@@ -15,6 +15,7 @@ type
     function OpenModule : boolean;
     function CloseModule : boolean;
     function OpenMainWindow : Integer;
+    function OpenMainWindowInAddMode : Integer;
     procedure RegisterClass (p_GUID : TGUID; p_Class : TInterfacedClass);
     procedure UnregisterClass (p_GUID : TGUID);
     procedure RegisterClasses;

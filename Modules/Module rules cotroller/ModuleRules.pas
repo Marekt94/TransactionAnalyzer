@@ -16,7 +16,9 @@ resourcestring
 type
   TModuleRules = class(TBaseModule, IModuleRules)
   public
-    function OpenMainWindow : Integer; override;
+    function OpenMainWindowInMode (p_AddMode : Boolean) : Integer; overload;
+    function OpenMainWindowInAddMode : Integer; override;
+    function OpenMainWindow : Integer; overload; override;
     function GetSelfInterface : TGUID; override;
     procedure RegisterClasses; override;
   end;
@@ -38,6 +40,11 @@ begin
 end;
 
 function TModuleRules.OpenMainWindow: Integer;
+begin
+  Result := OpenMainWindowInMode (false);
+end;
+
+function TModuleRules.OpenMainWindowInMode(p_AddMode: Boolean): Integer;
 resourcestring
   rs_CategoriesPanelTitle = 'Kategorie';
 var
@@ -80,6 +87,7 @@ begin
       WndObjTitle  := 'Regu³a';
       NavigationKeys := true;
       FullScreen := false;
+      AddMode := p_AddMode;
       XMLLoaderSaver := (MainKernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
     end;
     Result := TObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
@@ -91,6 +99,10 @@ begin
   end
 end;
 
+function TModuleRules.OpenMainWindowInAddMode: Integer;
+begin
+  Result := OpenMainWindowInMode (true);
+end;
 
 procedure TModuleRules.RegisterClasses;
 begin

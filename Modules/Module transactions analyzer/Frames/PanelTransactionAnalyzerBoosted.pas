@@ -61,7 +61,7 @@ end;
 
 procedure TFrmTransactionAnalyzerBoosted2.AddRule;
 begin
-  (MainKernel.GiveObjectByInterface(IModuleRules) as IModuleRules).OpenMainWindow;
+  (MainKernel.GiveObjectByInterface(IModuleRules) as IModuleRules).OpenMainWindowInAddMode;
   AnalyzeTransactions;
   UpdateView;
   UpdateBilans;

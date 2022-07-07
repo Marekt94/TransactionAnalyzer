@@ -13,6 +13,7 @@ type
     constructor Create; virtual;
     destructor Destroy; override;
     function OpenMainWindow : Integer; virtual;
+    function OpenMainWindowInAddMode : Integer; virtual;
     function OpenModule : boolean; virtual;
     function CloseModule : boolean; virtual;
     function GetObjectList : TDictionary<TGUID, TInterfacedClass>;
@@ -77,6 +78,11 @@ end;
 function TBaseModule.OpenMainWindow: Integer;
 begin
   Result := mrOk
+end;
+
+function TBaseModule.OpenMainWindowInAddMode: Integer;
+begin
+  Result := mrOk;
 end;
 
 function TBaseModule.OpenModule: boolean;
