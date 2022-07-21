@@ -34,7 +34,6 @@ begin
   Result := inherited;
   pomLoaderSaver := (MainKernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
   pomLoaderSaver.SaveSettings (FSettings);
-  FreeAndNil (FSettings);
 end;
 
 function TModuleSettings.GetSelfInterface: TGUID;
@@ -70,7 +69,6 @@ var
   pomLoaderSaver : ISettingsSaverLoader;
 begin
   Result := inherited;
-  FSettings := TSettings.Create;
   pomLoaderSaver := (MainKernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
   pomLoaderSaver.LoadSettings (FSettings);
 end;
