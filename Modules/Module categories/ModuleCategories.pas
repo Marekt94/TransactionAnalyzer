@@ -31,7 +31,7 @@ implementation
 
 uses
   System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
-  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
+  InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
   ObjectWindowsCreator;
 
 { TModuleCategories }
@@ -155,7 +155,6 @@ procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
   RegisterClass(IXMLCategoriesLoaderSaver, TXMLCategoriesLoaderSaver);
-  RegisterClass(ICategoriesLoaderSaver,    TDBCategoriesLoaderSaver);
 end;
 
 end.

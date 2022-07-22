@@ -46,11 +46,9 @@ uses
   InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
   ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
   DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
-  DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas',
   DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
   InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
   InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
-  DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas',
   PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame},
   DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas',
@@ -66,7 +64,9 @@ uses
   WindowSkeleton in 'Base classes\Kernel\WindowSkeleton.pas' {WndSkeleton},
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
   WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
-  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas';
+  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
+  DBCategoriesLoaderSaver in 'Modules\Module database\DBCategoriesLoaderSaver.pas',
+  DBRulesLoaderSaver in 'Modules\Module database\DBRulesLoaderSaver.pas';
 
 {$R *.res}
 

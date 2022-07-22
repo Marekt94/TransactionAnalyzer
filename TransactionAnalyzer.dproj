@@ -180,11 +180,9 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Modules\Module categories\DBCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas"/>
-        <DCCReference Include="Modules\Module rules cotroller\DBRulesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelCategories.pas">
             <Form>frmCategories</Form>
             <FormType>dfm</FormType>
@@ -216,6 +214,8 @@
         <DCCReference Include="Base classes\Frames\ObjectWindowsCreator.pas"/>
         <DCCReference Include="Base classes\Frames\WindowObjectControllerSteeringClass.pas"/>
         <DCCReference Include="Base classes\Kernel\InterfaceModule.pas"/>
+        <DCCReference Include="Modules\Module database\DBCategoriesLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module database\DBRulesLoaderSaver.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

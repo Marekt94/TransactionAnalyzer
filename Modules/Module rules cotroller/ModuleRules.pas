@@ -29,7 +29,7 @@ uses
   InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
   Category, PanelRule, Vcl.Grids, WindowSkeleton, InterfaceRulesController,
   Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver,
-  DBRulesLoaderSaver, ObjectWindowsCreator;
+  ObjectWindowsCreator;
 
 
 { TModuleRules }
@@ -109,7 +109,6 @@ begin
   inherited;
   RegisterClass (IXMLRuleLoaderSaver, TXMLRuleSaverLoader);
   RegisterClass (IRulesController,    TRulesController);
-  RegisterClass (IRuleSaver,          TDBRulesLoaderSaver);
 end;
 
 end.
