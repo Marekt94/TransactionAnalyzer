@@ -28,7 +28,9 @@ type
 implementation
 
 uses
-  System.SysUtils, InterfaceRuleSaver, InterfaceCategoriesLoaderSaver, DBRulesLoaderSaver, DBCategoriesLoaderSaver;
+  System.SysUtils, InterfaceRuleSaver, InterfaceCategoriesLoaderSaver, InterfaceTransactionLoader,
+  DBTransactionLoaderSaver,
+  DBRulesLoaderSaver, DBCategoriesLoaderSaver;
 
 { TModuleDatabase }
 
@@ -104,7 +106,8 @@ end;
 procedure TModuleDatabase.RegisterClasses;
 begin
   RegisterClass (IRuleSaver, TDBRulesLoaderSaver);
-  RegisterClass (ICategoriesLoaderSaver, TDBCategoriesLoaderSaver)
+  RegisterClass (ICategoriesLoaderSaver, TDBCategoriesLoaderSaver);
+  RegisterClass (ITransactionLoader, TDBTransactionLoaderSaver);
 end;
 
 end.

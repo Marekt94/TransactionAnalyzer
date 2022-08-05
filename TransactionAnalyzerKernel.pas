@@ -14,7 +14,7 @@ implementation
 
 uses
   ModuleTransactionAnalyzer, ModuleSettings, ModuleCategories,
-  ModuleRules, ModuleDatabase;
+  ModuleRules;
 
 { TTransactionAnalyzerKernel }
 
@@ -25,7 +25,6 @@ begin
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
   FObjectList.Add (TModuleRules.Create);
-  FObjectList.Add (TModuleDatabase.Create);
 end;
 
 end.

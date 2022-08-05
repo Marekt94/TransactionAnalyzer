@@ -31,7 +31,7 @@ begin
     pomNode := pomDocument.ChildNodes.FindNode (rs_NN_Settings);
 
     if Assigned (pomNode) then
-      p_Settings.MainFolderPath := pomNode.ChildNodes.FindNode(rs_NN_MianFolderPath).Text;
+      p_Settings.MainFolderPath := pomNode.ChildNodes.FindNode(rs_NN_MainFolderPath).Text;
   end;
 end;
 
@@ -44,7 +44,7 @@ begin
   pomDocument.Active := True;
 
   pomDocument.DocumentElement := pomDocument.CreateNode (rs_NN_Settings, ntElement, '');
-  pomNode := pomDocument.DocumentElement.AddChild (rs_NN_MianFolderPath);
+  pomNode := pomDocument.DocumentElement.AddChild (rs_NN_MainFolderPath);
   pomNode.Text := p_Settings.MainFolderPath;
 
   pomDocument.SaveToFile (rs_FileName);

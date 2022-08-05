@@ -86,6 +86,9 @@ begin
     pomCategoryNodes.NodeValue := p_List [i].CategoryName;
   end;
 
+  if not FileExists (p_Path) then
+    FileClose (FileCreate (p_Path));
+
   pomDocument.SaveToFile(p_Path);
 
   Result := true

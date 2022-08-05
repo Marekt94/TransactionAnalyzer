@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{CBB6B480-7F98-458D-A428-BEA11992DD0A}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TransactionAnalyzerFirebird.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TransactionAnalyzerXML.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TransactionAnalyzerFirebird">
+        <MSBuild Projects="TransactionAnalyzerFirebird.dproj"/>
+    </Target>
+    <Target Name="TransactionAnalyzerFirebird:Clean">
+        <MSBuild Projects="TransactionAnalyzerFirebird.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TransactionAnalyzerFirebird:Make">
+        <MSBuild Projects="TransactionAnalyzerFirebird.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML:Clean">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML:Make">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TransactionAnalyzerFirebird;TransactionAnalyzerXML"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TransactionAnalyzerFirebird:Clean;TransactionAnalyzerXML:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TransactionAnalyzerFirebird:Make;TransactionAnalyzerXML:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

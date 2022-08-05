@@ -21,7 +21,7 @@ implementation
 uses
   WindowSkeleton, InterfaceModuleRules, Kernel, PanelTransactionAnalyzerBoosted,
   InterfaceModuleCategory, InterfaceTransactionsController,
-  TransactionController, DBTransactionLoaderSaver,
+  TransactionController,
   InterfaceXMLTransactionLoaderSaver, PanelProductChooser, Vcl.Controls,
   XMLCreditCardTransactionLoader;
 
@@ -49,7 +49,6 @@ procedure TModuleTransactionAnalyzer.RegisterClasses;
 begin
   inherited;
   RegisterClass (ITransactionsController, TTransactionController);
-  RegisterClass (ITransactionLoader,      TDBTransactionLoaderSaver);
 end;
 
 function TModuleTransactionAnalyzer.RegisterLoaderSaverClass : boolean;

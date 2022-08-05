@@ -1,4 +1,4 @@
-program TransactionAnalyzer;
+program TransactionAnalyzerFirebird;
 
 uses
   Vcl.Forms,
@@ -43,6 +43,10 @@ uses
   PanelSettings in 'Modules\Module settings\Frames\PanelSettings.pas' {frmSettings: TFrame},
   PanelTransactionsInGraphic in 'Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas' {frmTransactionsInGraphic: TFrame},
   PanelBilans in 'Modules\Module transactions analyzer\Frames\PanelBilans.pas' {frmBilans: TFrame},
+  InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
+  ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
+  DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
+  DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
   InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
   InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
   PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
@@ -60,14 +64,10 @@ uses
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
   WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
   InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
-  DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
   DBCategoriesLoaderSaver in 'Modules\Module database\DBCategoriesLoaderSaver.pas',
-  DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
   DBRulesLoaderSaver in 'Modules\Module database\DBRulesLoaderSaver.pas',
-  DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
-  ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
-  InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
-  TransactionAnalyzerKernelFB in 'TransactionAnalyzerKernelFB.pas';
+  TransactionAnalyzerKernelFB in 'TransactionAnalyzerKernelFB.pas',
+  DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas';
 
 {$R *.res}
 
