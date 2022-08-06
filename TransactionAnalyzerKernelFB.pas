@@ -19,6 +19,7 @@ uses
 
 constructor TTransactionAnalyzerKernelFB.Create;
 begin
+  inherited;
   FObjectList.Add (TModuleDatabase.Create);
 end;
 

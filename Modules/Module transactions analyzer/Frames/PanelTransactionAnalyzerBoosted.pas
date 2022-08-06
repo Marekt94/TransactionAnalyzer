@@ -30,6 +30,8 @@ type
     procedure strTransactionMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure aAddRuleExecute(Sender: TObject);
+    procedure aSaveToDBUpdate(Sender: TObject);
+    procedure aLoadFromDBUpdate(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
@@ -83,6 +85,12 @@ begin
   LoadAndAnalyzeTransactions ((MainKernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader))
 end;
 
+procedure TFrmTransactionAnalyzerBoosted2.aLoadFromDBUpdate(Sender: TObject);
+begin
+  inherited;
+  aLoadFromDB.Enabled := Assigned (MainKernel. GiveObjectByInterface (ITransactionLoader, true));
+end;
+
 function TFrmTransactionAnalyzerBoosted2.AnalyzeTransactions: boolean;
 begin
   var pomRules := TObjectList<TRule>.Create;
@@ -102,6 +110,12 @@ procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBExecute(Sender: TObject);
 begin
   inherited;
   FController.SaveToDB (FTransactionList);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBUpdate(Sender: TObject);
+begin
+  inherited;
+  aSaveToDB.Enabled := Assigned (MainKernel.GiveObjectByInterface (ITransactionLoader, true));
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);

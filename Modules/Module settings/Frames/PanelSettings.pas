@@ -28,7 +28,7 @@ implementation
 procedure TfrmSettings.btnLoadClick(Sender: TObject);
 begin
   if ofdMainFolderSelector.Execute then
-    edtMainFolderPAth.Text := ofdMainFolderSelector.FileName;
+    edtMainFolderPAth.Text := ofdMainFolderSelector.FileName + '\';
 end;
 
 procedure TfrmSettings.Pack(var p_Settings: TSettings);

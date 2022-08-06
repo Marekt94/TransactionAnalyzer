@@ -23,7 +23,7 @@ type
 implementation
 
 uses
-  Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, ConstXMLCategoriesLoaderSaver;
+  Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, ConstXMLCategoriesLoaderSaver, Winapi.Windows;
 
 { TXMLCategoriesLoaderSaver }
 

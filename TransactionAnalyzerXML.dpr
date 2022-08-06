@@ -73,3 +73,4 @@ begin
   MainKernel := TTransactionAnalyzerKernelXML.Create;
   MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.
+
