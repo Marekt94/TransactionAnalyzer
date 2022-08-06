@@ -24,7 +24,7 @@ inherited frmRule: TfrmRule
     Align = alCustom
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Regu'#322'a'
-    TabOrder = 0
+    TabOrder = 2
     object Label1: TLabel
       Left = 215
       Top = 50
@@ -45,7 +45,7 @@ inherited frmRule: TfrmRule
       Width = 97
       Height = 17
       Caption = 'Tytu'#322' zawiera:'
-      TabOrder = 0
+      TabOrder = 1
       OnClick = chbTitleContainsClick
     end
     object edtTitleContains: TEdit
@@ -53,7 +53,7 @@ inherited frmRule: TfrmRule
       Top = 19
       Width = 121
       Height = 21
-      TabOrder = 1
+      TabOrder = 0
       OnChange = edtTitleContainsChange
     end
     object chbDateBetween: TCheckBox
@@ -62,7 +62,7 @@ inherited frmRule: TfrmRule
       Width = 97
       Height = 17
       Caption = 'Data pomi'#281'dzy:'
-      TabOrder = 2
+      TabOrder = 4
       OnClick = chbDateBetweenClick
     end
     object dtpFromDate: TDateTimePicker
@@ -72,7 +72,7 @@ inherited frmRule: TfrmRule
       Height = 21
       Date = 44344.000000000000000000
       Time = 0.655671111111587400
-      TabOrder = 3
+      TabOrder = 2
       OnChange = dtpFromDateChange
     end
     object dtpToDate: TDateTimePicker
@@ -82,7 +82,7 @@ inherited frmRule: TfrmRule
       Height = 21
       Date = 44344.000000000000000000
       Time = 0.656119016202865200
-      TabOrder = 4
+      TabOrder = 3
       OnChange = dtpToDateChange
     end
     object chbPrice: TCheckBox
@@ -132,6 +132,6 @@ inherited frmRule: TfrmRule
     Align = alRight
     Lines.Strings = (
       '')
-    TabOrder = 2
+    TabOrder = 0
   end
 end
