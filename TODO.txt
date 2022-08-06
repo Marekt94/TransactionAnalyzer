@@ -1,22 +1,26 @@
+- skróty klawiszowe we WSZYSTKICH oknach
+- usunąć tytuł tchart z prezentacji wydatków graficznej
+***old***
 - dodanie kategorii do bezkategori
-- dodanie procentów do legendy w graficznym
 - poprawki wizualne
 - poprawić funckje updateview, bo psuje sie przy drugim odswiezeniu,
 - zrobić xmlloader saver bardziej uniwersalny
 - zrobić updateview bardziej uniwersalne
 - dokońcyc refactoring od modułu analizy
 - rozszerzyć okno o walidacje
-- ogarnąć uruchamianie głwónego okna, zeby nie uruchamiał się szkielet ze sztucznie dodaną ramką (uniezlażenić od jądra)
 - znaleźć dobry logger
 - wyczyścić niepotrzebne unity
 - uporządkować unity: najpierw od delphi, potem interfejsy, potem klasy
-
+***old***
 opcjonalne
 - każdy moduł mółgby mieć funkcję edycji ustawień - okno ze zmianą ustawień, np: zmiana formatu wczytywanego pliku
 - wyrejestrowywanie klasy
 - refactoring - wydzelenie stringgrida z wnetrza funckji - powinien być parametrem
 
 SKOŃCZONE
+- tabordery w main
+- dodanie procentów do legendy w graficznym
+- ogarnąć uruchamianie głwónego okna, zeby nie uruchamiał się szkielet ze sztucznie dodaną ramką (uniezlażenić od jądra)
 - dodać w jądrze, żeby moduł również dodawał się do listy interfejsów i zwracał siebie
 - w module wczytywania powinna byc lista transakcji
 - moduł analizy

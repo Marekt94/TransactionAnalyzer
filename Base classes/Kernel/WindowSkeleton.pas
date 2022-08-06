@@ -20,6 +20,7 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure AfterShowReact (var Msg: TMessage); message WM_AFTERSHOW;
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   strict private
     FChildPanel : TFrame;
     FAfterShow : TProc;
@@ -60,6 +61,12 @@ destructor TWndSkeleton.Destroy;
 begin
   FChildPanel.Parent := nil;
   inherited;
+end;
+
+procedure TWndSkeleton.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 27 then Close;
 end;
 
 procedure TWndSkeleton.FormShow(Sender: TObject);
