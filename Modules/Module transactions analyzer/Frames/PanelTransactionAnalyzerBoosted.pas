@@ -74,6 +74,7 @@ begin
   inherited;
   FSummary := TList <TSummary>.Create;
   FChoosenCategories := TList<Integer>.Create;
+  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
 
   InitStringList;
   frmCategories.InitCategories (CheckBoxClick);
@@ -158,7 +159,6 @@ end;
 function TFrmTransactionAnalyzerBoosted2.LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string): boolean;
 begin
   Result := false;
-  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
   if Assigned (FController) then
   begin
     FTransactionList.Clear;

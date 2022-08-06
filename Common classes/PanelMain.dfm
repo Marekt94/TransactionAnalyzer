@@ -64,7 +64,7 @@ object frmTransactionList: TfrmTransactionList
     end
     object btnRules: TButton
       Left = 105
-      Top = 70
+      Top = 71
       Width = 111
       Height = 30
       Anchors = [akTop, akBottom]
@@ -84,7 +84,7 @@ object frmTransactionList: TfrmTransactionList
     end
     object btnSettings: TButton
       Left = 105
-      Top = 104
+      Top = 105
       Width = 111
       Height = 30
       Anchors = [akTop, akBottom]

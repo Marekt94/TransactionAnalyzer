@@ -28,7 +28,6 @@ uses
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
   GUIMethods in 'Base classes\GUIMethods.pas',
   UsefullMethods in 'Base classes\UsefullMethods.pas',
-  PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame},
   InterfaceTransactionsController in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas',
   TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas',
   InterfaceRulesController in 'Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas',
@@ -58,7 +57,6 @@ uses
   XMLCreditCardTransactionLoader in 'Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas',
   XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas',
   InterfaceKernel in 'Base classes\Kernel\InterfaceKernel.pas',
-  TransactionAnalyzerKernel in 'TransactionAnalyzerKernel.pas',
   Kernel in 'Base classes\Kernel\Kernel.pas',
   WindowSkeleton in 'Base classes\Kernel\WindowSkeleton.pas' {WndSkeleton},
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
@@ -66,8 +64,10 @@ uses
   InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
   DBCategoriesLoaderSaver in 'Modules\Module database\DBCategoriesLoaderSaver.pas',
   DBRulesLoaderSaver in 'Modules\Module database\DBRulesLoaderSaver.pas',
-  TransactionAnalyzerKernelFB in 'TransactionAnalyzerKernelFB.pas',
-  DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas';
+  DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
+  PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
+  TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
+  TransactionAnalyzerKernelFB in 'TransactionAnalyzerFirebird\TransactionAnalyzerKernelFB.pas';
 
 {$R *.res}
 

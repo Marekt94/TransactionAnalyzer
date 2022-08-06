@@ -138,11 +138,6 @@
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
         <DCCReference Include="Base classes\UsefullMethods.pas"/>
-        <DCCReference Include="PanelMain.pas">
-            <Form>frmTransactionList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\TransactionController.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas"/>
@@ -204,7 +199,6 @@
         <DCCReference Include="Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas"/>
         <DCCReference Include="Base classes\Kernel\InterfaceKernel.pas"/>
-        <DCCReference Include="TransactionAnalyzerKernel.pas"/>
         <DCCReference Include="Base classes\Kernel\Kernel.pas"/>
         <DCCReference Include="Base classes\Kernel\WindowSkeleton.pas">
             <Form>WndSkeleton</Form>
@@ -215,8 +209,14 @@
         <DCCReference Include="Base classes\Kernel\InterfaceModule.pas"/>
         <DCCReference Include="Modules\Module database\DBCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBRulesLoaderSaver.pas"/>
-        <DCCReference Include="TransactionAnalyzerKernelFB.pas"/>
         <DCCReference Include="Modules\Module database\DBTransactionLoaderSaver.pas"/>
+        <DCCReference Include="Common classes\PanelMain.pas">
+            <Form>frmTransactionList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
+        <DCCReference Include="TransactionAnalyzerFirebird\TransactionAnalyzerKernelFB.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerFirebird.todo"/>
         <BuildConfiguration Include="Release">
