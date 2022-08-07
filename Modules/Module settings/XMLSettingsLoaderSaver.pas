@@ -24,9 +24,6 @@ var
   pomDocument : IXMLDocument;
   pomNode     : IXMLNode;
 begin
-  if not Assigned (p_Settings) then
-    Exit;
-
   pomDocument := TXMLDocument.Create(nil);
   if FileExists (rs_FileName) then
   begin
@@ -34,7 +31,7 @@ begin
     pomNode := pomDocument.ChildNodes.FindNode (rs_NN_Settings);
 
     if Assigned (pomNode) then
-      p_Settings.MainFolderPath := pomNode.ChildNodes.FindNode(rs_NN_MianFolderPath).NodeValue;
+      p_Settings.MainFolderPath := pomNode.ChildNodes.FindNode(rs_NN_MainFolderPath).Text;
   end;
 end;
 
@@ -47,8 +44,8 @@ begin
   pomDocument.Active := True;
 
   pomDocument.DocumentElement := pomDocument.CreateNode (rs_NN_Settings, ntElement, '');
-  pomNode := pomDocument.DocumentElement.AddChild (rs_NN_MianFolderPath);
-  pomNode.NodeValue := p_Settings.MainFolderPath;
+  pomNode := pomDocument.DocumentElement.AddChild (rs_NN_MainFolderPath);
+  pomNode.Text := p_Settings.MainFolderPath;
 
   pomDocument.SaveToFile (rs_FileName);
 end;

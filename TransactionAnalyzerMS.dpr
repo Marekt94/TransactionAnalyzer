@@ -1,4 +1,4 @@
-program TransactionAnalyzer;
+program TransactionAnalyzerMS;
 
 uses
   Vcl.Forms,
@@ -28,7 +28,6 @@ uses
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
   GUIMethods in 'Base classes\GUIMethods.pas',
   UsefullMethods in 'Base classes\UsefullMethods.pas',
-  PanelMain in 'PanelMain.pas' {frmTransactionList: TFrame},
   InterfaceTransactionsController in 'Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas',
   TransactionController in 'Modules\Module transactions analyzer\TransactionController.pas',
   InterfaceRulesController in 'Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas',
@@ -46,14 +45,11 @@ uses
   InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
   ModuleDatabase in 'Modules\Module database\ModuleDatabase.pas',
   DataModuleDatabase in 'Modules\Module database\DataModuleDatabase.pas' {dtmModuleDatabase: TDataModule},
-  DBCategoriesLoaderSaver in 'Modules\Module categories\DBCategoriesLoaderSaver.pas',
   DBLoaderSaver in 'Modules\Module database\DBLoaderSaver.pas',
   InterfaceXMLRuleLoaderSaver in 'Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas',
   InterfaceXMLCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas',
-  DBRulesLoaderSaver in 'Modules\Module rules cotroller\DBRulesLoaderSaver.pas',
   PanelCategories in 'Modules\Module transactions analyzer\Frames\PanelCategories.pas' {frmCategories: TFrame},
   PanelTransactionAnalyzerBoosted in 'Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas' {FrmTransactionAnalyzerBoosted2: TFrame},
-  DBTransactionLoaderSaver in 'Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas',
   InterfaceXMLTransactionLoaderSaver in 'Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas',
   InterfaceXMLSaverLoader in 'Base classes\Interfaces\InterfaceXMLSaverLoader.pas',
   InterfaceLoaderSaver in 'Base classes\Interfaces\InterfaceLoaderSaver.pas',
@@ -61,12 +57,17 @@ uses
   XMLCreditCardTransactionLoader in 'Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas',
   XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas',
   InterfaceKernel in 'Base classes\Kernel\InterfaceKernel.pas',
-  TransactionAnalyzerKernel in 'TransactionAnalyzerKernel.pas',
   Kernel in 'Base classes\Kernel\Kernel.pas',
   WindowSkeleton in 'Base classes\Kernel\WindowSkeleton.pas' {WndSkeleton},
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
   WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
-  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas';
+  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
+  DBCategoriesLoaderSaver in 'Modules\Module database\DBCategoriesLoaderSaver.pas',
+  DBRulesLoaderSaver in 'Modules\Module database\DBRulesLoaderSaver.pas',
+  DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
+  PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
+  TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
+  TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas';
 
 {$R *.res}
 
@@ -74,6 +75,6 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TTransactionAnalyzerKernel.Create;
+  MainKernel := TTransactionAnalyzerKernelMS.Create;
   MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.

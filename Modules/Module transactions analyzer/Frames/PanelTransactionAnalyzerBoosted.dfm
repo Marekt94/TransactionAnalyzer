@@ -1,12 +1,4 @@
 inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
-  inherited pnlDescription: TPanel
-    inherited grpDescription: TGroupBox
-      inherited lblDescription: TLabel
-        Width = 266
-        Height = 58
-      end
-    end
-  end
   inherited pnlGrid: TPanel
     Left = 137
     Width = 330
@@ -64,8 +56,6 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
     end
   end
   inherited ToolBar1: TToolBar [3]
-    ButtonHeight = 21
-    ButtonWidth = 59
     TabOrder = 3
   end
   inherited MainMenu1: TMainMenu [4]
@@ -81,10 +71,12 @@ inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
     end
     inherited aSaveToDB: TAction
       OnExecute = aSaveToDBExecute
+      OnUpdate = aSaveToDBUpdate
     end
     object aLoadFromDB: TAction
       Caption = 'W&czytaj z bazy danych'
       OnExecute = aLoadFromDBExecute
+      OnUpdate = aLoadFromDBUpdate
     end
     object aAddRule: TAction
       Caption = '&Dodaj regu'#322#281' na podstawie transakcji i przeanalizuj'

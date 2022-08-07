@@ -11,6 +11,7 @@ type
     procedure Clean; virtual;
     function Unpack (const p_Object : TObject) : boolean; virtual;
     function Pack   (var   p_Object : TObject) : boolean; virtual;
+    function Check: boolean; virtual;
   end;
 
 implementation
@@ -18,6 +19,11 @@ implementation
 {$R *.dfm}
 
 { TFrame1 }
+
+function TFrmBasePanel.Check: boolean;
+begin
+  Result := True;
+end;
 
 procedure TFrmBasePanel.Clean;
 begin

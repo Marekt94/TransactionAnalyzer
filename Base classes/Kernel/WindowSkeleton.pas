@@ -20,15 +20,18 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure AfterShowReact (var Msg: TMessage); message WM_AFTERSHOW;
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   strict private
     FChildPanel : TFrame;
     FAfterShow : TProc;
+    FBeforeOKClick : TFunc <Boolean>;
   public
     destructor Destroy; override;
     function Init (p_ChildPanel : TFrame;
                    p_Title      : string;
                    p_WithNavigationKeys : boolean = true;
-                   p_FullScreen : Boolean = false) : TForm; virtual;
+                   p_FullScreen : Boolean = false;
+                   p_BeforeOKClick : TFunc<Boolean> = nil) : TForm; virtual;
     property AfterShow: TProc read FAfterShow write FAfterShow;
   end;
 
@@ -52,8 +55,11 @@ end;
 
 procedure TWndSkeleton.btnOkClick(Sender: TObject);
 begin
-  ModalResult := mrOk;
-  CloseModal;
+  if not Assigned (FBeforeOKClick) or FBeforeOKClick then
+  begin
+    ModalResult := mrOk;
+    CloseModal;
+  end;
 end;
 
 destructor TWndSkeleton.Destroy;
@@ -62,19 +68,31 @@ begin
   inherited;
 end;
 
+procedure TWndSkeleton.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = 27 then Close;
+end;
+
 procedure TWndSkeleton.FormShow(Sender: TObject);
 begin
   PostMessage(Handle, WM_AFTERSHOW, 0, 0);
 end;
 
 //function creating basic window
-function TWndSkeleton.Init (p_ChildPanel: TFrame; p_Title : string; p_WithNavigationKeys : boolean; p_FullScreen : Boolean) : TForm;
+function TWndSkeleton.Init (p_ChildPanel : TFrame;
+                   p_Title      : string;
+                   p_WithNavigationKeys : boolean = true;
+                   p_FullScreen : Boolean = false;
+                   p_BeforeOKClick : TFunc<Boolean> = nil) : TForm;
 var
   pomWidth : Integer;
 begin
   FChildPanel := p_ChildPanel;
   FChildPanel.Parent := pnlMain;
   FChildPanel.Align  := alClient;
+  if Assigned (p_BeforeOKClick) then
+    FBeforeOKClick := p_BeforeOKClick;
   Caption := p_Title;
   if p_FullScreen then
     WindowState := wsMaximized

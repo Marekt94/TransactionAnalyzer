@@ -3,7 +3,7 @@
         <ProjectGuid>{FE66ED3F-19E9-4952-BA5C-1A4272875AF3}</ProjectGuid>
         <ProjectVersion>19.4</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
-        <MainSource>TransactionAnalyzer.dpr</MainSource>
+        <MainSource>TransactionAnalyzerMS.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -52,7 +52,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <SanitizedProjectName>TransactionAnalyzer</SanitizedProjectName>
+        <SanitizedProjectName>TransactionAnalyzerMS</SanitizedProjectName>
         <DCC_Optimize>false</DCC_Optimize>
         <UsePackages>true</UsePackages>
         <VerInfo_Locale>1045</VerInfo_Locale>
@@ -138,11 +138,6 @@
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
         <DCCReference Include="Base classes\UsefullMethods.pas"/>
-        <DCCReference Include="PanelMain.pas">
-            <Form>frmTransactionList</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionsController.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\TransactionController.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas"/>
@@ -180,11 +175,9 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Modules\Module categories\DBCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceXMLRuleLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas"/>
-        <DCCReference Include="Modules\Module rules cotroller\DBRulesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelCategories.pas">
             <Form>frmCategories</Form>
             <FormType>dfm</FormType>
@@ -195,7 +188,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Modules\Module transactions analyzer\DBTransactionLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas"/>
         <DCCReference Include="Base classes\Interfaces\InterfaceXMLSaverLoader.pas"/>
         <DCCReference Include="Base classes\Interfaces\InterfaceLoaderSaver.pas"/>
@@ -207,7 +199,6 @@
         <DCCReference Include="Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas"/>
         <DCCReference Include="Base classes\Kernel\InterfaceKernel.pas"/>
-        <DCCReference Include="TransactionAnalyzerKernel.pas"/>
         <DCCReference Include="Base classes\Kernel\Kernel.pas"/>
         <DCCReference Include="Base classes\Kernel\WindowSkeleton.pas">
             <Form>WndSkeleton</Form>
@@ -216,7 +207,18 @@
         <DCCReference Include="Base classes\Frames\ObjectWindowsCreator.pas"/>
         <DCCReference Include="Base classes\Frames\WindowObjectControllerSteeringClass.pas"/>
         <DCCReference Include="Base classes\Kernel\InterfaceModule.pas"/>
+        <DCCReference Include="Modules\Module database\DBCategoriesLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module database\DBRulesLoaderSaver.pas"/>
+        <DCCReference Include="Modules\Module database\DBTransactionLoaderSaver.pas"/>
+        <DCCReference Include="Common classes\PanelMain.pas">
+            <Form>frmTransactionList</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
+        <DCCReference Include="TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
+        <None Include="TransactionAnalyzerMS.todo"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -235,7 +237,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">TransactionAnalyzer.dpr</Source>
+                    <Source Name="MainSource">TransactionAnalyzerMS.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k270.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
@@ -249,9 +251,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\TransactionAnalyzer.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\TransactionAnalyzerMS.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>TransactionAnalyzer.exe</RemoteName>
+                        <RemoteName>TransactionAnalyzerMS.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="TransactionAnalyzerMS.todo" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

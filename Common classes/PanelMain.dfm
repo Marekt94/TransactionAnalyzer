@@ -59,17 +59,17 @@ object frmTransactionList: TfrmTransactionList
       Height = 30
       Anchors = [akTop, akBottom]
       Caption = 'Kategorie'
-      TabOrder = 0
+      TabOrder = 1
       OnClick = butShowCategoriesClick
     end
     object btnRules: TButton
       Left = 105
-      Top = 70
+      Top = 71
       Width = 111
       Height = 30
       Anchors = [akTop, akBottom]
       Caption = 'Zasady'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = btnRulesClick
     end
     object btnAnalyze: TButton
@@ -79,12 +79,12 @@ object frmTransactionList: TfrmTransactionList
       Height = 30
       Anchors = [akTop, akBottom]
       Caption = 'Transakcje'
-      TabOrder = 2
+      TabOrder = 0
       OnClick = btnAnalyzeClick
     end
     object btnSettings: TButton
       Left = 105
-      Top = 104
+      Top = 105
       Width = 111
       Height = 30
       Anchors = [akTop, akBottom]

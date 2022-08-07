@@ -58,7 +58,7 @@ var
 begin
   pomWnd := TWndSkeleton.Create(nil);
   try
-    pomWnd.Init (FBasePanel, FWndObjectTitle);
+    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false, FBasePanel.Check);
     FBasePanel.Unpack (nil);
     if pomWnd.ShowModal = mrOk then
     begin
@@ -90,7 +90,7 @@ begin
   pomWnd := TWndSkeleton.Create(nil);
   try
     pomObject := FObjectList.Items [strList.Row - 1];
-    pomWnd.Init (FBasePanel, FWndObjectTitle);
+    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false, FBasePanel.Check);
     FBasePanel.Unpack (pomObject);
     if pomWnd.ShowModal = mrOk then
       FBasePanel.Pack (pomObject);

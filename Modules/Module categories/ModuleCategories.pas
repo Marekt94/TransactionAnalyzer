@@ -31,7 +31,7 @@ implementation
 
 uses
   System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
-  DBCategoriesLoaderSaver, InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
+  InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
   ObjectWindowsCreator;
 
 { TModuleCategories }
@@ -116,6 +116,8 @@ begin
                       p_Grid.RowCount := 1;
                       p_Grid.Cells[0,0] := 'Kategoria';
                       p_Grid.RowCount := pomCategories.Count + 1;
+                      if pomCategories.Count < 1 then
+                        Exit;
                       for var i := 0 to pomCategories.Count - 1 do
                         p_Grid.Cells [0, i + 1] := pomCategories [i].CategoryName;
                       p_Grid.FixedRows := 1;
@@ -155,7 +157,6 @@ procedure TModuleCategories.RegisterClasses;
 begin
   inherited;
   RegisterClass(IXMLCategoriesLoaderSaver, TXMLCategoriesLoaderSaver);
-  RegisterClass(ICategoriesLoaderSaver,    TDBCategoriesLoaderSaver);
 end;
 
 end.

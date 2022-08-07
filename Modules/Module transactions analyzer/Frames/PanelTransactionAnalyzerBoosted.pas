@@ -30,6 +30,8 @@ type
     procedure strTransactionMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure aAddRuleExecute(Sender: TObject);
+    procedure aSaveToDBUpdate(Sender: TObject);
+    procedure aLoadFromDBUpdate(Sender: TObject);
   private
     FChoosenCategories       : TList<Integer>;
     FController              : ITransactionsController;
@@ -72,6 +74,7 @@ begin
   inherited;
   FSummary := TList <TSummary>.Create;
   FChoosenCategories := TList<Integer>.Create;
+  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
 
   InitStringList;
   frmCategories.InitCategories (CheckBoxClick);
@@ -81,6 +84,12 @@ procedure TFrmTransactionAnalyzerBoosted2.aLoadFromDBExecute(Sender: TObject);
 begin
   inherited;
   LoadAndAnalyzeTransactions ((MainKernel.GiveObjectByInterface(ITransactionLoader) as ITransactionLoader))
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.aLoadFromDBUpdate(Sender: TObject);
+begin
+  inherited;
+  aLoadFromDB.Enabled := Assigned (MainKernel. GiveObjectByInterface (ITransactionLoader, true));
 end;
 
 function TFrmTransactionAnalyzerBoosted2.AnalyzeTransactions: boolean;
@@ -102,6 +111,12 @@ procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBExecute(Sender: TObject);
 begin
   inherited;
   FController.SaveToDB (FTransactionList);
+end;
+
+procedure TFrmTransactionAnalyzerBoosted2.aSaveToDBUpdate(Sender: TObject);
+begin
+  inherited;
+  aSaveToDB.Enabled := Assigned (MainKernel.GiveObjectByInterface (ITransactionLoader, true));
 end;
 
 procedure TFrmTransactionAnalyzerBoosted2.aWczytajExecute(Sender: TObject);
@@ -144,7 +159,6 @@ end;
 function TFrmTransactionAnalyzerBoosted2.LoadAndAnalyzeTransactions (p_TransactionLoader : ITransactionLoader; p_Path : string): boolean;
 begin
   Result := false;
-  FController := MainKernel.GiveObjectByInterface (ITransactionsController) as ITransactionsController;
   if Assigned (FController) then
   begin
     FTransactionList.Clear;

@@ -39,13 +39,14 @@ type
     constructor Create(AOwner: TComponent); override;
     function Unpack (const p_Object : TObject) : boolean; override;
     function Pack   (var   p_Object : TObject) : boolean; override;
+    function Check : boolean; override;
   end;
 
 implementation
 
 uses
   Kernel, Rule, InterfaceModuleRules,
-  InterfaceRulesController;
+  InterfaceRulesController, Vcl.Dialogs, System.UITypes;
 
 {$R *.dfm}
 
@@ -64,6 +65,14 @@ end;
 procedure TfrmRule.chbTitleContainsClick(Sender: TObject);
 begin
   RefreshRulesVisualizer (mmoConditionsVisualizer);
+end;
+
+function TfrmRule.Check: boolean;
+begin
+  Result := chbTitleContains.Checked or chbDateBetween.Checked or chbPrice.Checked;
+  if not Result then
+    MessageDlg('Co najmniej jeden z checkbox''ów musi byæ zaznaczony',
+      mtInformation, [mbOK], 0);
 end;
 
 procedure TfrmRule.cmbCategoriesChange(Sender: TObject);

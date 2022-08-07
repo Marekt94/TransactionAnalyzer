@@ -23,7 +23,7 @@ type
 implementation
 
 uses
-  Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, ConstXMLCategoriesLoaderSaver;
+  Xml.XMLIntf, Xml.XMLDoc, System.SysUtils, ConstXMLCategoriesLoaderSaver, Winapi.Windows;
 
 { TXMLCategoriesLoaderSaver }
 
@@ -85,6 +85,9 @@ begin
     pomCategoryNodes := pomCategory.AddChild(rs_NN_Name);
     pomCategoryNodes.NodeValue := p_List [i].CategoryName;
   end;
+
+  if not FileExists (p_Path) then
+    FileClose (FileCreate (p_Path));
 
   pomDocument.SaveToFile(p_Path);
 

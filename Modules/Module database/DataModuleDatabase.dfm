@@ -7,7 +7,7 @@ object dtmModuleDatabase: TdtmModuleDatabase
     ConnectionString = 
       'Provider=SQLNCLI11.1;Integrated Security=SSPI;Persist Security I' +
       'nfo=False;User ID="";Initial Catalog=Transactions;Data Source=DE' +
-      'SKTOP-EPJBH34\SQLEXPRESS;Initial File Name="";Server SPN=""'
+      'SKTOP-33IU8V2;Initial File Name="";Server SPN=""'
     Provider = 'SQLNCLI11.1'
     Left = 160
     Top = 96

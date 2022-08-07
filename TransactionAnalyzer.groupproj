@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{30C92BA6-CA0C-44CD-935E-1A8A733F7D20}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TransactionAnalyzerMS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TransactionAnalyzerXML.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TransactionAnalyzerMS">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj"/>
+    </Target>
+    <Target Name="TransactionAnalyzerMS:Clean">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TransactionAnalyzerMS:Make">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML:Clean">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TransactionAnalyzerXML:Make">
+        <MSBuild Projects="TransactionAnalyzerXML.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TransactionAnalyzerMS;TransactionAnalyzerXML"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TransactionAnalyzerMS:Clean;TransactionAnalyzerXML:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TransactionAnalyzerMS:Make;TransactionAnalyzerXML:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

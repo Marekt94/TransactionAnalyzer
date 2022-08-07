@@ -21,12 +21,16 @@ type
       function GetSelfInterface : TGUID; override;
       function FindTable (p_TableName : string) : TADOTable; overload;
       function GetHighestIndex (p_TableName : string; p_IndeksName : string): Integer;
+      procedure RegisterClasses; override;
+
   end;
 
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, InterfaceRuleSaver, InterfaceCategoriesLoaderSaver, InterfaceTransactionLoader,
+  DBTransactionLoaderSaver,
+  DBRulesLoaderSaver, DBCategoriesLoaderSaver;
 
 { TModuleDatabase }
 
@@ -97,6 +101,13 @@ end;
 function TModuleDatabase.GetSelfInterface: TGUID;
 begin
   Result := IModuleDatabase;
+end;
+
+procedure TModuleDatabase.RegisterClasses;
+begin
+  RegisterClass (IRuleSaver, TDBRulesLoaderSaver);
+  RegisterClass (ICategoriesLoaderSaver, TDBCategoriesLoaderSaver);
+  RegisterClass (ITransactionLoader, TDBTransactionLoaderSaver);
 end;
 
 end.
