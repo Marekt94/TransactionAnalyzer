@@ -1,12 +1,12 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{76C273E4-E11E-48E1-9E62-9D42D2A0F020}</ProjectGuid>
+        <ProjectGuid>{30C92BA6-CA0C-44CD-935E-1A8A733F7D20}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="TransactionAnalyzerXML.dproj">
+        <Projects Include="TransactionAnalyzerMS.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="TransactionAnalyzerFirebird.dproj">
+        <Projects Include="TransactionAnalyzerXML.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -17,6 +17,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="TransactionAnalyzerMS">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj"/>
+    </Target>
+    <Target Name="TransactionAnalyzerMS:Clean">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TransactionAnalyzerMS:Make">
+        <MSBuild Projects="TransactionAnalyzerMS.dproj" Targets="Make"/>
+    </Target>
     <Target Name="TransactionAnalyzerXML">
         <MSBuild Projects="TransactionAnalyzerXML.dproj"/>
     </Target>
@@ -26,23 +35,14 @@
     <Target Name="TransactionAnalyzerXML:Make">
         <MSBuild Projects="TransactionAnalyzerXML.dproj" Targets="Make"/>
     </Target>
-    <Target Name="TransactionAnalyzerFirebird">
-        <MSBuild Projects="TransactionAnalyzerFirebird.dproj"/>
-    </Target>
-    <Target Name="TransactionAnalyzerFirebird:Clean">
-        <MSBuild Projects="TransactionAnalyzerFirebird.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="TransactionAnalyzerFirebird:Make">
-        <MSBuild Projects="TransactionAnalyzerFirebird.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="TransactionAnalyzerXML;TransactionAnalyzerFirebird"/>
+        <CallTarget Targets="TransactionAnalyzerMS;TransactionAnalyzerXML"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="TransactionAnalyzerXML:Clean;TransactionAnalyzerFirebird:Clean"/>
+        <CallTarget Targets="TransactionAnalyzerMS:Clean;TransactionAnalyzerXML:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="TransactionAnalyzerXML:Make;TransactionAnalyzerFirebird:Make"/>
+        <CallTarget Targets="TransactionAnalyzerMS:Make;TransactionAnalyzerXML:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

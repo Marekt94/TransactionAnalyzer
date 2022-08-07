@@ -46,7 +46,7 @@ implementation
 
 uses
   Kernel, Rule, InterfaceModuleRules,
-  InterfaceRulesController, Vcl.Dialogs;
+  InterfaceRulesController, Vcl.Dialogs, System.UITypes;
 
 {$R *.dfm}
 

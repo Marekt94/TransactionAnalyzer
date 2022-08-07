@@ -1,4 +1,4 @@
-program TransactionAnalyzerFirebird;
+program TransactionAnalyzerMS;
 
 uses
   Vcl.Forms,
@@ -67,7 +67,7 @@ uses
   DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
   PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
   TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
-  TransactionAnalyzerKernelFB in 'TransactionAnalyzerFirebird\TransactionAnalyzerKernelFB.pas';
+  TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas';
 
 {$R *.res}
 
@@ -75,6 +75,6 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TTransactionAnalyzerKernelFB.Create;
+  MainKernel := TTransactionAnalyzerKernelMS.Create;
   MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.

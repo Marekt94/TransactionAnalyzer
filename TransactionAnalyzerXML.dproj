@@ -199,8 +199,6 @@
         <DCCReference Include="Base classes\Frames\ObjectWindowsCreator.pas"/>
         <DCCReference Include="Base classes\Frames\WindowObjectControllerSteeringClass.pas"/>
         <DCCReference Include="Base classes\Kernel\InterfaceModule.pas"/>
-        <DCCReference Include="Modules\ModuleDatabaseXML\ModuleDatabaseXML.pas"/>
-        <DCCReference Include="Modules\ModuleDatabaseXML\Interfaces\InterfaceModuleDatabaseXML.pas"/>
         <DCCReference Include="TransactionAnalyzerXML\TransactionAnalyzerKernelXML.pas"/>
         <DCCReference Include="Common classes\PanelMain.pas">
             <Form>frmTransactionList</Form>
@@ -208,6 +206,8 @@
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
+        <DCCReference Include="Modules\Module database XML\ModuleDatabaseXML.pas"/>
+        <DCCReference Include="Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerXML.todo"/>
         <BuildConfiguration Include="Release">

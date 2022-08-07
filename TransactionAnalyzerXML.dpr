@@ -58,11 +58,11 @@ uses
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
   WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
   InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
-  ModuleDatabaseXML in 'Modules\ModuleDatabaseXML\ModuleDatabaseXML.pas',
-  InterfaceModuleDatabaseXML in 'Modules\ModuleDatabaseXML\Interfaces\InterfaceModuleDatabaseXML.pas',
   TransactionAnalyzerKernelXML in 'TransactionAnalyzerXML\TransactionAnalyzerKernelXML.pas',
   PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
-  TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas';
+  TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
+  ModuleDatabaseXML in 'Modules\Module database XML\ModuleDatabaseXML.pas',
+  InterfaceModuleDatabaseXML in 'Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas';
 
 {$R *.res}
 

@@ -1,4 +1,4 @@
-unit TransactionAnalyzerKernelFB;
+unit TransactionAnalyzerKernelMS;
 
 interface
 
@@ -6,7 +6,7 @@ uses
   TransactionAnalyzerKernel;
 
 type
-  TTransactionAnalyzerKernelFB = class (TTransactionAnalyzerKernel)
+  TTransactionAnalyzerKernelMS = class (TTransactionAnalyzerKernel)
     constructor Create;
   end;
 
@@ -15,9 +15,9 @@ implementation
 uses
   ModuleDatabase;
 
-{ TTransactionAnalyzerKernelFB }
+{ TTransactionAnalyzerKernelMS }
 
-constructor TTransactionAnalyzerKernelFB.Create;
+constructor TTransactionAnalyzerKernelMS.Create;
 begin
   inherited;
   FObjectList.Add (TModuleDatabase.Create);
