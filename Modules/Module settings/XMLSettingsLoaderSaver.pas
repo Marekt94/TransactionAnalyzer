@@ -47,7 +47,15 @@ begin
   pomNode := pomDocument.DocumentElement.AddChild (rs_NN_MainFolderPath);
   pomNode.Text := p_Settings.MainFolderPath;
 
+  {$IFDEF  DEBUG}
   pomDocument.SaveToFile (rs_FileName);
+  {$ELSEIF DEBUG}
+  var pomPath := System.SysUtils.GetEnvironmentVariable('APPDATA');
+  if pomPath <> '' then
+    pomDocument.SaveToFile (IncludeTrailingPathDelimiter (pomPath) + rs_FileName)
+  else
+    raise Exception.Create('No environment variable: APPDATA');
+  {$ENDIF}
 end;
 
 end.

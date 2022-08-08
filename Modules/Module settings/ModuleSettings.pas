@@ -58,7 +58,10 @@ begin
     pomFrm.Unpack(FSettings);
     Result := pomWnd.ShowModal;
     if Result = mrOK then
+    begin
       pomFrm.Pack(FSettings);
+      MainKernel.ReloadModules;
+    end;
   finally
     pomWnd.Free;
   end;

@@ -14,6 +14,7 @@ type
       destructor Destroy; override;
       procedure OpenModules;
       procedure CloseModules;
+      procedure ReloadModules;
       procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
       function GetObjectList : TList <IModule>;
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
@@ -56,6 +57,12 @@ procedure TKernel.OpenModules;
 begin
   for var i := 0 to FObjectList.Count - 1 do
     FObjectList [i].OpenModule;
+end;
+
+procedure TKernel.ReloadModules;
+begin
+  CloseModules;
+  OpenModules;
 end;
 
 procedure TKernel.Run (p_MainFrame : TFrameClass; p_FrameTitle : string);
