@@ -87,15 +87,23 @@ object frmTransactionList: TfrmTransactionList
       Top = 105
       Width = 111
       Height = 30
+      Action = actBtnSettings
       Anchors = [akTop, akBottom]
-      Caption = 'Ustawienia'
       TabOrder = 3
-      OnClick = btnSettingsClick
     end
   end
   object ofdOpenTransactionFile: TOpenTextFileDialog
     DefaultExt = '*.xml'
     Left = 400
     Top = 16
+  end
+  object actlstButtons: TActionList
+    Left = 144
+    Top = 56
+    object actBtnSettings: TAction
+      Caption = '&Ustawienia'
+      OnExecute = actBtnSettingsExecute
+      OnUpdate = actBtnSettingsUpdate
+    end
   end
 end

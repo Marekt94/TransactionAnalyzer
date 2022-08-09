@@ -4,7 +4,8 @@ interface
 
 uses
   Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections;
+  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections,
+  System.Actions, Vcl.ActnList;
 
 type
   TfrmTransactionList = class(TFrame)
@@ -14,10 +15,13 @@ type
     btnAnalyze: TButton;
     GridPanel1: TGridPanel;
     btnSettings: TButton;
+    actlstButtons: TActionList;
+    actBtnSettings: TAction;
     procedure butShowCategoriesClick(Sender: TObject);
     procedure btnRulesClick(Sender: TObject);
     procedure btnAnalyzeClick(Sender: TObject);
-    procedure btnSettingsClick(Sender: TObject);
+    procedure actBtnSettingsExecute(Sender: TObject);
+    procedure actBtnSettingsUpdate(Sender: TObject);
   public
     constructor Create (AOwner: TComponent); override;
   end;
@@ -42,12 +46,17 @@ begin
   pomRulesModul.OpenMainWindow;
 end;
 
-procedure TfrmTransactionList.btnSettingsClick(Sender: TObject);
+procedure TfrmTransactionList.actBtnSettingsExecute(Sender: TObject);
 var
   pomSettings : IModuleSettings;
 begin
   pomSettings := MainKernel.GiveObjectByInterface (IModuleSettings) as IModuleSettings;
   pomSettings.OpenMainWindow;
+end;
+
+procedure TfrmTransactionList.actBtnSettingsUpdate(Sender: TObject);
+begin
+  btnSettings.Enabled := Assigned (MainKernel.GiveObjectByInterface (IModuleSettings, true) as IModuleSettings);
 end;
 
 procedure TfrmTransactionList.btnAnalyzeClick(Sender: TObject);

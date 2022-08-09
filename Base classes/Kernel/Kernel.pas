@@ -9,6 +9,7 @@ type
   TKernel = class (TInterfacedObject, IKernel)
     protected
       FObjectList : TList<IModule>;
+      FState : TKernelState;
     public
       constructor Create;
       destructor Destroy; override;
@@ -18,7 +19,9 @@ type
       procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
       function GetObjectList : TList <IModule>;
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
+      function GetState : TKernelState;
       property ObjectList: TList<IModule> read FObjectList;
+      property State : TKernelState read GetState;
   end;
 
 var
@@ -53,6 +56,11 @@ begin
   Result := FObjectList;
 end;
 
+function TKernel.GetState: TKernelState;
+begin
+  Result := FState;
+end;
+
 procedure TKernel.OpenModules;
 begin
   for var i := 0 to FObjectList.Count - 1 do
@@ -69,12 +77,14 @@ procedure TKernel.Run (p_MainFrame : TFrameClass; p_FrameTitle : string);
 var
   pomWind : TWndSkeleton;
 begin
+  FState := ks_Loading;
   OpenModules;
 
   //open main window
   pomWind := TWndSkeleton.Create(nil);
   try
     pomWind.Init (p_MainFrame.Create (pomWind), p_FrameTitle, false, false);
+    FState := ks_Ready;
     pomWind.ShowModal;
   finally
     FreeAndNil (pomWind);

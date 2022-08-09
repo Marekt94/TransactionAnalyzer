@@ -9,13 +9,14 @@ type
   TModuleSettings = class (TBaseModule, IModuleSettings)
   strict private
     FSettings : TSettings;
+    function OpenSettingsWindow (p_ReloadModules : boolean): Integer;
   public
     function OpenMainWindow : Integer; override;
     function GetSelfInterface : TGUID; override;
     procedure RegisterClasses; override;
-    function OpenModule : boolean; override;
     function CloseModule : boolean; override;
     function GetSettings : TSettings;
+    function OpenModule: Boolean; override;
     property Settings: TSettings read GetSettings;
   end;
 
@@ -23,7 +24,7 @@ implementation
 
 uses
   XMLSettingsLoaderSaver, PanelSettings, Kernel,
-  InterfaceSettingsLoaderSaver, Vcl.Controls, System.SysUtils;
+  InterfaceSettingsLoaderSaver, Vcl.Controls, System.SysUtils, InterfaceKernel;
 
 { TModuleSettings }
 
@@ -46,7 +47,7 @@ begin
   Result := FSettings;
 end;
 
-function TModuleSettings.OpenMainWindow: Integer;
+function TModuleSettings.OpenSettingsWindow (p_ReloadModules : boolean): Integer;
 var
   pomWnd : TWndSkeleton;
   pomFrm : TFrmSettings;
@@ -60,20 +61,28 @@ begin
     if Result = mrOK then
     begin
       pomFrm.Pack(FSettings);
-      MainKernel.ReloadModules;
+      if p_ReloadModules then
+        MainKernel.ReloadModules;
     end;
   finally
     pomWnd.Free;
   end;
 end;
 
-function TModuleSettings.OpenModule: boolean;
+function TModuleSettings.OpenMainWindow: Integer;
+begin
+  Result := OpenSettingsWindow (true);
+end;
+
+function TModuleSettings.OpenModule: Boolean;
 var
   pomLoaderSaver : ISettingsSaverLoader;
 begin
-  Result := inherited;
   pomLoaderSaver := (MainKernel.GiveObjectByInterface(ISettingsSaverLoader) as ISettingsSaverLoader);
   pomLoaderSaver.LoadSettings (FSettings);
+  if MainKernel.State = ks_Loading then
+    OpenSettingsWindow (false);
+  Result := True;
 end;
 
 procedure TModuleSettings.RegisterClasses;
