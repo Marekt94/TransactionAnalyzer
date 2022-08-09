@@ -3,7 +3,7 @@ unit Transaction;
 interface
 
 uses
-  InterfaceTransaction, System.SysUtils, System.Generics.Collections,
+  System.SysUtils, System.Generics.Collections,
   System.Generics.Defaults;
 
 const

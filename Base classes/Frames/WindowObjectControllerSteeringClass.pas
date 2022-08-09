@@ -3,7 +3,7 @@ unit WindowObjectControllerSteeringClass;
 interface
 
 uses
-  System.SysUtils, Vcl.Grids, Vcl.Forms, BasePanel, InterfaceXMLSaverLoader;
+  System.SysUtils, Vcl.Grids, BasePanel, InterfaceXMLSaverLoader;
 
 type
   TWndObjControllerSteeringClass = class

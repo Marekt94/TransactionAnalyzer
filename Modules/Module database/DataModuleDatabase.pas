@@ -3,7 +3,7 @@ unit DataModuleDatabase;
 interface
 
 uses
-  System.SysUtils, System.Classes, Data.DB, Data.Win.ADODB;
+  System.Classes, Data.Win.ADODB, Data.DB;
 
 type
   TdtmModuleDatabase = class(TDataModule)

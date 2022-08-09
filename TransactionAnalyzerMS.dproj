@@ -147,17 +147,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
-        <DCCReference Include="Modules\Module settings\ModuleSettings.pas"/>
-        <DCCReference Include="Modules\Module settings\Interfaces\InterfaceSettingsLoaderSaver.pas"/>
-        <DCCReference Include="Modules\Module settings\Settings.pas"/>
-        <DCCReference Include="Modules\Module settings\XMLSettingsLoaderSaver.pas"/>
-        <DCCReference Include="Modules\Module settings\ConstXMLSettingsLoaderSaver.pas"/>
-        <DCCReference Include="Modules\Module settings\Frames\PanelSettings.pas">
-            <Form>frmSettings</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas">
             <Form>frmTransactionsInGraphic</Form>
             <FormType>dfm</FormType>
@@ -217,6 +206,8 @@
         </DCCReference>
         <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
         <DCCReference Include="TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas"/>
+        <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
+        <DCCReference Include="Modules\Module settings\Settings.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerMS.todo"/>
         <BuildConfiguration Include="Release">

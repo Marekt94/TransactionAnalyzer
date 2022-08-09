@@ -16,9 +16,5 @@ object frmProductChooser: TfrmProductChooser
       'konto debetowe PKO BP'
       'karta kredytowa MasterCard - PKO BP')
     TabOrder = 0
-    ExplicitLeft = 72
-    ExplicitTop = 72
-    ExplicitWidth = 185
-    ExplicitHeight = 105
   end
 end

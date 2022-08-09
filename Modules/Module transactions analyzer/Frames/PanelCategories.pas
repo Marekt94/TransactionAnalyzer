@@ -3,8 +3,8 @@ unit PanelCategories;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, BasePanel, Vcl.StdCtrls,
+  System.SysUtils, System.Classes,
+  Vcl.Controls, Vcl.Forms, BasePanel, Vcl.StdCtrls,
   System.Generics.Collections, InterfaceModuleCategory;
 
 type

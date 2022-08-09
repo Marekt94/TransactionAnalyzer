@@ -3,13 +3,14 @@ unit PanelTransactionAnalyzerBoosted;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, PanelTransactionsList, BasePanel,
-  PanelCategories, PanelTransactionsInGraphic, Vcl.Grids, Vcl.ComCtrls,
-  Vcl.StdCtrls, PanelBilans, Vcl.ExtCtrls, Vcl.ExtDlgs,
+  System.SysUtils, System.Classes,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, PanelTransactionsList,
+  PanelCategories, PanelTransactionsInGraphic,
+  Vcl.StdCtrls, PanelBilans, Vcl.ExtDlgs,
   InterfaceModuleCategory, System.Generics.Collections, InterfaceTransactionsController, Transaction,
-  Category, System.Actions, Vcl.ActnList, Vcl.Menus, Vcl.ToolWin,
-  InterfaceTransactionLoader;
+  Category, System.Actions, Vcl.ActnList, Vcl.Menus,
+  InterfaceTransactionLoader, BasePanel, Vcl.ToolWin, Vcl.ComCtrls, Vcl.Grids,
+  Vcl.ExtCtrls;
 
 type
   TFrmTransactionAnalyzerBoosted2 = class(TfrmTransasctionsList)

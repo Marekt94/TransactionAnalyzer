@@ -26,8 +26,8 @@ type
 implementation
 
 uses
-  InterfaceRuleSaver, Kernel, System.SysUtils, InterfaceModuleCategory,
-  Category, PanelRule, Vcl.Grids, WindowSkeleton, InterfaceRulesController,
+  InterfaceRuleSaver, Kernel, System.SysUtils,
+  PanelRule, Vcl.Grids, InterfaceRulesController,
   Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver,
   ObjectWindowsCreator;
 
