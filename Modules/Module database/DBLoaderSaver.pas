@@ -32,8 +32,7 @@ type
 
 implementation
 
-uses
-  Kernel, InterfaceModuleDatabase;
+
 
 { TDBLoaderSaver }
 

@@ -4,7 +4,7 @@ interface
 
 uses
   InterfaceTransactionsController, Transaction, System.Generics.Collections,
-  InterfaceModuleRules, System.SysUtils, InterfaceModuleCategory,
+  System.SysUtils, InterfaceModuleCategory,
   Kernel, Rule;
 
 type

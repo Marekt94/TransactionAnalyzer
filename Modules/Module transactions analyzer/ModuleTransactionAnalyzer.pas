@@ -3,9 +3,8 @@ unit ModuleTransactionAnalyzer;
 interface
 
 uses
-  Module, InterfaceModuleTransactionAnalyzer, System.Generics.Collections, Transaction,
-  System.SysUtils, XMLDebitAccountTransactionLoader,
-  InterfaceTransactionLoader;
+  Module, InterfaceModuleTransactionAnalyzer,
+  System.SysUtils, XMLDebitAccountTransactionLoader;
 
 type
   TModuleTransactionAnalyzer = class (TBaseModule, IModuleTransactionAnalyzer)
@@ -19,8 +18,8 @@ type
 implementation
 
 uses
-  WindowSkeleton, InterfaceModuleRules, Kernel, PanelTransactionAnalyzerBoosted,
-  InterfaceModuleCategory, InterfaceTransactionsController,
+  WindowSkeleton, PanelTransactionAnalyzerBoosted,
+  InterfaceTransactionsController,
   TransactionController,
   InterfaceXMLTransactionLoaderSaver, PanelProductChooser, Vcl.Controls,
   XMLCreditCardTransactionLoader;

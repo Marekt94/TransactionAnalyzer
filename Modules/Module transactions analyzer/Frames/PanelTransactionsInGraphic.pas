@@ -3,10 +3,11 @@ unit PanelTransactionsInGraphic;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VclTee.TeeGDIPlus,
-  VCLTee.TeEngine, VCLTee.Series, Vcl.ExtCtrls, VCLTee.TeeProcs, VCLTee.Chart,
-  Vcl.StdCtrls, PanelBilans, System.Generics.Collections, Transaction;
+  System.SysUtils, System.Classes,
+  Vcl.Controls, Vcl.Forms,
+  VCLTee.Series, VCLTee.Chart,
+  System.Generics.Collections, Transaction, VclTee.TeeGDIPlus, VCLTee.TeEngine,
+  Vcl.ExtCtrls, VCLTee.TeeProcs;
 
 type
   TfrmTransactionsInGraphic = class(TFrame)
@@ -21,7 +22,7 @@ type
 implementation
 
 uses
-  Kernel, InterfaceModuleCategory, InterfaceTransactionsController, System.Math;
+  Kernel, InterfaceModuleCategory, InterfaceTransactionsController;
 
 {$R *.dfm}
 

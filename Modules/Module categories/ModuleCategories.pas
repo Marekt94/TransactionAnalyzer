@@ -4,7 +4,7 @@ interface
 
 uses
   Module, InterfaceModuleCategory, System.Generics.Collections, Category,
-  WindowSkeleton, InterfaceCategoriesLoaderSaver,
+  InterfaceCategoriesLoaderSaver,
   PanelCategory, WindowObjectControllerSteeringClass;
 
 type
@@ -30,7 +30,7 @@ type
 implementation
 
 uses
-  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, BaseListPanel, Vcl.Grids,
+  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, Vcl.Grids,
   InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
   ObjectWindowsCreator;
 

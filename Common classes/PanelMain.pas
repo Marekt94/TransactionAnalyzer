@@ -3,9 +3,9 @@ unit PanelMain;
 interface
 
 uses
-  Vcl.Forms, Vcl.Dialogs, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  System.Classes, Vcl.Controls, Vcl.Grids, System.Generics.Collections,
-  System.Actions, Vcl.ActnList;
+  Vcl.Forms, Vcl.ExtDlgs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  System.Classes, Vcl.Controls,
+  Vcl.ActnList, System.Actions, Vcl.Dialogs;
 
 type
   TfrmTransactionList = class(TFrame)
@@ -29,8 +29,8 @@ type
 implementation
 
 uses
-  System.SysUtils, InterfaceModuleRules, Kernel,
-  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory, UsefullMethods,
+  InterfaceModuleRules, Kernel,
+  InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory,
   InterfaceModuleSettings;
 
 {$R *.dfm}

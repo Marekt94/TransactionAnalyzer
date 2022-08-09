@@ -3,7 +3,7 @@ unit InterfaceTransactionsController;
 interface
 
 uses
-  System.Generics.Collections, Transaction, InterfaceModuleRules,
+  System.Generics.Collections, Transaction,
   InterfaceModuleCategory, Rule;
 
 type

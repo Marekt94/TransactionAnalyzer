@@ -3,7 +3,7 @@ unit InterfaceXMLCategoriesLoaderSaver;
 interface
 
 uses
-  InterfaceXMLSaverLoader, InterfaceCategoriesLoaderSaver;
+  InterfaceXMLSaverLoader;
 
 type
   IXMLCategoriesLoaderSaver = interface (IXMLSaverLoader)

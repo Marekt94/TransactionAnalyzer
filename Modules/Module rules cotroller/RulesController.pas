@@ -13,8 +13,7 @@ type
 implementation
 
 uses
-  Category, Kernel, InterfaceModuleCategory, ModuleRules, System.SysUtils,
-  System.StrUtils;
+  Category, Kernel, InterfaceModuleCategory, ModuleRules, System.SysUtils;
 
 { TRulesController }
 

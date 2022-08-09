@@ -3,11 +3,11 @@ unit PanelTransactionsList;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
+  System.SysUtils, System.Classes,
+  Vcl.Controls, Vcl.Forms, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, Transaction, System.Generics.Collections, PanelBilans,
-  PanelTransactionsInGraphic, Vcl.ComCtrls, WindowSkeleton, InterfaceTransactionsController,
-  Vcl.Menus, Vcl.ToolWin, System.Actions, Vcl.ActnList;
+  PanelTransactionsInGraphic, Vcl.ComCtrls, InterfaceTransactionsController,
+  Vcl.Menus, Vcl.ActnList, System.Actions, Vcl.ToolWin;
 
 const
   cLP              = 'L. p.';
@@ -79,8 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses GUIMethods, Kernel, InterfaceModuleCategory, Category, System.Math,
-  PanelCategories;
+uses GUIMethods, Kernel, InterfaceModuleCategory, Category;
 
 procedure TfrmTransasctionsList.AddTransaction (p_Transaction : TTransaction;
                                                 p_Row         : Integer);

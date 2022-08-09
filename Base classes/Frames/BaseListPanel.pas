@@ -45,7 +45,7 @@ type
 implementation
 
 uses
-  WindowSkeleton, System.Math, GUIMethods;
+  WindowSkeleton, GUIMethods;
 
 {$R *.dfm}
 

@@ -33,13 +33,6 @@ uses
   InterfaceRulesController in 'Modules\Module rules cotroller\Interfaces\InterfaceRulesController.pas',
   RulesController in 'Modules\Module rules cotroller\RulesController.pas',
   PanelTransactionsList in 'Modules\Module transactions analyzer\Frames\PanelTransactionsList.pas' {frmTransasctionsList: TFrame},
-  InterfaceModuleSettings in 'Modules\Module settings\Interfaces\InterfaceModuleSettings.pas',
-  ModuleSettings in 'Modules\Module settings\ModuleSettings.pas',
-  InterfaceSettingsLoaderSaver in 'Modules\Module settings\Interfaces\InterfaceSettingsLoaderSaver.pas',
-  Settings in 'Modules\Module settings\Settings.pas',
-  XMLSettingsLoaderSaver in 'Modules\Module settings\XMLSettingsLoaderSaver.pas',
-  ConstXMLSettingsLoaderSaver in 'Modules\Module settings\ConstXMLSettingsLoaderSaver.pas',
-  PanelSettings in 'Modules\Module settings\Frames\PanelSettings.pas' {frmSettings: TFrame},
   PanelTransactionsInGraphic in 'Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas' {frmTransactionsInGraphic: TFrame},
   PanelBilans in 'Modules\Module transactions analyzer\Frames\PanelBilans.pas' {frmBilans: TFrame},
   InterfaceModuleDatabase in 'Modules\Module database\Interfaces\InterfaceModuleDatabase.pas',
@@ -67,7 +60,9 @@ uses
   DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
   PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
   TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
-  TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas';
+  TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas',
+  InterfaceModuleSettings in 'Modules\Module settings\Interfaces\InterfaceModuleSettings.pas',
+  Settings in 'Modules\Module settings\Settings.pas';
 
 {$R *.res}
 

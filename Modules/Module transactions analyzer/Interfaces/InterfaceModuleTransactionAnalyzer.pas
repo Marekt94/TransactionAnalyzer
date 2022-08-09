@@ -3,7 +3,7 @@ unit InterfaceModuleTransactionAnalyzer;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, Transaction;
+  InterfaceModule;
 
 type
   IModuleTransactionAnalyzer = interface(IModule)

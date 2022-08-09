@@ -3,7 +3,7 @@ unit InterfaceModuleRules;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, Rule;
+  InterfaceModule;
 
 type
   IModuleRules = interface (IModule)
