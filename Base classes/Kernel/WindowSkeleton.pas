@@ -71,7 +71,11 @@ end;
 procedure TWndSkeleton.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if key = 27 then Close;
+  if key = 27 then
+  begin
+    ModalResult := mrCancel;
+    Close;
+  end;
 end;
 
 procedure TWndSkeleton.FormShow(Sender: TObject);

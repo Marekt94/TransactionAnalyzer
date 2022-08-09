@@ -3,7 +3,7 @@ unit TransactionAnalyzerKernelXML;
 interface
 
 uses
-  TransactionAnalyzerKernel;
+  TransactionAnalyzerKernel, ModuleSettings;
 
 type
   TTransactionAnalyzerKernelXML = class (TTransactionAnalyzerKernel)
@@ -22,6 +22,7 @@ constructor TTransactionAnalyzerKernelXML.Create;
 begin
   inherited;
   FObjectList.Add (TModuleDatabaseXML.Create);
+  FObjectList.Add (TModuleSettings.Create);
 end;
 
 end.

@@ -13,7 +13,7 @@ type
 implementation
 
 uses
-  ModuleTransactionAnalyzer, ModuleSettings, ModuleCategories,
+  ModuleTransactionAnalyzer, ModuleCategories,
   ModuleRules;
 
 { TTransactionAnalyzerKernel }
@@ -21,7 +21,6 @@ uses
 constructor TTransactionAnalyzerKernel.Create;
 begin
   inherited;
-  FObjectList.Add (TModuleSettings.Create);
   FObjectList.Add (TModuleCategories.Create);
   FObjectList.Add (TModuleTransactionAnalyzer.Create);
   FObjectList.Add (TModuleRules.Create);
