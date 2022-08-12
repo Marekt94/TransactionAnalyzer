@@ -3,10 +3,10 @@ unit TransactionAnalyzerKernel;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, InterfaceKernel, Kernel;
+  InterfaceModule, System.Generics.Collections, InterfaceKernel, BaseKernel;
 
 type
-  TTransactionAnalyzerKernel = class(TKernel, IBaseKernel)
+  TTransactionAnalyzerKernel = class(TBasePlatform, IPlatform)
     procedure RegisterModules (p_ModuleList : TList<IModule>); override;
   end;
 

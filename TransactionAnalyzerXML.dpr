@@ -71,8 +71,8 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TTransactionAnalyzerKernel.Create;
-  MainKernel.BaseKernel := TTransactionAnalyzerKernelXML.Create;
-  MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
+  MainKernel := TKernel.Create (TTransactionAnalyzerKernel.Create);
+  MainKernel.BasePlatform.BasePlatform := TTransactionAnalyzerKernelXML.Create;
+  MainKernel.Open (TfrmTransactionList, 'Analiza trasakcji');
 end.
 

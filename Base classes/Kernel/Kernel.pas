@@ -6,20 +6,22 @@ uses
   InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel, BaseKernel;
 
 type
-  TKernel = class (TBaseKernel, IMainKernel)
+  TKernel = class (TInterfacedObject, IMainKernel)
     strict private
       FObjectList : TList<IModule>;
+      FBaseKernel : IPlatform;
     protected
       FState : TKernelState;
     public
-      constructor Create;
+      constructor Create (p_BaseKernel : IPlatform);
       destructor Destroy; override;
       procedure OpenModules; virtual;
       procedure CloseModules; virtual;
       procedure ReloadModules; virtual;
-      procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
+      procedure Open (p_MainFrame : TFrameClass; p_FrameTitle : string);
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
+      function GetBasePlatform : IPlatform;
   end;
 
 var
@@ -38,15 +40,21 @@ begin
     FObjectList [i].CloseModule;
 end;
 
-constructor TKernel.Create;
+constructor TKernel.Create (p_BaseKernel : IPlatform);
 begin
   FObjectList := TList<IModule>.Create;
+  FBaseKernel := p_BaseKernel;
 end;
 
 destructor TKernel.Destroy;
 begin
   FreeAndNil(FObjectList);
   inherited;
+end;
+
+function TKernel.GetBasePlatform: IPlatform;
+begin
+  Result := FBaseKernel;
 end;
 
 function TKernel.GetState: TKernelState;
@@ -66,13 +74,15 @@ begin
   OpenModules;
 end;
 
-procedure TKernel.Run (p_MainFrame : TFrameClass; p_FrameTitle : string);
+procedure TKernel.Open (p_MainFrame : TFrameClass; p_FrameTitle : string);
 var
   pomWind : TWndSkeleton;
 begin
   FState := ks_Loading;
 
-  RegisterModules (FObjectList);
+  if not Assigned (FBaseKernel) then
+    Exit;
+  FBaseKernel.RegisterModules (FObjectList);
 
   OpenModules;
 
