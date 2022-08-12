@@ -6,7 +6,7 @@ uses
   TransactionAnalyzerKernel, BaseKernel, InterfaceKernel, System.Generics.Collections, InterfaceModule;
 
 type
-  TTransactionAnalyzerKernelMS = class (TBasePlatform, IPlatform)
+  TTransactionAnalyzerKernelMS = class (TContainer, IContainer)
     procedure RegisterModules (p_ModuleList : TList<IModule>); override;
   end;
 

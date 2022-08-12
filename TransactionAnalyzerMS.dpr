@@ -72,6 +72,6 @@ begin
   Application.Initialize;
   Application.Run;
   MainKernel := TKernel.Create (TTransactionAnalyzerKernel.Create);
-  MainKernel.BasePlatform.BasePlatform := TTransactionAnalyzerKernelMS.Create;
+  MainKernel.MainContainer.Container := TTransactionAnalyzerKernelMS.Create;
   MainKernel.Open (TfrmTransactionList, 'Analiza trasakcji');
 end.

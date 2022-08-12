@@ -9,11 +9,11 @@ type
   TKernel = class (TInterfacedObject, IMainKernel)
     strict private
       FObjectList : TList<IModule>;
-      FBaseKernel : IPlatform;
+      FContainer : IContainer;
     protected
       FState : TKernelState;
     public
-      constructor Create (p_BaseKernel : IPlatform);
+      constructor Create (p_BaseKernel : IContainer);
       destructor Destroy; override;
       procedure OpenModules; virtual;
       procedure CloseModules; virtual;
@@ -21,7 +21,7 @@ type
       procedure Open (p_MainFrame : TFrameClass; p_FrameTitle : string);
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
-      function GetBasePlatform : IPlatform;
+      function GetMainContainer : IContainer;
   end;
 
 var
@@ -40,10 +40,10 @@ begin
     FObjectList [i].CloseModule;
 end;
 
-constructor TKernel.Create (p_BaseKernel : IPlatform);
+constructor TKernel.Create (p_BaseKernel : IContainer);
 begin
   FObjectList := TList<IModule>.Create;
-  FBaseKernel := p_BaseKernel;
+  FContainer := p_BaseKernel;
 end;
 
 destructor TKernel.Destroy;
@@ -52,9 +52,9 @@ begin
   inherited;
 end;
 
-function TKernel.GetBasePlatform: IPlatform;
+function TKernel.GetMainContainer: IContainer;
 begin
-  Result := FBaseKernel;
+  Result := FContainer;
 end;
 
 function TKernel.GetState: TKernelState;
@@ -80,9 +80,9 @@ var
 begin
   FState := ks_Loading;
 
-  if not Assigned (FBaseKernel) then
+  if not Assigned (FContainer) then
     Exit;
-  FBaseKernel.RegisterModules (FObjectList);
+  FContainer.RegisterModules (FObjectList);
 
   OpenModules;
 

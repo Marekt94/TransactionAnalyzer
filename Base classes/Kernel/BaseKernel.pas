@@ -6,27 +6,27 @@ uses
   InterfaceKernel, InterfaceModule, System.Generics.Collections;
 
 type
-  TBasePlatform = class (TInterfacedObject, IPlatform)
+  TContainer = class (TInterfacedObject, IContainer)
   strict private
-    FBaseKernel : IPlatform;
+    FBaseKernel : IContainer;
   public
     procedure RegisterModules (p_ModuleList : TList<IModule>); virtual;
-    procedure SetBasePlatform (p_Platform: IPlatform);
+    procedure SetContainer (p_Container: IContainer);
   end;
 
 implementation
 
-{ TBasePlatform }
+{ TContainer }
 
-procedure TBasePlatform.RegisterModules(p_ModuleList: TList<IModule>);
+procedure TContainer.RegisterModules(p_ModuleList: TList<IModule>);
 begin
   if Assigned (FBaseKernel) then
     FBaseKernel.RegisterModules (p_ModuleList);
 end;
 
-procedure TBasePlatform.SetBasePlatform(p_Platform: IPlatform);
+procedure TContainer.SetContainer(p_Container: IContainer);
 begin
-  FBaseKernel := p_Platform;
+  FBaseKernel := p_Container;
 end;
 
 end.

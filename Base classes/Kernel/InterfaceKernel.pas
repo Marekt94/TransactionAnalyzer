@@ -9,11 +9,11 @@ type
   TFrameClass = class of TFrame;
   TKernelState = (ks_Loading, ks_Ready);
 
-  IPlatform = interface
+  IContainer = interface
   ['{3F76C9A4-0DA3-4EE4-AABC-F47A5C4C1D50}']
     procedure RegisterModules (p_ModuleList : TList<IModule>);
-    procedure SetBasePlatform (p_Platform : IPlatform);
-    property BasePlatform : IPlatform write SetBasePlatform;
+    procedure SetContainer (p_Container : IContainer);
+    property Container : IContainer write SetContainer;
   end;
 
   IMainKernel = interface
@@ -24,9 +24,9 @@ type
     procedure Open(p_MainFrame : TFrameClass; p_FrameTitle : string);
     function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
     function GetState : TKernelState;
-    function GetBasePlatform : IPlatform;
+    function GetMainContainer : IContainer;
     property State : TKernelState read GetState;
-    property BasePlatform : IPlatform read GetBasePlatform;
+    property MainContainer : IContainer read GetMainContainer;
   end;
 
 implementation
