@@ -3,11 +3,11 @@ unit TransactionAnalyzerKernel;
 interface
 
 uses
-  Kernel;
+  InterfaceModule, System.Generics.Collections, InterfaceKernel, Kernel;
 
 type
-  TTransactionAnalyzerKernel = class(TKernel)
-    constructor Create;
+  TTransactionAnalyzerKernel = class(TKernel, IBaseKernel)
+    procedure RegisterModules (p_ModuleList : TList<IModule>); override;
   end;
 
 implementation
@@ -18,12 +18,13 @@ uses
 
 { TTransactionAnalyzerKernel }
 
-constructor TTransactionAnalyzerKernel.Create;
+procedure TTransactionAnalyzerKernel.RegisterModules(
+  p_ModuleList: TList<IModule>);
 begin
   inherited;
-  FObjectList.Add (TModuleCategories.Create);
-  FObjectList.Add (TModuleTransactionAnalyzer.Create);
-  FObjectList.Add (TModuleRules.Create);
+  p_ModuleList.Add (TModuleCategories.Create);
+  p_ModuleList.Add (TModuleTransactionAnalyzer.Create);
+  p_ModuleList.Add (TModuleRules.Create);
 end;
 
 end.

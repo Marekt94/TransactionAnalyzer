@@ -62,7 +62,8 @@ uses
   PanelMain in 'Common classes\PanelMain.pas' {frmTransactionList: TFrame},
   TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
   ModuleDatabaseXML in 'Modules\Module database XML\ModuleDatabaseXML.pas',
-  InterfaceModuleDatabaseXML in 'Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas';
+  InterfaceModuleDatabaseXML in 'Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas',
+  BaseKernel in 'Base classes\Kernel\BaseKernel.pas';
 
 {$R *.res}
 
@@ -70,7 +71,8 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TTransactionAnalyzerKernelXML.Create;
+  MainKernel := TTransactionAnalyzerKernel.Create;
+  MainKernel.BaseKernel := TTransactionAnalyzerKernelXML.Create;
   MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.
 

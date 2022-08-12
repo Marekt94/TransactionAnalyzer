@@ -3,29 +3,27 @@ unit Kernel;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel;
+  InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel, BaseKernel;
 
 type
-  TKernel = class (TInterfacedObject, IKernel)
-    protected
+  TKernel = class (TBaseKernel, IMainKernel)
+    strict private
       FObjectList : TList<IModule>;
+    protected
       FState : TKernelState;
     public
       constructor Create;
       destructor Destroy; override;
-      procedure OpenModules;
-      procedure CloseModules;
-      procedure ReloadModules;
+      procedure OpenModules; virtual;
+      procedure CloseModules; virtual;
+      procedure ReloadModules; virtual;
       procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
-      function GetObjectList : TList <IModule>;
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
-      property ObjectList: TList<IModule> read FObjectList;
-      property State : TKernelState read GetState;
   end;
 
 var
-  MainKernel : IKernel;
+  MainKernel : IMainKernel;
 
 implementation
 
@@ -51,11 +49,6 @@ begin
   inherited;
 end;
 
-function TKernel.GetObjectList: TList<IModule>;
-begin
-  Result := FObjectList;
-end;
-
 function TKernel.GetState: TKernelState;
 begin
   Result := FState;
@@ -78,6 +71,9 @@ var
   pomWind : TWndSkeleton;
 begin
   FState := ks_Loading;
+
+  RegisterModules (FObjectList);
+
   OpenModules;
 
   //open main window

@@ -62,7 +62,8 @@ uses
   TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
   TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas',
   InterfaceModuleSettings in 'Modules\Module settings\Interfaces\InterfaceModuleSettings.pas',
-  Settings in 'Modules\Module settings\Settings.pas';
+  Settings in 'Modules\Module settings\Settings.pas',
+  BaseKernel in 'Base classes\Kernel\BaseKernel.pas';
 
 {$R *.res}
 
@@ -70,6 +71,7 @@ begin
   ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.Run;
-  MainKernel := TTransactionAnalyzerKernelMS.Create;
+  MainKernel := TTransactionAnalyzerKernel.Create;
+  MainKernel.BaseKernel := TTransactionAnalyzerKernelMS.Create;
   MainKernel.Run (TfrmTransactionList, 'Analiza trasakcji');
 end.
