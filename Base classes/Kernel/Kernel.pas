@@ -3,29 +3,29 @@ unit Kernel;
 interface
 
 uses
-  InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel;
+  InterfaceModule, System.Generics.Collections, WindowSkeleton, Vcl.Forms, InterfaceKernel, BaseKernel;
 
 type
-  TKernel = class (TInterfacedObject, IKernel)
-    protected
+  TKernel = class (TInterfacedObject, IMainKernel)
+    strict private
       FObjectList : TList<IModule>;
+      FContainer : IContainer;
+    protected
       FState : TKernelState;
     public
-      constructor Create;
+      constructor Create (p_BaseKernel : IContainer);
       destructor Destroy; override;
-      procedure OpenModules;
-      procedure CloseModules;
-      procedure ReloadModules;
-      procedure Run(p_MainFrame : TFrameClass; p_FrameTitle : string);
-      function GetObjectList : TList <IModule>;
+      procedure OpenModules; virtual;
+      procedure CloseModules; virtual;
+      procedure ReloadModules; virtual;
+      procedure Open (p_MainFrame : TFrameClass; p_FrameTitle : string);
       function GiveObjectByInterface (p_GUID : TGUID; p_Silent : boolean = false) : IInterface;
       function GetState : TKernelState;
-      property ObjectList: TList<IModule> read FObjectList;
-      property State : TKernelState read GetState;
+      function GetMainContainer : IContainer;
   end;
 
 var
-  MainKernel : IKernel;
+  MainKernel : IMainKernel;
 
 implementation
 
@@ -40,9 +40,10 @@ begin
     FObjectList [i].CloseModule;
 end;
 
-constructor TKernel.Create;
+constructor TKernel.Create (p_BaseKernel : IContainer);
 begin
   FObjectList := TList<IModule>.Create;
+  FContainer := p_BaseKernel;
 end;
 
 destructor TKernel.Destroy;
@@ -51,9 +52,9 @@ begin
   inherited;
 end;
 
-function TKernel.GetObjectList: TList<IModule>;
+function TKernel.GetMainContainer: IContainer;
 begin
-  Result := FObjectList;
+  Result := FContainer;
 end;
 
 function TKernel.GetState: TKernelState;
@@ -73,11 +74,16 @@ begin
   OpenModules;
 end;
 
-procedure TKernel.Run (p_MainFrame : TFrameClass; p_FrameTitle : string);
+procedure TKernel.Open (p_MainFrame : TFrameClass; p_FrameTitle : string);
 var
   pomWind : TWndSkeleton;
 begin
   FState := ks_Loading;
+
+  if not Assigned (FContainer) then
+    Exit;
+  FContainer.RegisterModules (FObjectList);
+
   OpenModules;
 
   //open main window

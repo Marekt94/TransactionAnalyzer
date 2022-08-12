@@ -3,26 +3,27 @@ unit TransactionAnalyzerKernelXML;
 interface
 
 uses
-  TransactionAnalyzerKernel, ModuleSettings;
+  InterfaceKernel, InterfaceModule, System.Generics.Collections, BaseKernel;
 
 type
-  TTransactionAnalyzerKernelXML = class (TTransactionAnalyzerKernel)
-  public
-    constructor Create;
+  TTransactionAnalyzerKernelXML = class (TContainer, IContainer)
+   public
+    procedure RegisterModules (p_ModuleList : TList<IModule>); override;
   end;
 
 implementation
 
 uses
-  ModuleDatabaseXML;
+  ModuleDatabaseXML, ModuleSettings;
 
 { TTransactionAnalyzerKernelXML }
 
-constructor TTransactionAnalyzerKernelXML.Create;
+procedure TTransactionAnalyzerKernelXML.RegisterModules(
+  p_ModuleList: TList<IModule>);
 begin
   inherited;
-  FObjectList.Add (TModuleDatabaseXML.Create);
-  FObjectList.Add (TModuleSettings.Create);
+  p_ModuleList.Add (TModuleDatabaseXML.Create);
+  p_ModuleList.Add (TModuleSettings.Create);
 end;
 
 end.

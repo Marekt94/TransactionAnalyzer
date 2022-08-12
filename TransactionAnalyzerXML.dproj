@@ -5,7 +5,7 @@
         <FrameworkType>VCL</FrameworkType>
         <MainSource>TransactionAnalyzerXML.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -208,6 +208,7 @@
         <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
         <DCCReference Include="Modules\Module database XML\ModuleDatabaseXML.pas"/>
         <DCCReference Include="Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas"/>
+        <DCCReference Include="Base classes\Kernel\BaseKernel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerXML.todo"/>
         <BuildConfiguration Include="Release">

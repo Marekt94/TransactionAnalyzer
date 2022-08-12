@@ -208,6 +208,7 @@
         <DCCReference Include="TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas"/>
         <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
         <DCCReference Include="Modules\Module settings\Settings.pas"/>
+        <DCCReference Include="Base classes\Kernel\BaseKernel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerMS.todo"/>
         <BuildConfiguration Include="Release">
