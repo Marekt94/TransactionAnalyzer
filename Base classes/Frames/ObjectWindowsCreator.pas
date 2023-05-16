@@ -3,7 +3,7 @@ unit ObjectWindowsCreator;
 interface
 
 uses
-  WindowObjectControllerSteeringClass;
+  WindowObjectControllerSteeringClass, Vcl.Forms;
 
 type
   TObjectWindowsCreator = class
@@ -26,7 +26,7 @@ begin
   try
     pomFrame := TFrmBaseListPanel.Create(pomWindow);
     pomFrame.Init (p_SteeringObj.ObjectClass,
-                   p_SteeringObj.ObjectFrame,
+                   p_SteeringObj.ObjectFrame as TFrame,
                    p_SteeringObj.UpdateView,
                    p_SteeringObj.XMLLoaderSaver,
                    p_SteeringObj.WndObjTitle);

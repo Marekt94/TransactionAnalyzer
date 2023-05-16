@@ -1,14 +1,20 @@
-inherited frmRule: TfrmRule
+object frmRule: TfrmRule
   AlignWithMargins = True
+  Left = 0
+  Top = 0
   Width = 651
   Height = 166
   Margins.Left = 10
   Margins.Top = 10
   Margins.Right = 10
   Margins.Bottom = 10
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
   ParentFont = False
-  ExplicitWidth = 651
-  ExplicitHeight = 166
+  TabOrder = 0
   object Label2: TLabel
     Left = 9
     Top = 19
@@ -71,7 +77,7 @@ inherited frmRule: TfrmRule
       Width = 97
       Height = 21
       Date = 44344.000000000000000000
-      Time = 0.655671111111587400
+      Time = 0.655671111111587300
       TabOrder = 2
       OnChange = dtpFromDateChange
     end

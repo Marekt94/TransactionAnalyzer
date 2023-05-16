@@ -3,11 +3,11 @@ unit PanelRule;
 interface
 
 uses
-  BasePanel, Vcl.StdCtrls, Vcl.ComCtrls, System.Generics.Collections, Category,
-  System.Classes, Vcl.Controls, System.SysUtils, InterfaceModuleCategory;
+  InterfaceBasePanel, Vcl.StdCtrls, Vcl.ComCtrls, System.Generics.Collections, Category,
+  System.Classes, Vcl.Controls, Vcl.Forms, System.SysUtils, InterfaceModuleCategory;
 
 type
-  TfrmRule = class(TFrmBasePanel)
+  TfrmRule = class(TFrame, IBasePanel, IBasePanelValidator)
     GroupBox1: TGroupBox;
     chbTitleContains: TCheckBox;
     edtTitleContains: TEdit;
@@ -37,9 +37,10 @@ type
     procedure RefreshRulesVisualizer (p_Mmo : TMemo);
   public
     constructor Create(AOwner: TComponent); override;
-    function Unpack (const p_Object : TObject) : boolean; override;
-    function Pack   (var   p_Object : TObject) : boolean; override;
-    function Check : boolean; override;
+    function Unpack (const p_Object : TObject) : boolean;
+    function Pack   (var   p_Object : TObject) : boolean;
+    procedure Clean;
+    function Check : boolean;
   end;
 
 implementation
@@ -73,6 +74,11 @@ begin
   if not Result then
     MessageDlg('Co najmniej jeden z checkbox''ów musi byæ zaznaczony',
       mtInformation, [mbOK], 0);
+end;
+
+procedure TfrmRule.Clean;
+begin
+
 end;
 
 procedure TfrmRule.cmbCategoriesChange(Sender: TObject);
@@ -140,7 +146,7 @@ var
   pomRuleController : IModuleCategories;
   pomCategory       : TCategory;
 begin
-  Result := inherited Unpack(p_Object);
+  Result := true;
   pomRule := p_Object as TRule;
   if Assigned (pomRule) then
   begin
@@ -195,7 +201,7 @@ begin
     else
       CategoryIndex := pomCategory.CategoryIndex;
   end;
-  Result := inherited Pack(p_Object);
+  Result := true;
 end;
 
 end.

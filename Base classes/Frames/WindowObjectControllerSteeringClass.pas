@@ -3,13 +3,13 @@ unit WindowObjectControllerSteeringClass;
 interface
 
 uses
-  System.SysUtils, Vcl.Grids, BasePanel, InterfaceXMLSaverLoader;
+  System.SysUtils, Vcl.Grids, InterfaceBasePanel, InterfaceXMLSaverLoader;
 
 type
   TWndObjControllerSteeringClass = class
   private
     FObjectClass    : TClass;
-    FObjectFrame    : TFrmBasePanel;
+    FObjectFrame    : IBasePanel;
     FUpdateView     : TProc<TStringGrid, TObject>;
     FXMLLoaderSaver : IXMLSaverLoader;
     FObjectList     : TObject;
@@ -19,9 +19,8 @@ type
     FNavigationKeys : boolean;
     FAddMode        : boolean;
   public
-    destructor Destroy; override;
     property ObjectClass: TClass read FObjectClass write FObjectClass;
-    property ObjectFrame: TFrmBasePanel read FObjectFrame write FObjectFrame;
+    property ObjectFrame: IBasePanel read FObjectFrame write FObjectFrame;
     property UpdateView: TProc<TStringGrid, TObject> read FUpdateView write FUpdateView;
     property ObjectList: TObject read FObjectList write FObjectList;
     property WndListTitle: string read FWndListTitle write FWndListTitle;
@@ -33,14 +32,5 @@ type
   end;
 
 implementation
-
-{ TWndObjControllerSteeringClass }
-
-destructor TWndObjControllerSteeringClass.Destroy;
-begin
-  if Assigned (FObjectFrame) then
-    FObjectFrame.Free;
-  inherited;
-end;
 
 end.

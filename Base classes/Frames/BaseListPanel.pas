@@ -4,7 +4,7 @@ interface
 
 uses
   Vcl.Forms, Vcl.Grids, Vcl.StdCtrls, System.Classes, Vcl.Controls, Vcl.ExtCtrls,
-  System.Generics.Collections, BasePanel, System.SysUtils, InterfaceXMLSaverLoader,
+  System.Generics.Collections, InterfaceBasePanel, System.SysUtils, InterfaceXMLSaverLoader,
   Vcl.Dialogs, Vcl.ExtDlgs;
 
 
@@ -28,7 +28,7 @@ type
   strict private
     FObjectList     : TObjectList<TObject>;
     FObjectClass    : TClass;
-    FBasePanel      : TFrmBasePanel;
+    FBasePanel      : TFrame;
     FUpdateView     : TProc <TStringGrid, TObject>;
     FLoaderSaver    : IXMLSaverLoader;
     FWndObjectTitle : string;
@@ -36,7 +36,7 @@ type
   public
     function UnpackFrame (p_ObjectList : TObject) : boolean;
     procedure Init (p_ObjectClass    : TClass;
-                    p_ObjectPanel    : TFrmBasePanel;
+                    p_ObjectPanel    : TFrame;
                     p_FunUpdateView  : TProc <TStringGrid, TObject>;
                     p_XMLLoaderSaver : IXMLSaverLoader;
                     p_WndObjectTitle : String);
@@ -55,16 +55,25 @@ procedure TFrmBaseListPanel.btnAddClick (Sender: TObject);
 var
   pomWnd    : TWndSkeleton;
   pomObject : TObject;
+  pomBasePanel : IBasePanel;
+  pomRes : Integer;
 begin
   pomWnd := TWndSkeleton.Create(nil);
   try
-    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false, FBasePanel.Check);
-    FBasePanel.Unpack (nil);
-    if pomWnd.ShowModal = mrOk then
+    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false);
+    if Supports(FBasePanel, IBasePanel) then
+    begin
+      pomBasePanel := FBasePanel as IBasePanel;
+      pomBasePanel.Unpack (nil);
+    end;
+
+    pomRes := pomWnd.ShowModal;
+
+    if Assigned(pomBasePanel) and (pomRes = mrOk) then
     begin
       pomObject := FObjectClass.Create;
       try
-        FBasePanel.Pack (pomObject);
+        pomBasePanel.Pack (pomObject);
         FObjectList.Add (pomObject)
       except
         pomObject.Free;
@@ -86,14 +95,21 @@ procedure TFrmBaseListPanel.btnEditClick (Sender: TObject);
 var
   pomWnd    : TWndSkeleton;
   pomObject : TObject;
+  pomBasePanel : IBasePanel;
+  pomRes : Integer;
 begin
   pomWnd := TWndSkeleton.Create(nil);
   try
     pomObject := FObjectList.Items [strList.Row - 1];
-    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false, FBasePanel.Check);
-    FBasePanel.Unpack (pomObject);
-    if pomWnd.ShowModal = mrOk then
-      FBasePanel.Pack (pomObject);
+    pomWnd.Init (FBasePanel, FWndObjectTitle, true, false);
+    if Supports(FBasePanel, IBasePanel) then
+    begin
+      pomBasePanel := FBasePanel as IBasePanel;
+      pomBasePanel.Unpack (pomObject);
+    end;
+    pomRes := pomWnd.ShowModal;
+    if Assigned(pomBasePanel) and (pomRes = mrOk) then
+      pomBasePanel.Pack (pomObject);
   finally
     pomWnd.Free;
   end;
@@ -122,10 +138,10 @@ begin
 end;
 
 procedure TFrmBaseListPanel.Init (p_ObjectClass    : TClass;
-                                  p_ObjectPanel    : TFrmBasePanel;
-                                  p_FunUpdateView  : TProc <TStringGrid, TObject>;
-                                  p_XMLLoaderSaver : IXMLSaverLoader;
-                                  p_WndObjectTitle : String);
+                    p_ObjectPanel    : TFrame;
+                    p_FunUpdateView  : TProc <TStringGrid, TObject>;
+                    p_XMLLoaderSaver : IXMLSaverLoader;
+                    p_WndObjectTitle : String);
 begin
   FObjectClass    := p_ObjectClass;
   FBasePanel      := p_ObjectPanel;

@@ -1,6 +1,11 @@
 program TransactionAnalyzerXML;
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Vcl.Forms,
   Module in 'Base classes\Module.pas',
   Category in 'Modules\Module categories\Category.pas',

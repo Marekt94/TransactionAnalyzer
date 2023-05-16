@@ -5,24 +5,22 @@ interface
 uses
   System.SysUtils, System.Classes,
   Vcl.Controls, Vcl.Forms, Vcl.StdCtrls, Category,
-  BasePanel;
+  InterfaceBasePanel;
 
 type
-  TFrmCategory = class(TFrmBasePanel)
+  TFrmCategory = class(TFrame, IBasePanel)
     lblCategory: TLabel;
     edtCategory: TEdit;
   public
-   procedure Clean; override;
-   function Unpack (const p_Object : TObject) : boolean; override;
-   function Pack   (var p_Object : TObject) : boolean; override;
+   procedure Clean;
+   function Unpack (const p_Object : TObject) : boolean;
+   function Pack   (var p_Object : TObject) : boolean;
     { Public declarations }
   end;
 
 implementation
 
 {$R *.dfm}
-
-{ TFrmCategory }
 
 { TFrmCategory }
 
