@@ -138,11 +138,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="Base classes\Frames\BasePanel.pas">
-            <Form>FrmBasePanel</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas"/>
         <DCCReference Include="Base classes\GUIMethods.pas"/>
@@ -218,6 +213,7 @@
         <DCCReference Include="Modules\Module database XML\ModuleDatabaseXML.pas"/>
         <DCCReference Include="Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas"/>
         <DCCReference Include="Base classes\Kernel\BaseKernel.pas"/>
+        <DCCReference Include="Base classes\Frames\InterfaceBasePanel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerXML.todo"/>
         <BuildConfiguration Include="Release">
@@ -252,127 +248,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vcl270.fr" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vcl270.fr</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\xmlrtl270.ja" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>xmlrtl270.ja</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\TransactionAnalyzerXML.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>TransactionAnalyzerXML.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vcl270.ja" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vcl270.ja</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\IndySystem270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\xmlrtl270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vclimg270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\xmlrtl270.de" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>xmlrtl270.de</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\IndyProtocols270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl270.de" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>rtl270.de</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl270.ja" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>rtl270.ja</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\IndyCore270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\Tee9270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vcl270.de" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vcl270.de</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployFile LocalName="TransactionAnalyzer.todo" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vclimg270.de" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vclimg270.de</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vcl270.bpl" Configuration="Debug" Class="DependencyPackage">
-                    <Platform Name="Win32">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\xmlrtl270.fr" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>xmlrtl270.fr</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vclimg270.ja" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vclimg270.ja</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\rtl270.fr" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>rtl270.fr</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\Win32\vclimg270.fr" Configuration="Debug" Class="DependencyPackageResource">
-                    <Platform Name="Win32">
-                        <RemoteName>vclimg270.fr</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
