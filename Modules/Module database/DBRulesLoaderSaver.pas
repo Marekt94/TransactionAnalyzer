@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  System.SysUtils, ConstXMLRuleSaverLoader, Kernel, InterfaceModuleDatabase;
+  System.SysUtils, ConstXMLRuleSaverLoader, InterfaceKernel, InterfaceModuleDatabase;
 
 { TDBRulesLoaderSaver }
 

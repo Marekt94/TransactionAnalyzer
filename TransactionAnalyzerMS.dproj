@@ -109,7 +109,6 @@
         <DCCReference Include="Modules\Module rules cotroller\Interfaces\InterfaceRuleSaver.pas"/>
         <DCCReference Include="Modules\Module rules cotroller\Frames\PanelRule.pas">
             <Form>frmRule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\ConstXMLLoader.pas"/>
@@ -121,14 +120,12 @@
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceTransactionLoader.pas"/>
         <DCCReference Include="Modules\Module categories\Frames\PanelCategory.pas">
             <Form>FrmCategory</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module categories\XMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Base classes\Frames\BaseListPanel.pas">
             <Form>FrmBaseListPanel</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas"/>
@@ -141,24 +138,20 @@
         <DCCReference Include="Modules\Module rules cotroller\RulesController.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionsList.pas">
             <Form>frmTransasctionsList</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionsInGraphic.pas">
             <Form>frmTransactionsInGraphic</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelBilans.pas">
             <Form>frmBilans</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module database\Interfaces\InterfaceModuleDatabase.pas"/>
         <DCCReference Include="Modules\Module database\ModuleDatabase.pas"/>
         <DCCReference Include="Modules\Module database\DataModuleDatabase.pas">
             <Form>dtmModuleDatabase</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module database\DBLoaderSaver.pas"/>
@@ -166,12 +159,10 @@
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceXMLCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelCategories.pas">
             <Form>frmCategories</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelTransactionAnalyzerBoosted.pas">
             <Form>FrmTransactionAnalyzerBoosted2</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\Interfaces\InterfaceXMLTransactionLoaderSaver.pas"/>
@@ -179,34 +170,27 @@
         <DCCReference Include="Base classes\Interfaces\InterfaceLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\Frames\PanelProductChooser.pas">
             <Form>frmProductChooser</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas"/>
         <DCCReference Include="Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas"/>
-        <DCCReference Include="Base classes\Kernel\InterfaceKernel.pas"/>
-        <DCCReference Include="Base classes\Kernel\Kernel.pas"/>
-        <DCCReference Include="Base classes\Kernel\WindowSkeleton.pas">
-            <Form>WndSkeleton</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="Base classes\Frames\ObjectWindowsCreator.pas"/>
         <DCCReference Include="Base classes\Frames\WindowObjectControllerSteeringClass.pas"/>
-        <DCCReference Include="Base classes\Kernel\InterfaceModule.pas"/>
         <DCCReference Include="Modules\Module database\DBCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBRulesLoaderSaver.pas"/>
         <DCCReference Include="Modules\Module database\DBTransactionLoaderSaver.pas"/>
         <DCCReference Include="Common classes\PanelMain.pas">
             <Form>frmTransactionList</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="Common classes\TransactionAnalyzerKernel.pas"/>
         <DCCReference Include="TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas"/>
         <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
         <DCCReference Include="Modules\Module settings\Settings.pas"/>
-        <DCCReference Include="Base classes\Kernel\BaseKernel.pas"/>
         <DCCReference Include="Base classes\Frames\InterfaceBasePanel.pas"/>
+        <DCCReference Include="..\..\Kernel\src\Interfaces\InterfaceKernel.pas"/>
+        <DCCReference Include="..\..\Kernel\src\VCL\Interfaces\InterfaceVCLKernel.pas"/>
+        <DCCReference Include="..\..\Kernel\src\VCL\VCLKernel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerMS.todo"/>
         <BuildConfiguration Include="Release">

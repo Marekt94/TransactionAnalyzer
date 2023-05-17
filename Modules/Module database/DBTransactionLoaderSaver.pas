@@ -30,7 +30,7 @@ type
 implementation
 
 uses
-  ConstXMLLoader, Kernel, SysUtils;
+  ConstXMLLoader, InterfaceKernel, SysUtils;
 
 { TDBTransactionLoaderSaver }
 

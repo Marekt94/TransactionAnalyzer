@@ -4,7 +4,7 @@ interface
 
 uses
   InterfaceCategoriesLoaderSaver, System.Generics.Collections, Category,
-  InterfaceModuleSettings, Kernel, InterfaceXMLCategoriesLoaderSaver;
+  InterfaceModuleSettings, InterfaceKernel, InterfaceXMLCategoriesLoaderSaver;
 
 const
   rs_FileName = 'categories.xml';

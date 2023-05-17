@@ -7,6 +7,7 @@ uses
   madListProcesses,
   madListModules,
   Vcl.Forms,
+  System.SysUtils,
   Module in 'Base classes\Module.pas',
   Category in 'Modules\Module categories\Category.pas',
   ModuleCategories in 'Modules\Module categories\ModuleCategories.pas',
@@ -53,12 +54,8 @@ uses
   PanelProductChooser in 'Modules\Module transactions analyzer\Frames\PanelProductChooser.pas' {frmProductChooser: TFrame},
   XMLCreditCardTransactionLoader in 'Modules\Module transactions analyzer\XMLCreditCardTransactionLoader.pas',
   XMLDebitAccountTransactionLoader in 'Modules\Module transactions analyzer\XMLDebitAccountTransactionLoader.pas',
-  InterfaceKernel in 'Base classes\Kernel\InterfaceKernel.pas',
-  Kernel in 'Base classes\Kernel\Kernel.pas',
-  WindowSkeleton in 'Base classes\Kernel\WindowSkeleton.pas' {WndSkeleton},
   ObjectWindowsCreator in 'Base classes\Frames\ObjectWindowsCreator.pas',
   WindowObjectControllerSteeringClass in 'Base classes\Frames\WindowObjectControllerSteeringClass.pas',
-  InterfaceModule in 'Base classes\Kernel\InterfaceModule.pas',
   DBCategoriesLoaderSaver in 'Modules\Module database\DBCategoriesLoaderSaver.pas',
   DBRulesLoaderSaver in 'Modules\Module database\DBRulesLoaderSaver.pas',
   DBTransactionLoaderSaver in 'Modules\Module database\DBTransactionLoaderSaver.pas',
@@ -67,16 +64,20 @@ uses
   TransactionAnalyzerKernelMS in 'TransactionAnalyzerMS\TransactionAnalyzerKernelMS.pas',
   InterfaceModuleSettings in 'Modules\Module settings\Interfaces\InterfaceModuleSettings.pas',
   Settings in 'Modules\Module settings\Settings.pas',
-  BaseKernel in 'Base classes\Kernel\BaseKernel.pas',
-  InterfaceBasePanel in 'Base classes\Frames\InterfaceBasePanel.pas';
+  InterfaceBasePanel in 'Base classes\Frames\InterfaceBasePanel.pas',
+  InterfaceKernel in '..\..\Kernel\src\Interfaces\InterfaceKernel.pas',
+  InterfaceVCLKernel in '..\..\Kernel\src\VCL\Interfaces\InterfaceVCLKernel.pas',
+  VCLKernel in '..\..\Kernel\src\VCL\VCLKernel.pas';
 
 {$R *.res}
 
 begin
   ReportMemoryLeaksOnShutdown := true;
-  Application.Initialize;
-  Application.Run;
-  MainKernel := TKernel.Create (TTransactionAnalyzerKernel.Create);
+  MainKernel := TVCLKernel.Create (TTransactionAnalyzerKernel.Create);
   MainKernel.MainContainer.Container := TTransactionAnalyzerKernelMS.Create;
-  MainKernel.Open (TfrmTransactionList, 'Analiza trasakcji');
+  if Supports(MainKernel, IVCLKernel) then
+  begin
+    (MainKernel as IVCLKernel).Open (TfrmTransactionList, 'Analiza trasakcji');
+    MainKernel.Close;
+  end
 end.

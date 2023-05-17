@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  InterfaceRuleSaver, Kernel, System.SysUtils,
+  InterfaceRuleSaver, InterfaceKernel, System.SysUtils,
   PanelRule, Vcl.Grids, InterfaceRulesController,
   Vcl.Controls, RulesController, InterfaceXMLRuleLoaderSaver,
   ObjectWindowsCreator;

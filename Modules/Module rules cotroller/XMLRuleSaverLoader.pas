@@ -4,7 +4,7 @@ interface
 
 uses
   System.Generics.Collections, Rule, System.SysUtils,
-  InterfaceModuleSettings, Kernel, InterfaceRuleSaver, InterfaceXMLRuleLoaderSaver;
+  InterfaceModuleSettings, InterfaceKernel, InterfaceRuleSaver, InterfaceXMLRuleLoaderSaver;
 
 type
   TXMLRuleSaverLoader = class (TInterfacedObject, IRuleSaver, IXMLRuleLoaderSaver)

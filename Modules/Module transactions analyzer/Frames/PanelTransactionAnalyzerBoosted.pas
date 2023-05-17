@@ -51,7 +51,7 @@ type
 implementation
 
 uses
-  WindowSkeleton, Kernel, Rule, InterfaceXMLTransactionLoaderSaver, InterfaceRuleSaver,
+  WindowSkeleton, InterfaceKernel, Rule, InterfaceXMLTransactionLoaderSaver, InterfaceRuleSaver,
   InterfaceModuleRules, InterfaceModuleTransactionAnalyzer;
 
 {$R *.dfm}

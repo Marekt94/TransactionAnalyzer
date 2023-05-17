@@ -27,7 +27,7 @@ implementation
 
 {$R *.dfm}
 
-uses Kernel, System.Math, InterfaceModuleCategory;
+uses InterfaceKernel, System.Math, InterfaceModuleCategory;
 
 procedure TfrmBilans.OnLabelListClear(p_Sender: TObject;
   const p_Item: TLabel; p_Action: TCollectionNotification);

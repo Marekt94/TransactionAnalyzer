@@ -31,7 +31,7 @@ type
 implementation
 
 uses
-  InterfaceModuleRules, Kernel,
+  InterfaceModuleRules, InterfaceKernel,
   InterfaceModuleTransactionAnalyzer, InterfaceModuleCategory;
 
 {$R *.dfm}
