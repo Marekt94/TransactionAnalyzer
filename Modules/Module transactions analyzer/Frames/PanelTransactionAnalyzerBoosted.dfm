@@ -1,12 +1,4 @@
 inherited FrmTransactionAnalyzerBoosted2: TFrmTransactionAnalyzerBoosted2
-  inherited pnlDescription: TPanel
-    inherited grpDescription: TGroupBox
-      inherited lblDescription: TLabel
-        Width = 266
-        Height = 58
-      end
-    end
-  end
   inherited pnlGrid: TPanel
     Left = 137
     Width = 330

@@ -9,7 +9,7 @@ uses
   Vcl.StdCtrls, PanelBilans, Vcl.ExtDlgs,
   InterfaceModuleCategory, System.Generics.Collections, InterfaceTransactionsController, Transaction,
   Category, System.Actions, Vcl.ActnList, Vcl.Menus,
-  InterfaceTransactionLoader, BasePanel, Vcl.ToolWin, Vcl.ComCtrls, Vcl.Grids,
+  InterfaceTransactionLoader, Vcl.ToolWin, Vcl.ComCtrls, Vcl.Grids,
   Vcl.ExtCtrls;
 
 type

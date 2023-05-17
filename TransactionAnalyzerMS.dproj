@@ -81,6 +81,8 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_Optimize>false</DCC_Optimize>
         <UsePackages>true</UsePackages>
+        <DCC_Define>madExcept;$(DCC_Define)</DCC_Define>
+        <DCC_MapFile>3</DCC_MapFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -126,11 +128,6 @@
         <DCCReference Include="Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas"/>
         <DCCReference Include="Base classes\Frames\BaseListPanel.pas">
             <Form>FrmBaseListPanel</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="Base classes\Frames\BasePanel.pas">
-            <Form>FrmBasePanel</Form>
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
@@ -209,6 +206,7 @@
         <DCCReference Include="Modules\Module settings\Interfaces\InterfaceModuleSettings.pas"/>
         <DCCReference Include="Modules\Module settings\Settings.pas"/>
         <DCCReference Include="Base classes\Kernel\BaseKernel.pas"/>
+        <DCCReference Include="Base classes\Frames\InterfaceBasePanel.pas"/>
         <None Include="TransactionAnalyzer.todo"/>
         <None Include="TransactionAnalyzerMS.todo"/>
         <BuildConfiguration Include="Release">

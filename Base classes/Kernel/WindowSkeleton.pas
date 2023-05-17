@@ -24,18 +24,19 @@ type
   strict private
     FChildPanel : TFrame;
     FAfterShow : TProc;
-    FBeforeOKClick : TFunc <Boolean>;
   public
     destructor Destroy; override;
     function Init (p_ChildPanel : TFrame;
                    p_Title      : string;
                    p_WithNavigationKeys : boolean = true;
-                   p_FullScreen : Boolean = false;
-                   p_BeforeOKClick : TFunc<Boolean> = nil) : TForm; virtual;
+                   p_FullScreen : Boolean = false) : TForm; virtual;
     property AfterShow: TProc read FAfterShow write FAfterShow;
   end;
 
 implementation
+
+uses
+  InterfaceBasePanel;
 
 {$R *.dfm}
 
@@ -55,11 +56,11 @@ end;
 
 procedure TWndSkeleton.btnOkClick(Sender: TObject);
 begin
-  if not Assigned (FBeforeOKClick) or FBeforeOKClick then
-  begin
-    ModalResult := mrOk;
-    CloseModal;
-  end;
+  if Assigned(FChildPanel.GetInterfaceEntry(IBasePanelValidator)) and not (FChildPanel as IBasePanelValidator).Check then
+    Exit;
+
+  ModalResult := mrOk;
+  CloseModal;
 end;
 
 destructor TWndSkeleton.Destroy;
@@ -87,16 +88,13 @@ end;
 function TWndSkeleton.Init (p_ChildPanel : TFrame;
                    p_Title      : string;
                    p_WithNavigationKeys : boolean = true;
-                   p_FullScreen : Boolean = false;
-                   p_BeforeOKClick : TFunc<Boolean> = nil) : TForm;
+                   p_FullScreen : Boolean = false) : TForm;
 var
   pomWidth : Integer;
 begin
   FChildPanel := p_ChildPanel;
   FChildPanel.Parent := pnlMain;
   FChildPanel.Align  := alClient;
-  if Assigned (p_BeforeOKClick) then
-    FBeforeOKClick := p_BeforeOKClick;
   Caption := p_Title;
   if p_FullScreen then
     WindowState := wsMaximized

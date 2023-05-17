@@ -90,7 +90,7 @@ begin
       AddMode := p_AddMode;
       XMLLoaderSaver := (MainKernel.GiveObjectByInterface (IXMLRuleLoaderSaver) as IXMLRuleLoaderSaver);
     end;
-    Result := TObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
+    Result := TVCLObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
     if Result = mrOk then
       pomRuleSaver.SaveRules (pomRulesList);
   finally

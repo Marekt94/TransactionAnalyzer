@@ -3,10 +3,10 @@ unit ObjectWindowsCreator;
 interface
 
 uses
-  WindowObjectControllerSteeringClass;
+  WindowObjectControllerSteeringClass, Vcl.Forms;
 
 type
-  TObjectWindowsCreator = class
+  TVCLObjectWindowsCreator = class
     class function OpenObjControllerWindow (p_SteeringObj : TWndObjControllerSteeringClass) : Integer;
   end;
 
@@ -17,7 +17,7 @@ uses
 
 { TObjectWindowsCreator }
 
-class function TObjectWindowsCreator.OpenObjControllerWindow (p_SteeringObj: TWndObjControllerSteeringClass) : integer;
+class function TVCLObjectWindowsCreator.OpenObjControllerWindow (p_SteeringObj: TWndObjControllerSteeringClass) : integer;
 var
   pomWindow : TWndSkeleton;
   pomFrame  : TFrmBaseListPanel;
@@ -26,7 +26,7 @@ begin
   try
     pomFrame := TFrmBaseListPanel.Create(pomWindow);
     pomFrame.Init (p_SteeringObj.ObjectClass,
-                   p_SteeringObj.ObjectFrame,
+                   p_SteeringObj.ObjectFrame as TFrame,
                    p_SteeringObj.UpdateView,
                    p_SteeringObj.XMLLoaderSaver,
                    p_SteeringObj.WndObjTitle);

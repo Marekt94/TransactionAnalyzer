@@ -4,11 +4,11 @@ interface
 
 uses
   System.SysUtils, System.Classes,
-  Vcl.Controls, Vcl.Forms, BasePanel, Vcl.StdCtrls,
+  Vcl.Controls, Vcl.Forms, InterfaceBasePanel, Vcl.StdCtrls,
   System.Generics.Collections, InterfaceModuleCategory;
 
 type
-  TfrmCategories = class(TFrmBasePanel)
+  TfrmCategories = class(TFrame, IBasePanel)
     grpFilter: TGroupBox;
   private
     FCategoriesAndChbDict : TDictionary <Integer, TCheckBox>;
@@ -16,8 +16,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    function Unpack (const p_Object : TObject) : boolean; override;
-    function Pack   (var   p_Object : TObject) : boolean; override;
+    function Unpack (const p_Object : TObject) : boolean;
+    function Pack   (var   p_Object : TObject) : boolean;
+    procedure Clean;
     procedure InitCategories(p_OnClick : TNotifyEvent; p_DefState : boolean = true);
     property CategoriesAndChbDict: TDictionary <Integer, TCheckBox> read FCategoriesAndChbDict;
   end;
@@ -28,6 +29,11 @@ implementation
 {$R *.dfm}
 
 uses Kernel;
+
+procedure TfrmCategories.Clean;
+begin
+
+end;
 
 constructor TfrmCategories.Create(AOwner: TComponent);
 begin

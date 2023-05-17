@@ -1,6 +1,11 @@
 program TransactionAnalyzerXML;
 
 uses
+  madExcept,
+  madLinkDisAsm,
+  madListHardware,
+  madListProcesses,
+  madListModules,
   Vcl.Forms,
   Module in 'Base classes\Module.pas',
   Category in 'Modules\Module categories\Category.pas',
@@ -23,7 +28,6 @@ uses
   XMLCategoriesLoaderSaver in 'Modules\Module categories\XMLCategoriesLoaderSaver.pas',
   InterfaceCategoriesLoaderSaver in 'Modules\Module categories\Interfaces\InterfaceCategoriesLoaderSaver.pas',
   BaseListPanel in 'Base classes\Frames\BaseListPanel.pas' {FrmBaseListPanel: TFrame},
-  BasePanel in 'Base classes\Frames\BasePanel.pas' {FrmBasePanel: TFrame},
   ConstXMLCategoriesLoaderSaver in 'Modules\Module categories\ConstXMLCategoriesLoaderSaver.pas',
   ConstXMLRuleSaverLoader in 'Modules\Module rules cotroller\ConstXMLRuleSaverLoader.pas',
   GUIMethods in 'Base classes\GUIMethods.pas',
@@ -63,7 +67,8 @@ uses
   TransactionAnalyzerKernel in 'Common classes\TransactionAnalyzerKernel.pas',
   ModuleDatabaseXML in 'Modules\Module database XML\ModuleDatabaseXML.pas',
   InterfaceModuleDatabaseXML in 'Modules\Module database XML\Interfaces\InterfaceModuleDatabaseXML.pas',
-  BaseKernel in 'Base classes\Kernel\BaseKernel.pas';
+  BaseKernel in 'Base classes\Kernel\BaseKernel.pas',
+  InterfaceBasePanel in 'Base classes\Frames\InterfaceBasePanel.pas';
 
 {$R *.res}
 
