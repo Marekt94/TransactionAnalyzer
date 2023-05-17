@@ -23,8 +23,8 @@ type
 implementation
 
 uses
-  XMLSettingsLoaderSaver, PanelSettings, Kernel,
-  InterfaceSettingsLoaderSaver, Vcl.Controls, System.SysUtils, InterfaceKernel;
+  XMLSettingsLoaderSaver, PanelSettings, InterfaceKernel,
+  InterfaceSettingsLoaderSaver, Vcl.Controls, System.SysUtils;
 
 { TModuleSettings }
 

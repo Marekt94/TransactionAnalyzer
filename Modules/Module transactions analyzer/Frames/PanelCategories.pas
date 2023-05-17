@@ -28,7 +28,7 @@ implementation
 
 {$R *.dfm}
 
-uses Kernel;
+uses InterfaceKernel;
 
 procedure TfrmCategories.Clean;
 begin

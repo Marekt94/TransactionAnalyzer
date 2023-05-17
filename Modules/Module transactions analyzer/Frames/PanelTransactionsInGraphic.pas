@@ -22,7 +22,7 @@ type
 implementation
 
 uses
-  Kernel, InterfaceModuleCategory, InterfaceTransactionsController;
+  InterfaceKernel, InterfaceModuleCategory, InterfaceTransactionsController;
 
 {$R *.dfm}
 

@@ -79,7 +79,7 @@ implementation
 
 {$R *.dfm}
 
-uses GUIMethods, Kernel, InterfaceModuleCategory, Category;
+uses GUIMethods, InterfaceKernel, InterfaceModuleCategory, Category;
 
 procedure TfrmTransasctionsList.AddTransaction (p_Transaction : TTransaction;
                                                 p_Row         : Integer);

@@ -28,7 +28,7 @@ type
 implementation
 
 uses
-  System.SysUtils, System.Variants, Kernel, InterfaceModuleDatabase, ConstXMLCategoriesLoaderSaver;
+  System.SysUtils, System.Variants, InterfaceKernel, InterfaceModuleDatabase, ConstXMLCategoriesLoaderSaver;
 
 { TDBCategoriesLoaderSaver }
 

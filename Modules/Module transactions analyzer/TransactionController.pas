@@ -5,7 +5,7 @@ interface
 uses
   InterfaceTransactionsController, Transaction, System.Generics.Collections,
   System.SysUtils, InterfaceModuleCategory,
-  Kernel, Rule;
+  InterfaceKernel, Rule;
 
 type
   TTransactionController = class (TInterfacedObject, ITransactionsController)

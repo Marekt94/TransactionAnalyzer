@@ -30,7 +30,7 @@ type
 implementation
 
 uses
-  System.SysUtils, XMLCategoriesLoaderSaver, Kernel, Vcl.Grids,
+  System.SysUtils, XMLCategoriesLoaderSaver, InterfaceKernel, Vcl.Grids,
   InterfaceXMLCategoriesLoaderSaver, System.UITypes, UsefullMethods,
   ObjectWindowsCreator;
 
