@@ -148,6 +148,8 @@ begin
   FWndObjectTitle := p_WndObjectTitle;
   FUpdateView     := p_FunUpdateView;
   FLoaderSaver    := p_XMLLoaderSaver;
+  if FBasePanel.Owner = nil then
+    Self.InsertComponent(p_ObjectPanel);
 end;
 
 function TFrmBaseListPanel.UnpackFrame (p_ObjectList: TObject): boolean;
