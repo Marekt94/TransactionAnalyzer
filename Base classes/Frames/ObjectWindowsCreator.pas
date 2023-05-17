@@ -6,7 +6,7 @@ uses
   WindowObjectControllerSteeringClass, Vcl.Forms;
 
 type
-  TObjectWindowsCreator = class
+  TVCLObjectWindowsCreator = class
     class function OpenObjControllerWindow (p_SteeringObj : TWndObjControllerSteeringClass) : Integer;
   end;
 
@@ -17,7 +17,7 @@ uses
 
 { TObjectWindowsCreator }
 
-class function TObjectWindowsCreator.OpenObjControllerWindow (p_SteeringObj: TWndObjControllerSteeringClass) : integer;
+class function TVCLObjectWindowsCreator.OpenObjControllerWindow (p_SteeringObj: TWndObjControllerSteeringClass) : integer;
 var
   pomWindow : TWndSkeleton;
   pomFrame  : TFrmBaseListPanel;

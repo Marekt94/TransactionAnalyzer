@@ -77,7 +77,7 @@ object frmRule: TfrmRule
       Width = 97
       Height = 21
       Date = 44344.000000000000000000
-      Time = 0.655671111111587300
+      Time = 0.655671111111587400
       TabOrder = 2
       OnChange = dtpFromDateChange
     end

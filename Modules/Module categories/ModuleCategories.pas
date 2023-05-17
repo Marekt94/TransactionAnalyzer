@@ -129,7 +129,7 @@ begin
       FullScreen := false;
       XMLLoaderSaver := MainKernel.GiveObjectByInterface(IXMLCategoriesLoaderSaver, true) as IXMLCategoriesLoaderSaver;
     end;
-    Result := TObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
+    Result := TVCLObjectWindowsCreator.OpenObjControllerWindow (pomSteeringObj);
     SetIndexes (TObjectList<TObject> (pomCategories),
                 function (p_ID : Integer; p_List : TObjectList <TObject>) : Integer
                 begin

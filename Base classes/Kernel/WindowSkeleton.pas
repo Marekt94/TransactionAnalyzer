@@ -24,7 +24,6 @@ type
   strict private
     FChildPanel : TFrame;
     FAfterShow : TProc;
-    FBeforeOKClick : TFunc <Boolean>;
   public
     destructor Destroy; override;
     function Init (p_ChildPanel : TFrame;
@@ -57,11 +56,11 @@ end;
 
 procedure TWndSkeleton.btnOkClick(Sender: TObject);
 begin
-  if not Assigned (FBeforeOKClick) or FBeforeOKClick then
-  begin
-    ModalResult := mrOk;
-    CloseModal;
-  end;
+  if Assigned(FChildPanel.GetInterfaceEntry(IBasePanelValidator)) and not (FChildPanel as IBasePanelValidator).Check then
+    Exit;
+
+  ModalResult := mrOk;
+  CloseModal;
 end;
 
 destructor TWndSkeleton.Destroy;
@@ -96,8 +95,6 @@ begin
   FChildPanel := p_ChildPanel;
   FChildPanel.Parent := pnlMain;
   FChildPanel.Align  := alClient;
-  if Supports(p_ChildPanel, IBasePanelValidator) then
-    (p_ChildPanel as IBasePanelValidator).Check;
   Caption := p_Title;
   if p_FullScreen then
     WindowState := wsMaximized

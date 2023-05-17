@@ -61,7 +61,7 @@ begin
   pomWnd := TWndSkeleton.Create(nil);
   try
     pomWnd.Init (FBasePanel, FWndObjectTitle, true, false);
-    if Supports(FBasePanel, IBasePanel) then
+    if Assigned(FBasePanel.GetInterfaceEntry(IBasePanel)) then
     begin
       pomBasePanel := FBasePanel as IBasePanel;
       pomBasePanel.Unpack (nil);
@@ -102,7 +102,7 @@ begin
   try
     pomObject := FObjectList.Items [strList.Row - 1];
     pomWnd.Init (FBasePanel, FWndObjectTitle, true, false);
-    if Supports(FBasePanel, IBasePanel) then
+    if Assigned(FBasePanel.GetInterfaceEntry(IBasePanel)) then
     begin
       pomBasePanel := FBasePanel as IBasePanel;
       pomBasePanel.Unpack (pomObject);
