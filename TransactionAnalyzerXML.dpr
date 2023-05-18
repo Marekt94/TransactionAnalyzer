@@ -8,7 +8,6 @@ uses
   madListModules,
   Vcl.Forms,
   System.SysUtils,
-  Module in 'Base classes\Module.pas',
   Category in 'Modules\Module categories\Category.pas',
   ModuleCategories in 'Modules\Module categories\ModuleCategories.pas',
   InterfaceModuleCategory in 'Modules\Module categories\Interfaces\InterfaceModuleCategory.pas',
